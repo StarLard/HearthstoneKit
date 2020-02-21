@@ -110,3 +110,33 @@ public struct Card: Decodable {
         childIDs = try values.decodeIfPresent(Array<BlizzardIdentifier>.self, forKey: .childIDs)
     }
 }
+
+// MARK: - Related Types
+
+extension Card {
+    // MARK: Keyword
+    
+    public struct Keyword: Decodable {
+        public let id: BlizzardIdentifier
+        public let slug: String
+        public let name: String
+        public let text: String
+        public let referenceText: String
+        
+        enum CodingKeys: String, CodingKey {
+            case id
+            case slug
+            case name
+            case text
+            case referenceText = "refText"
+        }
+    }
+    
+    // MARK: Card Type
+    
+    public struct CardType: Decodable {
+        public let id: BlizzardIdentifier
+        public let slug: String
+        public let name: String
+    }
+}

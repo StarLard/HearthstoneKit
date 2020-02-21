@@ -117,4 +117,22 @@ final class CardTests: HSKitTestCase {
         XCTAssertEqual(card.parentID?.rawValue, 637)
         XCTAssertEqual(card.childIDs?.map({$0.rawValue}), [39791])
     }
+    
+    func testDecodeCardTypeFromValidDataDoesNotThrow() throws {
+        let data = openSampleFile(.cardType)
+        let cardType = try JSONDecoder().decode(Card.CardType.self, from: data)
+        XCTAssertEqual(cardType.id.rawValue, 3)
+        XCTAssertEqual(cardType.slug, "hero")
+        XCTAssertEqual(cardType.name, "Hero")
+    }
+    
+    func testDecodeCardKeyworkFromValidDataDoesNotThrow() throws {
+        let data = openSampleFile(.cardKeyword)
+        let keyword = try JSONDecoder().decode(Card.Keyword.self, from: data)
+        XCTAssertEqual(keyword.id.rawValue, 3)
+        XCTAssertEqual(keyword.slug, "divine-shield")
+        XCTAssertEqual(keyword.name, "Divine Shield")
+        XCTAssertEqual(keyword.text, "The first time this minion takes damage, ignore it.")
+        XCTAssertEqual(keyword.referenceText, "The first time a Shielded minion takes damage, ignore it.")
+    }
 }

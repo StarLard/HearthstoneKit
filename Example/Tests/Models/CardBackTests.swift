@@ -24,7 +24,6 @@ final class CardBackTests: HSKitTestCase {
     func testDecodeCardBackCategoryFromValidDataDoesNotThrow() throws {
         let data = openSampleFile(.cardBackCategory)
         let cardBackSortCategory = try JSONDecoder().decode(CardBack.SortCategory.self, from: data)
-        print(cardBackSortCategory)
         XCTAssertEqual(cardBackSortCategory.id.rawValue, 1)
         XCTAssertEqual(cardBackSortCategory.slug, "base")
         XCTAssertEqual(cardBackSortCategory.name, "Basic")
