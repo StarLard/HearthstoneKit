@@ -1,0 +1,11 @@
+{
+      "id": 1403,
+      "slug": "galakronds-awakening",
+      "releaseDate": "2020-01-01T00:00:00",
+      "name": "Galakrond's Awakening",
+      "type": "adventure",
+      "collectibleCount": 35,
+      "collectibleRevealedCount": 35,
+      "nonCollectibleCount": 246,
+      "nonCollectibleRevealedCount": 43
+}

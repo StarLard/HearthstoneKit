@@ -8,16 +8,44 @@
 
 /* Begin PBXBuildFile section */
 		3E56FDD1712AD6D46D8BFB8A /* Pods_HearthstoneKit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F033D392725A4EECB5853917 /* Pods_HearthstoneKit_Tests.framework */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		85F9FC5423FF9D0E00FDA1E0 /* sample_expansion_set_group.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC4823FF9D0D00FDA1E0 /* sample_expansion_set_group.json */; };
+		85F9FC5523FF9D0E00FDA1E0 /* sample_minion_type.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC4923FF9D0D00FDA1E0 /* sample_minion_type.json */; };
+		85F9FC5623FF9D0E00FDA1E0 /* sample_card.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC4A23FF9D0D00FDA1E0 /* sample_card.json */; };
+		85F9FC5723FF9D0E00FDA1E0 /* sample_rarity.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC4B23FF9D0E00FDA1E0 /* sample_rarity.json */; };
+		85F9FC5823FF9D0E00FDA1E0 /* sample_expansion_set.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC4C23FF9D0E00FDA1E0 /* sample_expansion_set.json */; };
+		85F9FC5923FF9D0E00FDA1E0 /* sample_deck.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC4D23FF9D0E00FDA1E0 /* sample_deck.json */; };
+		85F9FC5A23FF9D0E00FDA1E0 /* sample_card_back_category.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC4E23FF9D0E00FDA1E0 /* sample_card_back_category.json */; };
+		85F9FC5B23FF9D0E00FDA1E0 /* sample_player_class.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC4F23FF9D0E00FDA1E0 /* sample_player_class.json */; };
+		85F9FC5C23FF9D0E00FDA1E0 /* sample_card_type.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC5023FF9D0E00FDA1E0 /* sample_card_type.json */; };
+		85F9FC5D23FF9D0E00FDA1E0 /* sample_card_back.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC5123FF9D0E00FDA1E0 /* sample_card_back.json */; };
+		85F9FC5E23FF9D0E00FDA1E0 /* sample_card_keyword.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC5223FF9D0E00FDA1E0 /* sample_card_keyword.json */; };
+		85F9FC5F23FF9D0E00FDA1E0 /* sample_game_mode.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC5323FF9D0E00FDA1E0 /* sample_game_mode.json */; };
+		85F9FC6223FF9DC500FDA1E0 /* HSKitTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F9FC6123FF9DC500FDA1E0 /* HSKitTestCase.swift */; };
+		85F9FC6423FF9E6300FDA1E0 /* SampleFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F9FC6323FF9E6300FDA1E0 /* SampleFile.swift */; };
+		85F9FC6723FFA07200FDA1E0 /* CardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F9FC6623FFA07200FDA1E0 /* CardTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		607FACE51AFB9204008FA782 /* HearthstoneKit_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HearthstoneKit_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		68AAA61CFFC9207FE98B9198 /* Pods-HearthstoneKit_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HearthstoneKit_Tests.debug.xcconfig"; path = "Target Support Files/Pods-HearthstoneKit_Tests/Pods-HearthstoneKit_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		6AF1CC0EF602D1E7C39A4519 /* Pods-HearthstoneKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HearthstoneKit_Tests.release.xcconfig"; path = "Target Support Files/Pods-HearthstoneKit_Tests/Pods-HearthstoneKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		735B80324A464AB546ABDF0A /* HearthstoneKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = HearthstoneKit.podspec; path = ../HearthstoneKit.podspec; sourceTree = "<group>"; };
+		735B80324A464AB546ABDF0A /* HearthstoneKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = HearthstoneKit.podspec; path = ../HearthstoneKit.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		85F9FC4823FF9D0D00FDA1E0 /* sample_expansion_set_group.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_expansion_set_group.json; sourceTree = "<group>"; };
+		85F9FC4923FF9D0D00FDA1E0 /* sample_minion_type.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_minion_type.json; sourceTree = "<group>"; };
+		85F9FC4A23FF9D0D00FDA1E0 /* sample_card.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card.json; sourceTree = "<group>"; };
+		85F9FC4B23FF9D0E00FDA1E0 /* sample_rarity.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_rarity.json; sourceTree = "<group>"; };
+		85F9FC4C23FF9D0E00FDA1E0 /* sample_expansion_set.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_expansion_set.json; sourceTree = "<group>"; };
+		85F9FC4D23FF9D0E00FDA1E0 /* sample_deck.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_deck.json; sourceTree = "<group>"; };
+		85F9FC4E23FF9D0E00FDA1E0 /* sample_card_back_category.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card_back_category.json; sourceTree = "<group>"; };
+		85F9FC4F23FF9D0E00FDA1E0 /* sample_player_class.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_player_class.json; sourceTree = "<group>"; };
+		85F9FC5023FF9D0E00FDA1E0 /* sample_card_type.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card_type.json; sourceTree = "<group>"; };
+		85F9FC5123FF9D0E00FDA1E0 /* sample_card_back.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card_back.json; sourceTree = "<group>"; };
+		85F9FC5223FF9D0E00FDA1E0 /* sample_card_keyword.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card_keyword.json; sourceTree = "<group>"; };
+		85F9FC5323FF9D0E00FDA1E0 /* sample_game_mode.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_game_mode.json; sourceTree = "<group>"; };
+		85F9FC6123FF9DC500FDA1E0 /* HSKitTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSKitTestCase.swift; sourceTree = "<group>"; };
+		85F9FC6323FF9E6300FDA1E0 /* SampleFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleFile.swift; sourceTree = "<group>"; };
+		85F9FC6623FFA07200FDA1E0 /* CardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTests.swift; sourceTree = "<group>"; };
+		85F9FC6B23FFA56F00FDA1E0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		980ED8C6481519B5202062E5 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		B34CC775BCE1429053B8CB61 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		F033D392725A4EECB5853917 /* Pods_HearthstoneKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HearthstoneKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -57,7 +85,8 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
+				85F9FC6523FFA04C00FDA1E0 /* Models */,
+				85F9FC6023FF9D8000FDA1E0 /* Testing Support */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -66,7 +95,19 @@
 		607FACE91AFB9204008FA782 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEA1AFB9204008FA782 /* Info.plist */,
+				85F9FC4E23FF9D0E00FDA1E0 /* sample_card_back_category.json */,
+				85F9FC5123FF9D0E00FDA1E0 /* sample_card_back.json */,
+				85F9FC5223FF9D0E00FDA1E0 /* sample_card_keyword.json */,
+				85F9FC5023FF9D0E00FDA1E0 /* sample_card_type.json */,
+				85F9FC4A23FF9D0D00FDA1E0 /* sample_card.json */,
+				85F9FC4D23FF9D0E00FDA1E0 /* sample_deck.json */,
+				85F9FC4823FF9D0D00FDA1E0 /* sample_expansion_set_group.json */,
+				85F9FC4C23FF9D0E00FDA1E0 /* sample_expansion_set.json */,
+				85F9FC5323FF9D0E00FDA1E0 /* sample_game_mode.json */,
+				85F9FC4923FF9D0D00FDA1E0 /* sample_minion_type.json */,
+				85F9FC4F23FF9D0E00FDA1E0 /* sample_player_class.json */,
+				85F9FC4B23FF9D0E00FDA1E0 /* sample_rarity.json */,
+				85F9FC6B23FFA56F00FDA1E0 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -90,6 +131,23 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		85F9FC6023FF9D8000FDA1E0 /* Testing Support */ = {
+			isa = PBXGroup;
+			children = (
+				85F9FC6123FF9DC500FDA1E0 /* HSKitTestCase.swift */,
+				85F9FC6323FF9E6300FDA1E0 /* SampleFile.swift */,
+			);
+			path = "Testing Support";
+			sourceTree = "<group>";
+		};
+		85F9FC6523FFA04C00FDA1E0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				85F9FC6623FFA07200FDA1E0 /* CardTests.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		AB015BFD5FDD59C9598CA758 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +167,7 @@
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
+				B4101EAB4AA905895B6B270C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -131,8 +190,8 @@
 				TargetAttributes = {
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						LastSwiftMigration = 0900;
-						TestTargetID = 607FACCF1AFB9204008FA782;
+						DevelopmentTeam = 2524DUVEAT;
+						LastSwiftMigration = 1130;
 					};
 				};
 			};
@@ -160,12 +219,42 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85F9FC5A23FF9D0E00FDA1E0 /* sample_card_back_category.json in Resources */,
+				85F9FC5C23FF9D0E00FDA1E0 /* sample_card_type.json in Resources */,
+				85F9FC5423FF9D0E00FDA1E0 /* sample_expansion_set_group.json in Resources */,
+				85F9FC5823FF9D0E00FDA1E0 /* sample_expansion_set.json in Resources */,
+				85F9FC5E23FF9D0E00FDA1E0 /* sample_card_keyword.json in Resources */,
+				85F9FC5B23FF9D0E00FDA1E0 /* sample_player_class.json in Resources */,
+				85F9FC5923FF9D0E00FDA1E0 /* sample_deck.json in Resources */,
+				85F9FC5623FF9D0E00FDA1E0 /* sample_card.json in Resources */,
+				85F9FC5F23FF9D0E00FDA1E0 /* sample_game_mode.json in Resources */,
+				85F9FC5723FF9D0E00FDA1E0 /* sample_rarity.json in Resources */,
+				85F9FC5D23FF9D0E00FDA1E0 /* sample_card_back.json in Resources */,
+				85F9FC5523FF9D0E00FDA1E0 /* sample_minion_type.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		B4101EAB4AA905895B6B270C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HearthstoneKit_Tests/Pods-HearthstoneKit_Tests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/HearthstoneKit/HearthstoneKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HearthstoneKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HearthstoneKit_Tests/Pods-HearthstoneKit_Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		F485D74B3AAD87E056172918 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -195,7 +284,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				85F9FC6723FFA07200FDA1E0 /* CardTests.swift in Sources */,
+				85F9FC6223FF9DC500FDA1E0 /* HSKitTestCase.swift in Sources */,
+				85F9FC6423FF9E6300FDA1E0 /* SampleFile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,6 +402,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 68AAA61CFFC9207FE98B9198 /* Pods-HearthstoneKit_Tests.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = 2524DUVEAT;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -323,9 +416,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HearthstoneKit_Example.app/HearthstoneKit_Example";
 			};
 			name = Debug;
 		};
@@ -333,6 +426,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6AF1CC0EF602D1E7C39A4519 /* Pods-HearthstoneKit_Tests.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = 2524DUVEAT;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -343,7 +438,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HearthstoneKit_Example.app/HearthstoneKit_Example";
 			};
 			name = Release;
 		};
