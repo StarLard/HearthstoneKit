@@ -1,0 +1,6 @@
+use_frameworks!
+target 'HearthstoneKit_Tests' do
+  pod 'HearthstoneKit', :path => '../'
+  
+  
+end
