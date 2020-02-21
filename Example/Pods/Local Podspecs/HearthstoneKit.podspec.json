@@ -1,22 +1,25 @@
 {
   "name": "HearthstoneKit",
   "version": "0.1.0",
-  "summary": "A short description of HearthstoneKit.",
-  "description": "TODO: Add long description of the pod here.",
+  "summary": "An elegant pure-swift SDK for consuming the official Hearthstone API.",
+  "description": "HearthstoneKit is a pure-swift SDK for consuming the official Hearthstone API. With it you can interact with the official API using native swift types. HearthstoneKit's design goals are to be lightweight, simple to use, and leverage the power of swift.",
   "homepage": "https://github.com/StarLard/HearthstoneKit",
   "license": {
-    "type": "MIT",
+    "type": "Apache License, Version 2.0",
     "file": "LICENSE"
   },
   "authors": {
-    "StarLard": "caleb.cfri@gmail.com"
+    "StarLard": "contact@calebfriden.com"
   },
   "source": {
     "git": "https://github.com/StarLard/HearthstoneKit.git",
     "tag": "0.1.0"
   },
+  "social_media_url": "https://twitter.com/CalebFriden",
   "platforms": {
-    "ios": "8.0"
+    "ios": "13.0"
   },
-  "source_files": "HearthstoneKit/Classes/**/*"
+  "swift_versions": "5",
+  "source_files": "Source/**/*.swift",
+  "swift_version": "5"
 }
