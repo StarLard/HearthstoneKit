@@ -14,6 +14,7 @@
 		42481B6B3FAEA3382A364FF767571C9B /* Pods-HearthstoneKit_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C8466FE3D06942A5CFC3DF9359D98274 /* Pods-HearthstoneKit_Tests-dummy.m */; };
 		453FD060434C0105301904BAF7A58111 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE00D57FFA04DF37E89FBD8F398E47E /* Card.swift */; };
 		5C3DC40DCFCAF55D21033FF70E846B45 /* CardBack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667CDF06054DB3CD3F5632CC220034CD /* CardBack.swift */; };
+		85F9FC6F23FFC07C00FDA1E0 /* PlayerLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F9FC6E23FFC07C00FDA1E0 /* PlayerLocale.swift */; };
 		EAF77BFAA84422F3D8333CA33460EE3F /* HearthstoneKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 72046FC2E61B0AD524C47A9BEF4FE05A /* HearthstoneKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F53D6073DA92BFC5ED9347BD6A98DB21 /* Pods-HearthstoneKit_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C613165ED666C82DF1198045BB59B9E0 /* Pods-HearthstoneKit_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
@@ -34,25 +35,26 @@
 		34E51EA1740FE9C76C5BA670090ACF04 /* Pods-HearthstoneKit_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-HearthstoneKit_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		3639F0600C1F6A6C4FE04582931E3E23 /* HearthstoneKit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = HearthstoneKit.xcconfig; sourceTree = "<group>"; };
 		3E2DA78EB0F7913933D39EADD14F3655 /* Pods-HearthstoneKit_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HearthstoneKit_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		464D76EAA9A9451E047BBA4E568F27A1 /* HearthstoneKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = HearthstoneKit.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		464D76EAA9A9451E047BBA4E568F27A1 /* HearthstoneKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = HearthstoneKit.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		4B17F7C405CE3AAF2EF9353AEB466378 /* Pods-HearthstoneKit_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HearthstoneKit_Tests-frameworks.sh"; sourceTree = "<group>"; };
 		4E9F801DA9F504AFC0816DB17F541431 /* Pods-HearthstoneKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HearthstoneKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		5834532BF5BC9777556F971635D9BFAC /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		5834532BF5BC9777556F971635D9BFAC /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		667CDF06054DB3CD3F5632CC220034CD /* CardBack.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CardBack.swift; sourceTree = "<group>"; };
 		6C08ECD1775D77D399127D514410C8E0 /* BlizzardIdentifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BlizzardIdentifier.swift; sourceTree = "<group>"; };
 		72046FC2E61B0AD524C47A9BEF4FE05A /* HearthstoneKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HearthstoneKit-umbrella.h"; sourceTree = "<group>"; };
 		7EE00D57FFA04DF37E89FBD8F398E47E /* Card.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		85F9FC6E23FFC07C00FDA1E0 /* PlayerLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerLocale.swift; sourceTree = "<group>"; };
 		87FF1B9C9390842E8EB34314F6BBB4DD /* HearthstoneKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "HearthstoneKit-dummy.m"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		A1580CAE12F4A7BB4F94DB8E7F785634 /* Pods_HearthstoneKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_HearthstoneKit_Tests.framework; path = "Pods-HearthstoneKit_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A1580CAE12F4A7BB4F94DB8E7F785634 /* Pods_HearthstoneKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HearthstoneKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7C8C0729B9333DEFD9559A7A405E688 /* Pods-HearthstoneKit_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-HearthstoneKit_Tests-Info.plist"; sourceTree = "<group>"; };
 		AF52CAE8F5B679847F35E95A1999B3FE /* HearthstoneKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = HearthstoneKit.modulemap; sourceTree = "<group>"; };
 		C613165ED666C82DF1198045BB59B9E0 /* Pods-HearthstoneKit_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-HearthstoneKit_Tests-umbrella.h"; sourceTree = "<group>"; };
 		C8466FE3D06942A5CFC3DF9359D98274 /* Pods-HearthstoneKit_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-HearthstoneKit_Tests-dummy.m"; sourceTree = "<group>"; };
 		D1E3807B4332583E7B440FFFE09102CA /* HearthstoneKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "HearthstoneKit-Info.plist"; sourceTree = "<group>"; };
-		D517D06DD49C2006C74B050CFC69F580 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		D517D06DD49C2006C74B050CFC69F580 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		EC7EB68EB453395F215FD8FF19208483 /* Pods-HearthstoneKit_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-HearthstoneKit_Tests.modulemap"; sourceTree = "<group>"; };
-		F63601C36FD074F72A62D212A0643E6C /* HearthstoneKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = HearthstoneKit.framework; path = HearthstoneKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F63601C36FD074F72A62D212A0643E6C /* HearthstoneKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HearthstoneKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F74D221C6ADE5690FBF6801D37738966 /* Pods-HearthstoneKit_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-HearthstoneKit_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,6 +81,7 @@
 		518FA4A88A38820333D10AB04E221331 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				85F9FC6D23FFC00B00FDA1E0 /* Supporting Types */,
 				7EE00D57FFA04DF37E89FBD8F398E47E /* Card.swift */,
 				667CDF06054DB3CD3F5632CC220034CD /* CardBack.swift */,
 			);
@@ -89,10 +92,18 @@
 		7CE70CF744B18662EE08B23D4CFB3A97 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				6C08ECD1775D77D399127D514410C8E0 /* BlizzardIdentifier.swift */,
 			);
 			name = Utilities;
 			path = Source/Utilities;
+			sourceTree = "<group>";
+		};
+		85F9FC6D23FFC00B00FDA1E0 /* Supporting Types */ = {
+			isa = PBXGroup;
+			children = (
+				6C08ECD1775D77D399127D514410C8E0 /* BlizzardIdentifier.swift */,
+				85F9FC6E23FFC07C00FDA1E0 /* PlayerLocale.swift */,
+			);
+			path = "Supporting Types";
 			sourceTree = "<group>";
 		};
 		A14C3DA3054EAB3274E625E6778867DC /* Development Pods */ = {
@@ -321,6 +332,7 @@
 				453FD060434C0105301904BAF7A58111 /* Card.swift in Sources */,
 				5C3DC40DCFCAF55D21033FF70E846B45 /* CardBack.swift in Sources */,
 				2DCE2B933D445C69DE0241E1925393C9 /* HearthstoneKit-dummy.m in Sources */,
+				85F9FC6F23FFC07C00FDA1E0 /* PlayerLocale.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,8 +437,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};

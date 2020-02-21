@@ -1,0 +1,23 @@
+{
+      "id": 39117,
+      "collectible": 1,
+      "slug": "39117-khadgar",
+      "classId": 4,
+      "multiClassIds": [],
+      "cardTypeId": 3,
+      "cardSetId": 17,
+      "rarityId": 4,
+      "artistName": null,
+      "health": 30,
+      "manaCost": 0,
+      "name": "Khadgar",
+      "text": "",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/aa225c96ba982a1eab4c27033015ab3af79a338fb48e09898d591e80e28a2c5c.png",
+      "imageGold": "",
+      "flavorText": "",
+      "cropImage": null,
+      "parentId": 637,
+      "childIds": [
+          39791
+    ]
+}
