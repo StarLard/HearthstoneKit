@@ -15,6 +15,7 @@
 		453FD060434C0105301904BAF7A58111 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE00D57FFA04DF37E89FBD8F398E47E /* Card.swift */; };
 		5C3DC40DCFCAF55D21033FF70E846B45 /* CardBack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667CDF06054DB3CD3F5632CC220034CD /* CardBack.swift */; };
 		85F9FC6F23FFC07C00FDA1E0 /* PlayerLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F9FC6E23FFC07C00FDA1E0 /* PlayerLocale.swift */; };
+		85F9FC7923FFD56400FDA1E0 /* Decklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F9FC7823FFD56400FDA1E0 /* Decklist.swift */; };
 		EAF77BFAA84422F3D8333CA33460EE3F /* HearthstoneKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 72046FC2E61B0AD524C47A9BEF4FE05A /* HearthstoneKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F53D6073DA92BFC5ED9347BD6A98DB21 /* Pods-HearthstoneKit_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C613165ED666C82DF1198045BB59B9E0 /* Pods-HearthstoneKit_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
@@ -44,6 +45,7 @@
 		72046FC2E61B0AD524C47A9BEF4FE05A /* HearthstoneKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HearthstoneKit-umbrella.h"; sourceTree = "<group>"; };
 		7EE00D57FFA04DF37E89FBD8F398E47E /* Card.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		85F9FC6E23FFC07C00FDA1E0 /* PlayerLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerLocale.swift; sourceTree = "<group>"; };
+		85F9FC7823FFD56400FDA1E0 /* Decklist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decklist.swift; sourceTree = "<group>"; };
 		87FF1B9C9390842E8EB34314F6BBB4DD /* HearthstoneKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "HearthstoneKit-dummy.m"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A1580CAE12F4A7BB4F94DB8E7F785634 /* Pods_HearthstoneKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HearthstoneKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,6 +104,7 @@
 			children = (
 				6C08ECD1775D77D399127D514410C8E0 /* BlizzardIdentifier.swift */,
 				85F9FC6E23FFC07C00FDA1E0 /* PlayerLocale.swift */,
+				85F9FC7823FFD56400FDA1E0 /* Decklist.swift */,
 			);
 			path = "Supporting Types";
 			sourceTree = "<group>";
@@ -332,6 +335,7 @@
 				453FD060434C0105301904BAF7A58111 /* Card.swift in Sources */,
 				5C3DC40DCFCAF55D21033FF70E846B45 /* CardBack.swift in Sources */,
 				2DCE2B933D445C69DE0241E1925393C9 /* HearthstoneKit-dummy.m in Sources */,
+				85F9FC7923FFD56400FDA1E0 /* Decklist.swift in Sources */,
 				85F9FC6F23FFC07C00FDA1E0 /* PlayerLocale.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

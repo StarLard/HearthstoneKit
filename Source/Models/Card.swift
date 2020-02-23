@@ -8,7 +8,7 @@
 import Foundation
 
 /// Represents an in-game Hearthstone card.
-public struct Card: Decodable {
+public struct Card: Decodable, Hashable {
     // MARK: Properties
     
     public let id: BlizzardIdentifier
