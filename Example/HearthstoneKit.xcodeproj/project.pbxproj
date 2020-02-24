@@ -26,7 +26,9 @@
 		85F9FC7123FFC40A00FDA1E0 /* CardBackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F9FC7023FFC40A00FDA1E0 /* CardBackTests.swift */; };
 		85F9FC7323FFCBD600FDA1E0 /* sample_card_minion.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC7223FFCBD600FDA1E0 /* sample_card_minion.json */; };
 		85F9FC7523FFCC2600FDA1E0 /* sample_card_weapon.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC7423FFCC2600FDA1E0 /* sample_card_weapon.json */; };
-		85F9FC7723FFCC7200FDA1E0 /* sample_card_hero.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC7623FFCC7200FDA1E0 /* sample_card_hero.json */; };
+		85F9FC7723FFCC7200FDA1E0 /* sample_card_hero_skin.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC7623FFCC7200FDA1E0 /* sample_card_hero_skin.json */; };
+		85F9FC7B2402167000FDA1E0 /* DecklistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F9FC7A2402167000FDA1E0 /* DecklistTests.swift */; };
+		85F9FC7D24037B8A00FDA1E0 /* sample_card_hero_playable.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC7C24037B8A00FDA1E0 /* sample_card_hero_playable.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,7 +55,9 @@
 		85F9FC7023FFC40A00FDA1E0 /* CardBackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBackTests.swift; sourceTree = "<group>"; };
 		85F9FC7223FFCBD600FDA1E0 /* sample_card_minion.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card_minion.json; sourceTree = "<group>"; };
 		85F9FC7423FFCC2600FDA1E0 /* sample_card_weapon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card_weapon.json; sourceTree = "<group>"; };
-		85F9FC7623FFCC7200FDA1E0 /* sample_card_hero.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card_hero.json; sourceTree = "<group>"; };
+		85F9FC7623FFCC7200FDA1E0 /* sample_card_hero_skin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card_hero_skin.json; sourceTree = "<group>"; };
+		85F9FC7A2402167000FDA1E0 /* DecklistTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecklistTests.swift; sourceTree = "<group>"; };
+		85F9FC7C24037B8A00FDA1E0 /* sample_card_hero_playable.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card_hero_playable.json; sourceTree = "<group>"; };
 		980ED8C6481519B5202062E5 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		B34CC775BCE1429053B8CB61 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		F033D392725A4EECB5853917 /* Pods_HearthstoneKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HearthstoneKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,6 +100,7 @@
 				85F9FC6523FFA04C00FDA1E0 /* Models */,
 				85F9FC6023FF9D8000FDA1E0 /* Testing Support */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
+				85F9FC7A2402167000FDA1E0 /* DecklistTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -110,7 +115,8 @@
 				85F9FC4A23FF9D0D00FDA1E0 /* sample_card_spell.json */,
 				85F9FC7223FFCBD600FDA1E0 /* sample_card_minion.json */,
 				85F9FC7423FFCC2600FDA1E0 /* sample_card_weapon.json */,
-				85F9FC7623FFCC7200FDA1E0 /* sample_card_hero.json */,
+				85F9FC7623FFCC7200FDA1E0 /* sample_card_hero_skin.json */,
+				85F9FC7C24037B8A00FDA1E0 /* sample_card_hero_playable.json */,
 				85F9FC4D23FF9D0E00FDA1E0 /* sample_deck.json */,
 				85F9FC4823FF9D0D00FDA1E0 /* sample_expansion_set_group.json */,
 				85F9FC4C23FF9D0E00FDA1E0 /* sample_expansion_set.json */,
@@ -238,8 +244,9 @@
 				85F9FC7323FFCBD600FDA1E0 /* sample_card_minion.json in Resources */,
 				85F9FC5E23FF9D0E00FDA1E0 /* sample_card_keyword.json in Resources */,
 				85F9FC5B23FF9D0E00FDA1E0 /* sample_player_class.json in Resources */,
+				85F9FC7D24037B8A00FDA1E0 /* sample_card_hero_playable.json in Resources */,
 				85F9FC5923FF9D0E00FDA1E0 /* sample_deck.json in Resources */,
-				85F9FC7723FFCC7200FDA1E0 /* sample_card_hero.json in Resources */,
+				85F9FC7723FFCC7200FDA1E0 /* sample_card_hero_skin.json in Resources */,
 				85F9FC5623FF9D0E00FDA1E0 /* sample_card_spell.json in Resources */,
 				85F9FC7523FFCC2600FDA1E0 /* sample_card_weapon.json in Resources */,
 				85F9FC5F23FF9D0E00FDA1E0 /* sample_game_mode.json in Resources */,
@@ -303,6 +310,7 @@
 				85F9FC6723FFA07200FDA1E0 /* CardTests.swift in Sources */,
 				85F9FC6223FF9DC500FDA1E0 /* HSKitTestCase.swift in Sources */,
 				85F9FC6423FF9E6300FDA1E0 /* SampleFile.swift in Sources */,
+				85F9FC7B2402167000FDA1E0 /* DecklistTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

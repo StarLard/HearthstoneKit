@@ -7,13 +7,19 @@
 
 import Foundation
 
-/// Describes the contents of a Card Deck
+/// A data structure which represents the cards contented in a Hearthstone Deck
+///
+/// Decklist leverages a binary search algorithm to keep the decklist sorted as it would appear in-game and
+/// optimize card increment and decrement operations.
 public struct Decklist: Sequence {
     // MARK: Properties (Public)
     
     private var slots: Array<Element>
     
-    /// Dictionary where keys are mana costs and values are quantities. All cards over 7 cost are grouped under the cost 7.
+    /// A mapping which represents the mana-curve of the decklist's cards.
+    ///
+    /// The curve is represented as a dictionary where keys are mana costs and values are the quantity of cards
+    /// at that cost. All cards over 7 mana are grouped under 7 mana (as is done in-game).
     public var manaCurve: Dictionary<Int, Int> {
         var curve =  Dictionary(grouping: slots, by: { (pair) -> Int in
             let cost = pair.card.manaCost
@@ -34,10 +40,22 @@ public struct Decklist: Sequence {
         return curve
     }
     
-    public var count: Int {
+    public subscript(index: Int) -> Slot {
+        return slots[index]
+    }
+    
+    /// The number of cards in the decklist.
+    ///
+    /// - Note: This is **not** the number of slots in decklist.
+    public var numberOfCards: Int {
         return slots.reduce(into: 0, { (counter, pair) in
             counter += pair.quantity
         })
+    }
+    
+    /// The number of cards in the decklist.
+    public var numberOfSlots: Int {
+        return slots.count
     }
     
     // MARK: Properties (Private)
@@ -58,7 +76,7 @@ public struct Decklist: Sequence {
     public init(cards: [Card] = [],
                 areInIncreasingOrder: @escaping ((_ lhs: Card, _ rhs: Card) -> Bool?) =
         { (lhs: Card, rhs: Card) -> Bool? in
-            guard lhs.id != rhs.id else { return nil }
+            guard lhs != rhs else { return nil }
             if lhs.manaCost != rhs.manaCost {
                 return lhs.manaCost < rhs.manaCost
             } else {
@@ -98,29 +116,57 @@ extension Decklist {
     /// Complexity: O(log *n*), where *n* is the number of slots in the decklist, if an existing card is being
     /// incremented. O(*n*), if a new card is being inserted.
     ///
-    /// - Parameter card: The card to increment the quantity of.
-    /// - Parameter cardLimit: (Optional) A limit on the quantity of the card being incremented that will
-    /// be enforced while incrementing. If incrementing the card would exceed the given limit. the decklist will not be
-    /// modified. Defaults to 2.
+    /// - Parameters:
+    ///   - card: The card to increment the quantity of.
+    ///   - slotLimit: (Optional) A limit on the quantity of the card at a given slot being incremented that will
+    ///   be enforced while incrementing. If incrementing the card would exceed the given limit. the decklist will not be
+    ///   modified. Defaults to 2.
+    ///   - cardLimit: (Optional) A limit on the quantity of cards in the decklist that will be enforced while incrementing.
+    ///   If incrementing the card would exceed the given limit. the decklist will not be modified. Defaults to 30.
     ///
     /// - Returns: `true` if the quantity of the card was incremented, `false` otherwise.
     @discardableResult
-    public mutating func incrementCard(_ card: Card, cardLimit: Int? = 2) -> Bool {
-        guard count < 30 else { return false }
+    public mutating func incrementCard(_ card: Card, slotLimit: Int? = 2, cardLimit: Int? = 30) -> Bool {
+        if let limit = cardLimit, numberOfCards + 1 > limit {
+            return false
+        }
         switch indexOf(card: card, withinRange: 0 ..< slots.count) {
         case .hit(let index):
-            var slot = slots[index]
-            if let limit = cardLimit, slot.quantity + 1 > limit {
-                return false
-            }
-            slot.increment()
-            slots[index] = slot
-            return true
+            return incrementCard(at: index, slotLimit: slotLimit, cardLimit: cardLimit)
         case .noHit(let index):
             let element = Element(card: card, quantity: 1)
             slots.insert(element, at: index)
             return true
         }
+    }
+    
+    /// Increments the quantity of the given card
+    ///
+    /// Complexity: O(log *n*), where *n* is the number of slots in the decklist, if an existing card is being
+    /// incremented. O(*n*), if a new card is being inserted.
+    ///
+    /// - Parameters:
+    ///   - index: The position of the card  to increment. `index` must be a valid
+    ///  `index` of the decklist that is not equal to the decklist's end index.
+    ///   - slotLimit: (Optional) A limit on the quantity of the card at a given slot being incremented that will
+    ///   be enforced while incrementing. If incrementing the card would exceed the given limit. the decklist will not be
+    ///   modified. Defaults to 2.
+    ///   - cardLimit: (Optional) A limit on the quantity of cards in the decklist that will be enforced while incrementing.
+    ///   If incrementing the card would exceed the given limit. the decklist will not be modified. Defaults to 30.
+    ///
+    /// - Returns: `true` if the quantity of the card was incremented, `false` otherwise.
+    @discardableResult
+    public mutating func incrementCard(at index: Int, slotLimit: Int? = 2, cardLimit: Int? = 30) -> Bool {
+        if let limit = cardLimit, numberOfCards + 1 > limit {
+            return false
+        }
+        var slot = slots[index]
+        if let limit = slotLimit, slot.quantity + 1 > limit {
+            return false
+        }
+        slot.increment()
+        slots[index] = slot
+        return true
     }
     
     /// Removes one instance of the given card
@@ -134,10 +180,10 @@ extension Decklist {
     /// - Note: If the card's quantity drops to 0 it will be removed entirely
     @discardableResult
     public mutating func decrementCard(_ card: Card) -> Bool {
-        guard count > 0 else { return false }
+        guard numberOfCards > 0 else { return false }
         switch indexOf(card: card, withinRange: 0 ..< slots.count) {
         case .hit(let index):
-            decrementCard(atIndex: index)
+            decrementCard(at: index)
             return true
         case .noHit: return false
         }
@@ -152,9 +198,9 @@ extension Decklist {
     /// O(*n*), where *n* is the number of slots in the decklist, if decrementing causes a slot
     /// removal.
     ///
-    /// - Parameter index: The position of the slot  to remove. `index` must be a valid
+    /// - Parameter index: The position of the slot  to decrement. `index` must be a valid
     /// `index` of the decklist that is not equal to the decklist's end index.
-    public mutating func decrementCard(atIndex index: Int) {
+    public mutating func decrementCard(at index: Int) {
         var pair = slots[index]
         if pair.decrement() {
             slots[index] = pair
@@ -170,7 +216,7 @@ extension Decklist {
     /// - Parameter card: The card to check the decklist for.
     /// - Returns: The index of the card if present; otherwise `nil`
     public func contains(_ card: Card) -> Int? {
-        guard count > 0 else { return nil }
+        guard numberOfCards > 0 else { return nil }
         switch indexOf(card: card, withinRange: 0 ..< slots.count) {
         case .hit(let index):
             return index
@@ -225,6 +271,10 @@ private extension Decklist {
 // MARK: - Slot
 
 extension Decklist {
+    /// Represents a "slot" in a decklist
+    ///
+    /// A slot is a position within the decklist which defines the card at that position and the quantity
+    /// of it.
     public struct Slot {
         public let card: Card
         public private(set) var quantity: Int

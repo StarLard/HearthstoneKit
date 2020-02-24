@@ -26,6 +26,7 @@ final class CardTests: HSKitTestCase {
         XCTAssertEqual(card.attack, nil)
         XCTAssertEqual(card.health, nil)
         XCTAssertEqual(card.durability, nil)
+        XCTAssertEqual(card.armor, nil)
         XCTAssertEqual(card.name, "Innervate")
         XCTAssertEqual(card.text.string, "Gain 1 Mana Crystal this turn only.")
         XCTAssertEqual(card.image, URL(string: "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/2d48c3d181e4fd258dfc3c3f06ca64f2adb633cc25b301fbbf625c8e92c1ffec.png")!)
@@ -53,6 +54,7 @@ final class CardTests: HSKitTestCase {
         XCTAssertEqual(card.attack, 7)
         XCTAssertEqual(card.health, 8)
         XCTAssertEqual(card.durability, nil)
+        XCTAssertEqual(card.armor, nil)
         XCTAssertEqual(card.name, "Arch-Villain Rafaam")
         XCTAssertEqual(card.text.string, "Taunt Battlecry: Replace your hand and deck with Legendary minions.")
         XCTAssertEqual(card.image, URL(string: "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/56c8b21f56380e726255287ff4ce9fd4f50041cdbc1f246009f6288a8d8287ad.png")!)
@@ -80,6 +82,7 @@ final class CardTests: HSKitTestCase {
         XCTAssertEqual(card.manaCost, 4)
         XCTAssertEqual(card.health, nil)
         XCTAssertEqual(card.durability, 5)
+        XCTAssertEqual(card.armor, nil)
         XCTAssertEqual(card.name, "Twig of the World Tree")
         XCTAssertEqual(card.text.string, "Deathrattle: Gain 10 Mana Crystals.")
         XCTAssertEqual(card.image, URL(string: "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/22a9c58833289e5fc0a3a61ae8cd8c27b12c446db9491c875be2b082f99580a1.png")!)
@@ -91,8 +94,8 @@ final class CardTests: HSKitTestCase {
         XCTAssertEqual(card.childIDs?.map({$0.rawValue}), nil)
     }
     
-    func testDecodeHeroFromValidDataDoesNotThrow() throws {
-        let data = openSampleFile(.cardHero)
+    func testDecodeHeroSkinFromValidDataDoesNotThrow() throws {
+        let data = openSampleFile(.cardHeroSkin)
         let card = try JSONDecoder().decode(Card.self, from: data)
         XCTAssertEqual(card.id.rawValue, 39117)
         XCTAssertTrue(card.isCollectible)
@@ -106,6 +109,7 @@ final class CardTests: HSKitTestCase {
         XCTAssertEqual(card.manaCost, 0)
         XCTAssertEqual(card.attack, nil)
         XCTAssertEqual(card.health, 30)
+        XCTAssertEqual(card.armor, nil)
         XCTAssertEqual(card.durability, nil)
         XCTAssertEqual(card.name, "Khadgar")
         XCTAssertEqual(card.text.string, "")
@@ -116,6 +120,34 @@ final class CardTests: HSKitTestCase {
         XCTAssertEqual(card.keywordIDs?.map({$0.rawValue}), nil)
         XCTAssertEqual(card.parentID?.rawValue, 637)
         XCTAssertEqual(card.childIDs?.map({$0.rawValue}), [39791])
+    }
+    
+    func testDecodeHeroCardFromValidDataDoesNotThrow() throws {
+        let data = openSampleFile(.cardHeroPlayable)
+        let card = try JSONDecoder().decode(Card.self, from: data)
+        XCTAssertEqual(card.id.rawValue, 43406)
+        XCTAssertTrue(card.isCollectible)
+        XCTAssertEqual(card.slug, "43406-uther-of-the-ebon-blade")
+        XCTAssertEqual(card.classID.rawValue, 5)
+        XCTAssertEqual(card.multiClassIDs, [])
+        XCTAssertEqual(card.cardTypeID.rawValue, 3)
+        XCTAssertEqual(card.cardSetID.rawValue, 1001)
+        XCTAssertEqual(card.rarityID.rawValue, 5)
+        XCTAssertEqual(card.artistName, "James Ryman")
+        XCTAssertEqual(card.manaCost, 9)
+        XCTAssertEqual(card.attack, nil)
+        XCTAssertEqual(card.health, 30)
+        XCTAssertEqual(card.armor, 5)
+        XCTAssertEqual(card.durability, nil)
+        XCTAssertEqual(card.name, "Uther of the Ebon Blade")
+        XCTAssertEqual(card.text.string, "Battlecry: Equip a 5/3 Lifesteal weapon.")
+        XCTAssertEqual(card.image, URL(string: "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/3d140b58399f20b6e7e3ad05b562975820a6702f6beb3fee040f1baf2f3a7a14.png")!)
+        XCTAssertEqual(card.imageGold, nil)
+        XCTAssertEqual(card.flavorText, "\"Step forward. Confess! Once I was a mere servant of the Light. Now I alone stand in judgement.\"")
+        XCTAssertEqual(card.cropImage, URL(string: "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/de37186287a73f6a463b6de0254f8f61aa65b22015b9b821546fb240274f6b80.jpg")!)
+        XCTAssertEqual(card.keywordIDs?.map({$0.rawValue}), [8, 38])
+        XCTAssertEqual(card.parentID?.rawValue, nil)
+        XCTAssertEqual(card.childIDs?.map({$0.rawValue}), [43013, 43405])
     }
     
     func testDecodeCardTypeFromValidDataDoesNotThrow() throws {

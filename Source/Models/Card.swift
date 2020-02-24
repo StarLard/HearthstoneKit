@@ -28,6 +28,7 @@ public struct Card: Decodable, Hashable {
     public let attack: Int?
     public let manaCost: Int
     public let durability: Int?
+    public let armor: Int?
     public let name: String
     public let text: NSAttributedString
     public let image: URL
@@ -58,6 +59,7 @@ public struct Card: Decodable, Hashable {
         case attack
         case manaCost
         case durability
+        case armor
         case name
         case text
         case image
@@ -90,6 +92,7 @@ public struct Card: Decodable, Hashable {
         health = try values.decodeIfPresent(Int.self, forKey: .health)
         attack = try values.decodeIfPresent(Int.self, forKey: .attack)
         durability = try values.decodeIfPresent(Int.self, forKey: .durability)
+        armor = try values.decodeIfPresent(Int.self, forKey: .armor)
         manaCost = try values.decode(Int.self, forKey: .manaCost)
         name = try values.decode(String.self, forKey: .name)
         
