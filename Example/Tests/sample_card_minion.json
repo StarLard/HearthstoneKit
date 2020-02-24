@@ -1,0 +1,24 @@
+{
+  "id": 52119,
+  "collectible": 1,
+  "slug": "52119-arch-villain-rafaam",
+  "classId": 9,
+  "multiClassIds": [],
+  "cardTypeId": 4,
+  "cardSetId": 1130,
+  "rarityId": 5,
+  "artistName": "Alex Horley Orlandelli",
+  "health": 8,
+  "attack": 7,
+  "manaCost": 7,
+  "name": "Arch-Villain Rafaam",
+  "text": "<b><b>Taunt</b> Battlecry:</b> Replace your hand and deck with <b>Legendary</b> minions.",
+  "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/56c8b21f56380e726255287ff4ce9fd4f50041cdbc1f246009f6288a8d8287ad.png",
+  "imageGold": "",
+  "flavorText": "Minions must wash hands before being LIQUIDATED AND REPLACED BY SOMEONE BETTER.",
+  "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/88803effaa821c7d76f5f0c3b1fd044ba62a884dcc207cb318d32583986fe9a6.jpg",
+  "keywordIds": [
+    1,
+    8
+  ]
+}

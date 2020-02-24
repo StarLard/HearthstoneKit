@@ -1,0 +1,23 @@
+{
+      "id": 46107,
+      "collectible": 1,
+      "slug": "46107-twig-of-the-world-tree",
+      "classId": 2,
+      "multiClassIds": [],
+      "cardTypeId": 7,
+      "cardSetId": 1004,
+      "rarityId": 5,
+      "artistName": "Alexey Aparin",
+      "attack": 1,
+      "manaCost": 4,
+      "durability": 5,
+      "name": "Twig of the World Tree",
+      "text": "<b>Deathrattle:</b> Gain 10 Mana Crystals.",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/22a9c58833289e5fc0a3a61ae8cd8c27b12c446db9491c875be2b082f99580a1.png",
+      "imageGold": "",
+      "flavorText": "For druids who want to branch out.",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/c2145cc616bf539204369d054b830903d09c2dba6a936c490449efc9ec13a05d.jpg",
+      "keywordIds": [
+          12
+    ]
+}
