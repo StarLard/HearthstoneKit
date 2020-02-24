@@ -18,7 +18,7 @@ final class DecklistTests: HSKitTestCase {
         let minion = try makeCard(.minion)
         let hero = try makeCard(.hero)
         
-        XCTContext.runActivity(named: "Test that init constructs sorted deck") { _ in
+        XCTContext.runActivity(named: "Test that init creates sorted deck") { _ in
             XCTAssertEqual(decklist.numberOfCards, 5)
             XCTAssertEqual(decklist.numberOfSlots, 4)
             XCTAssertEqual(decklist[0].card, spell)
@@ -29,6 +29,7 @@ final class DecklistTests: HSKitTestCase {
             XCTAssertEqual(decklist[2].quantity, 2)
             XCTAssertEqual(decklist[3].card, hero)
             XCTAssertEqual(decklist[3].quantity, 1)
+            XCTAssertEqual(decklist.cards, [spell, weapon, minion, minion, hero])
         }
         XCTContext.runActivity(named: "Test that binary search finds cards") { _ in
             XCTAssertEqual(decklist.contains(spell), 0)

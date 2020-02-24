@@ -11,7 +11,7 @@ import Foundation
 ///
 /// Decklist leverages a binary search algorithm to keep the decklist sorted as it would appear in-game and
 /// optimize card increment and decrement operations.
-public struct Decklist: Sequence {
+public struct Decklist: Sequence, Codable, Hashable {
     // MARK: Properties (Public)
     
     private var slots: Array<Element>
@@ -46,16 +46,32 @@ public struct Decklist: Sequence {
     
     /// The number of cards in the decklist.
     ///
-    /// - Note: This is **not** the number of slots in decklist.
+    /// Complexity: O(*n*), where *n* is the number of slots in the decklist.
     public var numberOfCards: Int {
         return slots.reduce(into: 0, { (counter, pair) in
             counter += pair.quantity
         })
     }
     
-    /// The number of cards in the decklist.
+    /// The number of slots in the decklist.
+    ///
+    /// This is **not** the same as `numberOfCards`.  A decklist with 2 of the same card, only has one slot.
     public var numberOfSlots: Int {
         return slots.count
+    }
+    
+    /// An array reprsentation of the cards in the decklist
+    ///
+    /// Complexity: O(*nm*), where *n* is the number of slots in the decklist and *m* is the quantity of a card in
+    /// a given slot.
+    public var cards: [Card] {
+        var temp: [Card] = []
+        for slot in self {
+            for _ in 0..<slot.quantity {
+                temp.append(slot.card)
+            }
+        }
+        return temp
     }
     
     // MARK: Properties (Private)
@@ -99,13 +115,31 @@ public struct Decklist: Sequence {
         self.areInIncreasingOrder = areInIncreasingOrder
     }
     
-    // MARK: Sequence & IteratorProtocol
+    // MARK: Protocol
        
     public __consuming func makeIterator() -> Array<Element>.Iterator {
         return slots.makeIterator()
     }
     
     public typealias Element = Slot
+    
+    public init(from decoder: Decoder) throws {
+        let value = try decoder.singleValueContainer()
+        self.init(cards: try value.decode(Array<Card>.self))
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(cards)
+    }
+    
+    public static func == (lhs: Decklist, rhs: Decklist) -> Bool {
+        return lhs.slots == rhs.slots
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(slots)
+    }
 }
 
 // MARK: - Methods (Public)
@@ -275,7 +309,7 @@ extension Decklist {
     ///
     /// A slot is a position within the decklist which defines the card at that position and the quantity
     /// of it.
-    public struct Slot {
+    public struct Slot: Hashable {
         public let card: Card
         public private(set) var quantity: Int
         

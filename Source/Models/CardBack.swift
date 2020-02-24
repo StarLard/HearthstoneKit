@@ -8,7 +8,7 @@
 import Foundation
 
 /// Represents a card back which is equipable by the player.
-public struct CardBack: Decodable {
+public struct CardBack: Codable, Hashable {
     public let id: BlizzardIdentifier
     public let sortCategoryID: BlizzardIdentifier
     public let text: String

@@ -8,7 +8,7 @@
 import Foundation
 
 /// Represents an in-game Hearthstone card.
-public struct Card: Decodable, Hashable {
+public struct Card: Codable, Hashable {
     // MARK: Properties
     
     public let id: BlizzardIdentifier
@@ -30,7 +30,8 @@ public struct Card: Decodable, Hashable {
     public let durability: Int?
     public let armor: Int?
     public let name: String
-    public let text: NSAttributedString
+    public let text: String
+    public let attributedText: NSAttributedString?
     public let image: URL
     public let imageGold: URL?
     public let flavorText: String
@@ -97,13 +98,10 @@ public struct Card: Decodable, Hashable {
         name = try values.decode(String.self, forKey: .name)
         
         let unparsedText = try values.decode(String.self, forKey: .text)
-        do {
-            let data = Data(unparsedText.utf8)
-            text = try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
-        } catch {
-            text = NSAttributedString(string: unparsedText)
-        }
-                
+        text = unparsedText
+        let data = Data(unparsedText.utf8)
+        attributedText = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
+            
         image = try values.decode(URL.self, forKey: .image)
         imageGold = URL(string: try values.decode(String.self, forKey: .imageGold))
         flavorText = try values.decode(String.self, forKey: .flavorText)
@@ -111,6 +109,34 @@ public struct Card: Decodable, Hashable {
         keywordIDs = try values.decodeIfPresent(Array<BlizzardIdentifier>.self, forKey: .keywordIDs)
         parentID = try values.decodeIfPresent(BlizzardIdentifier.self, forKey: .parentID)
         childIDs = try values.decodeIfPresent(Array<BlizzardIdentifier>.self, forKey: .childIDs)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(id, forKey: .id)
+        try container.encode(isCollectible ? 1 : 0, forKey: .isCollectible)
+        try container.encode(slug, forKey: .slug)
+        try container.encode(classID, forKey: .classID)
+        try container.encode(multiClassIDs, forKey: .multiClassIDs)
+        try container.encode(cardTypeID, forKey: .cardTypeID)
+        try container.encode(cardSetID, forKey: .cardSetID)
+        try container.encode(rarityID, forKey: .rarityID)
+        try container.encodeIfPresent(artistName, forKey: .artistName)
+        try container.encodeIfPresent(health, forKey: .health)
+        try container.encodeIfPresent(attack, forKey: .attack)
+        try container.encodeIfPresent(durability, forKey: .durability)
+        try container.encodeIfPresent(armor, forKey: .armor)
+        try container.encode(manaCost, forKey: .manaCost)
+        try container.encode(name, forKey: .name)
+        try container.encode(text, forKey: .text)
+        try container.encode(image.absoluteString, forKey: .image)
+        try container.encode(imageGold?.absoluteString ?? "", forKey: .imageGold)
+        try container.encode(flavorText, forKey: .flavorText)
+        try container.encodeIfPresent(cropImage?.absoluteString, forKey: .cropImage)
+        try container.encodeIfPresent(keywordIDs, forKey: .keywordIDs)
+        try container.encodeIfPresent(parentID, forKey: .parentID)
+        try container.encodeIfPresent(childIDs, forKey: .childIDs)
     }
 }
 

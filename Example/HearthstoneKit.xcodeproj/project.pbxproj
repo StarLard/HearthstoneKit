@@ -29,6 +29,8 @@
 		85F9FC7723FFCC7200FDA1E0 /* sample_card_hero_skin.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC7623FFCC7200FDA1E0 /* sample_card_hero_skin.json */; };
 		85F9FC7B2402167000FDA1E0 /* DecklistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F9FC7A2402167000FDA1E0 /* DecklistTests.swift */; };
 		85F9FC7D24037B8A00FDA1E0 /* sample_card_hero_playable.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC7C24037B8A00FDA1E0 /* sample_card_hero_playable.json */; };
+		85F9FC81240388D500FDA1E0 /* DeckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F9FC80240388D500FDA1E0 /* DeckTests.swift */; };
+		85F9FC852403A0C700FDA1E0 /* MetadataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F9FC842403A0C700FDA1E0 /* MetadataTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +60,8 @@
 		85F9FC7623FFCC7200FDA1E0 /* sample_card_hero_skin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card_hero_skin.json; sourceTree = "<group>"; };
 		85F9FC7A2402167000FDA1E0 /* DecklistTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecklistTests.swift; sourceTree = "<group>"; };
 		85F9FC7C24037B8A00FDA1E0 /* sample_card_hero_playable.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card_hero_playable.json; sourceTree = "<group>"; };
+		85F9FC80240388D500FDA1E0 /* DeckTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckTests.swift; sourceTree = "<group>"; };
+		85F9FC842403A0C700FDA1E0 /* MetadataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataTests.swift; sourceTree = "<group>"; };
 		980ED8C6481519B5202062E5 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		B34CC775BCE1429053B8CB61 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		F033D392725A4EECB5853917 /* Pods_HearthstoneKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HearthstoneKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,12 +121,12 @@
 				85F9FC7423FFCC2600FDA1E0 /* sample_card_weapon.json */,
 				85F9FC7623FFCC7200FDA1E0 /* sample_card_hero_skin.json */,
 				85F9FC7C24037B8A00FDA1E0 /* sample_card_hero_playable.json */,
+				85F9FC4F23FF9D0E00FDA1E0 /* sample_player_class.json */,
 				85F9FC4D23FF9D0E00FDA1E0 /* sample_deck.json */,
-				85F9FC4823FF9D0D00FDA1E0 /* sample_expansion_set_group.json */,
 				85F9FC4C23FF9D0E00FDA1E0 /* sample_expansion_set.json */,
+				85F9FC4823FF9D0D00FDA1E0 /* sample_expansion_set_group.json */,
 				85F9FC5323FF9D0E00FDA1E0 /* sample_game_mode.json */,
 				85F9FC4923FF9D0D00FDA1E0 /* sample_minion_type.json */,
-				85F9FC4F23FF9D0E00FDA1E0 /* sample_player_class.json */,
 				85F9FC4B23FF9D0E00FDA1E0 /* sample_rarity.json */,
 				85F9FC6B23FFA56F00FDA1E0 /* Info.plist */,
 			);
@@ -162,6 +166,8 @@
 			children = (
 				85F9FC6623FFA07200FDA1E0 /* CardTests.swift */,
 				85F9FC7023FFC40A00FDA1E0 /* CardBackTests.swift */,
+				85F9FC842403A0C700FDA1E0 /* MetadataTests.swift */,
+				85F9FC80240388D500FDA1E0 /* DeckTests.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -306,6 +312,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85F9FC852403A0C700FDA1E0 /* MetadataTests.swift in Sources */,
+				85F9FC81240388D500FDA1E0 /* DeckTests.swift in Sources */,
 				85F9FC7123FFC40A00FDA1E0 /* CardBackTests.swift in Sources */,
 				85F9FC6723FFA07200FDA1E0 /* CardTests.swift in Sources */,
 				85F9FC6223FF9DC500FDA1E0 /* HSKitTestCase.swift in Sources */,

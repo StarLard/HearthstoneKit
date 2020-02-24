@@ -10,7 +10,7 @@ import XCTest
 @testable import HearthstoneKit
 
 final class CardBackTests: HSKitTestCase {
-    func testDecodeCardBackFromValidDataDoesNotThrow() throws {
+    func testDecodeCardBackFromValidData() throws {
         let data = openSampleFile(.cardBack)
         let cardBack = try JSONDecoder().decode(CardBack.self, from: data)
         XCTAssertEqual(cardBack.id.rawValue, 155)
@@ -21,7 +21,7 @@ final class CardBackTests: HSKitTestCase {
         XCTAssertEqual(cardBack.image, URL(string: "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/2f831a00ef1f7671b8132b8c1b0cd63c1ebb7ad334d8903d59f6bd4f60469ccd.png")!)
     }
     
-    func testDecodeCardBackCategoryFromValidDataDoesNotThrow() throws {
+    func testDecodeCardBackCategoryFromValidData() throws {
         let data = openSampleFile(.cardBackCategory)
         let cardBackSortCategory = try JSONDecoder().decode(CardBack.SortCategory.self, from: data)
         XCTAssertEqual(cardBackSortCategory.id.rawValue, 1)
