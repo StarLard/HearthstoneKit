@@ -145,7 +145,7 @@ public struct Card: Codable, Hashable {
 extension Card {
     // MARK: Keyword
     
-    public struct Keyword: Decodable {
+    public struct Keyword: Codable {
         public let id: BlizzardIdentifier
         public let slug: String
         public let name: String
@@ -163,9 +163,28 @@ extension Card {
     
     // MARK: Card Type
     
-    public struct CardType: Decodable {
+    public struct CardType: Codable {
         public let id: BlizzardIdentifier
         public let slug: String
         public let name: String
+        public var kind: Kind { Kind(slug: slug) }
+        
+        public enum Kind {
+            case hero
+            case minion
+            case spell
+            case weapon
+            case unknown
+            
+            public init(slug: String) {
+                switch slug {
+                case "hero": self = .hero
+                case "minion": self = .minion
+                case "spell": self = .spell
+                case "weapon": self = .weapon
+                default: self = .unknown
+                }
+            }
+        }
     }
 }

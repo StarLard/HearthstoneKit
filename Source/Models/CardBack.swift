@@ -27,7 +27,7 @@ public struct CardBack: Codable, Hashable {
 }
 
 extension CardBack {
-    public struct SortCategory: Decodable {
+    public struct SortCategory: Codable {
         public let id: BlizzardIdentifier
         public let name: String
         public let slug: String
