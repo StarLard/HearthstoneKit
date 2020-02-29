@@ -156,6 +156,7 @@ final class CardTests: HSKitTestCase {
         XCTAssertEqual(cardType.id.rawValue, 3)
         XCTAssertEqual(cardType.slug, "hero")
         XCTAssertEqual(cardType.name, "Hero")
+        XCTAssertEqual(cardType.kind, .hero)
     }
     
     func testDecodeCardKeyworkFromValidData() throws {
