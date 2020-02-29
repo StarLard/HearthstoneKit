@@ -31,7 +31,7 @@ public struct BlizzardIdentifier: Hashable, RawRepresentable, LosslessStringConv
         return nil
     }
     
-    public init?(rawValue: Int) {
+    public init(rawValue: Int) {
         self.rawValue = rawValue
     }
 }
