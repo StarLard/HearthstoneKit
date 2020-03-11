@@ -7,8 +7,8 @@
 
 import Foundation
 
-/// All requests in the Hearthstone API include an optional locale parameter. Localization works as described in [Regionality and APIs](https://develop.battle.net/documentation/guides/regionality-and-apis).
-public enum BattleNetRegion: String, CaseIterable, Codable {
+/// All requests in the Hearthstone API include an optional locale parameter. Localization works as described in [Hearthstone Localization ](https://develop.battle.net/documentation/hearthstone/guides/localization).
+public enum PlayerLocale: String, CaseIterable, Codable {
     /// German - Germany
     case deDE = "de_DE"
     /// English - United States
@@ -35,4 +35,31 @@ public enum BattleNetRegion: String, CaseIterable, Codable {
     case thTH = "th_TH"
     /// Chinese - Taiwan
     case zhTW = "zh_TW"
+    
+    public var apiRegion: APIRegion {
+        switch self {
+        case .enUS, .esMX, .ptBR: return .northAmerica
+        case .esES, .frFR, .ruRU, .deDE, .itIT, .plPL: return .europe
+        case .koKR, .jaJP, .thTH: return .korea
+        case .zhTW: return .taiwan
+        }
+    }
+    
+    public var localizedName: String {
+        switch self {
+        case .deDE: return "Germany"
+        case .enUS: return "United States"
+        case .esES: return "España"
+        case .esMX: return "Mexico"
+        case .frFR: return "France"
+        case .itIT: return "Italia"
+        case .jaJP: return "日本"
+        case .koKR: return "대한민국"
+        case .plPL: return "Polska"
+        case .ptBR: return "Brasil"
+        case .ruRU: return "Россия"
+        case .thTH: return "ประเทศไทย"
+        case .zhTW: return "台灣"
+        }
+    }
 }
