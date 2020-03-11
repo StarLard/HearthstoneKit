@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3E56FDD1712AD6D46D8BFB8A /* Pods_HearthstoneKit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F033D392725A4EECB5853917 /* Pods_HearthstoneKit_Tests.framework */; };
+		850659D3240A46000099BE74 /* DeckstringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850659D2240A46000099BE74 /* DeckstringTests.swift */; };
 		85F9FC5423FF9D0E00FDA1E0 /* sample_expansion_set_group.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC4823FF9D0D00FDA1E0 /* sample_expansion_set_group.json */; };
 		85F9FC5523FF9D0E00FDA1E0 /* sample_minion_type.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC4923FF9D0D00FDA1E0 /* sample_minion_type.json */; };
 		85F9FC5623FF9D0E00FDA1E0 /* sample_card_spell.json in Resources */ = {isa = PBXBuildFile; fileRef = 85F9FC4A23FF9D0D00FDA1E0 /* sample_card_spell.json */; };
@@ -38,6 +39,7 @@
 		68AAA61CFFC9207FE98B9198 /* Pods-HearthstoneKit_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HearthstoneKit_Tests.debug.xcconfig"; path = "Target Support Files/Pods-HearthstoneKit_Tests/Pods-HearthstoneKit_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		6AF1CC0EF602D1E7C39A4519 /* Pods-HearthstoneKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HearthstoneKit_Tests.release.xcconfig"; path = "Target Support Files/Pods-HearthstoneKit_Tests/Pods-HearthstoneKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		735B80324A464AB546ABDF0A /* HearthstoneKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = HearthstoneKit.podspec; path = ../HearthstoneKit.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		850659D2240A46000099BE74 /* DeckstringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckstringTests.swift; sourceTree = "<group>"; };
 		85F9FC4823FF9D0D00FDA1E0 /* sample_expansion_set_group.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_expansion_set_group.json; sourceTree = "<group>"; };
 		85F9FC4923FF9D0D00FDA1E0 /* sample_minion_type.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_minion_type.json; sourceTree = "<group>"; };
 		85F9FC4A23FF9D0D00FDA1E0 /* sample_card_spell.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card_spell.json; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				85F9FC6023FF9D8000FDA1E0 /* Testing Support */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 				85F9FC7A2402167000FDA1E0 /* DecklistTests.swift */,
+				850659D2240A46000099BE74 /* DeckstringTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				85F9FC852403A0C700FDA1E0 /* MetadataTests.swift in Sources */,
+				850659D3240A46000099BE74 /* DeckstringTests.swift in Sources */,
 				85F9FC81240388D500FDA1E0 /* DeckTests.swift in Sources */,
 				85F9FC7123FFC40A00FDA1E0 /* CardBackTests.swift in Sources */,
 				85F9FC6723FFA07200FDA1E0 /* CardTests.swift in Sources */,

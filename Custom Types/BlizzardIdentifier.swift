@@ -8,7 +8,7 @@
 import Foundation
 
 /// A type that servers as a wrapper around `Int` to enforce type restrictions on identifiers.
-public struct BlizzardIdentifier: Hashable, RawRepresentable, LosslessStringConvertible, CustomDebugStringConvertible, Codable {
+public struct BlizzardIdentifier: Hashable, RawRepresentable, LosslessStringConvertible, CustomDebugStringConvertible, Codable, ExpressibleByIntegerLiteral {
     
     // MARK: Properties
     
@@ -33,5 +33,9 @@ public struct BlizzardIdentifier: Hashable, RawRepresentable, LosslessStringConv
     
     public init(rawValue: Int) {
         self.rawValue = rawValue
+    }
+    
+    public init(integerLiteral value: Int) {
+        self.init(rawValue: value)
     }
 }

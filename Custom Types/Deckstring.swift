@@ -10,8 +10,10 @@ import Foundation
 /// A type that represents a deck in a form that can be exported an imported from Hearthstone
 public struct Deckstring: Hashable {
     // MARK: Properties
+    
+    public let version: Int
     /// The name of the deck.
-    public let name: String
+    public let name: String?
     /// The ID of the format of the deck.
     public let formatID: BlizzardIdentifier
     /// The ID of the hero for the deck.
@@ -19,35 +21,54 @@ public struct Deckstring: Hashable {
     /// A map where keys are card IDs and values are quantities of that card.
     public let cards: [BlizzardIdentifier: Int]
     /// The string representation of the deck.
+    ///
+    /// Two identical decks are not guarenteed to have the same `rawValue` as cards are unordered.
     public let rawValue: String
+    
+    // MARK: Hashable
+    
+    public static func == (lhs: Deckstring, rhs: Deckstring) -> Bool {
+        return
+            lhs.formatID == rhs.formatID &&
+            lhs.heroID == rhs.heroID &&
+            lhs.cards == rhs.cards
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(formatID)
+        hasher.combine(heroID)
+        hasher.combine(cards)
+    }
     
     // MARK: Import
     
     /// Creates a new deckstring from a string exported from the game.
+    ///
+    /// Will also parse the name if included in the header.
+    ///
     /// - Parameter rawValue: The string representation of the deckstring as it is exported from hearthstone.
     public init(rawValue: String) throws {
-        var deckstring = ""
-        var name = ""
+        var deckstringInput: String?
+        var name: String?
         
         rawValue.enumerateLines {
-            (line, _) in
-            if line.first != "#" {
-                deckstring = line
-            } else if String(line.prefix(3)) == "###"{
+            (line, stop) in
+            if line.first != "#" && !line.isEmpty && deckstringInput == nil {
+                deckstringInput = line
+            } else if String(line.prefix(3)) == "###" {
                 let index = line.index(line.startIndex, offsetBy: 3)
                 name = String(line[index...]).trimmingCharacters(in: .whitespacesAndNewlines)
             }
+            if deckstringInput != nil && name != nil { stop = true }
+        }
+        
+        guard let deckstring = deckstringInput, let decodedData = Data(base64Encoded: deckstring) else {
+            throw DeckstringError.invalidInput
         }
         
         var frmtNumber: Int = 0
         var heroes: [Int] = []
         var cards: [BlizzardIdentifier: Int] = [:]
-        
-        let decodedBase64 = Data(base64Encoded: deckstring)
-        
-        guard let decodedData = decodedBase64 else {
-            throw DeckstringError.invalidInput
-        }
         
         let inputStream = InputStream.init(data: decodedData)
         inputStream.open()
@@ -57,10 +78,7 @@ public struct Deckstring: Hashable {
             throw DeckstringError.invalidInput
         }
         
-        let version = try Self.number(fromVarInt: inputStream)
-        if version != 1 {
-            throw DeckstringError.invalidInput
-        }
+        self.version = try Self.number(fromVarInt: inputStream)
         
         frmtNumber = try Self.number(fromVarInt: inputStream)
         
@@ -111,20 +129,26 @@ public struct Deckstring: Hashable {
     
     /// Creates a new deckstring from the given parameters.
     /// - Parameters:
-    ///   - name: The name of the deck.
     ///   - formatID: The ID of the format of the deck.
     ///   - heroID: The ID of the hero for the deck.
     ///   - cards: A map where keys are card IDs and values are quantities of that card.
-    public init(name: String, formatID: BlizzardIdentifier, heroID: BlizzardIdentifier, cards: Dictionary<BlizzardIdentifier, Int>) {
-        self.rawValue = """
-        ### \(name)\n
-        \(Self.varIntData(from: cards, formatID: formatID, heroID: heroID).base64EncodedString())\n
-        # To use this deck, copy it to your clipboard and create a new deck in Hearthstone\n
-        """
+    ///   - name: (Optional) The name of the deck. Defaults to `nil`. If provided, the deckstring will include the name
+    /// in it's header.
+    public init(formatID: BlizzardIdentifier, heroID: BlizzardIdentifier, cards: Dictionary<BlizzardIdentifier, Int>, name: String? = nil, version: Int = 0) {
+        if let name = name {
+            self.rawValue = """
+            ### \(name)\n
+            \(Self.varIntData(from: cards, formatID: formatID, heroID: heroID, version: version).base64EncodedString())\n
+            # To use this deck, copy it to your clipboard and create a new deck in Hearthstone\n
+            """
+        } else {
+            self.rawValue = Self.varIntData(from: cards, formatID: formatID, heroID: heroID, version: version).base64EncodedString()
+        }
         self.name = name
         self.cards = cards
         self.heroID = heroID
         self.formatID = formatID
+        self.version = version
     }
 }
 
@@ -176,7 +200,7 @@ private extension Deckstring {
         return buffer
     }
     
-    static func varIntData(from cards: Dictionary<BlizzardIdentifier, Int>, formatID: BlizzardIdentifier, heroID: BlizzardIdentifier) -> Data {
+    static func varIntData(from cards: Dictionary<BlizzardIdentifier, Int>, formatID: BlizzardIdentifier, heroID: BlizzardIdentifier, version: Int) -> Data {
         var varIntArray: [UInt8] = []
         var oneOfs: [BlizzardIdentifier] = []
         var twoOfs: [BlizzardIdentifier] = []
@@ -198,7 +222,7 @@ private extension Deckstring {
         }
         
         append(number: 0)
-        append(number: 1)
+        append(number: version)
         append(number: formatID.rawValue)
         
         let heroIDs = [heroID]
