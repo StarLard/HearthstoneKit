@@ -13,7 +13,7 @@ public struct GameMode: Codable, Hashable {
     public let name: String
     public var kind: Kind { Kind(slug: slug) }
     
-    public enum Kind {
+    public enum Kind: String {
         case constructed
         case battlegrounds
         case arena

@@ -43,7 +43,62 @@ public enum HearthstoneAPI {
                     raritySlug: String? = nil, typeSlug: String? = nil, minionTypeSlug: String? = nil, keywordSlug: String? = nil,
                     textFilter: String? = nil, gameMode: GameMode.Kind = .constructed, page: Int = 1, pageSize: Int? = nil,
                     sort: CardSearch.SortPriority = .manaCost, order: CardSearch.SortOrder = .ascending) -> AnyPublisher<CardSearch, Error> {
-        let request: URLRequest = URLRequest(url: locale.apiRegion.host)
+        switch gameMode {
+        case .battlegrounds, .constructed:
+            break
+        case .arena, .unknown:
+            assertionFailure("battlegrounds and constructed are the only currently supported game modes.")
+        }
+        var parameters = [
+            URLQueryItem(name: "locale", value: locale.rawValue),
+            URLQueryItem(name: "page", value: String(page)),
+            URLQueryItem(name: "gameMode", value: gameMode.rawValue),
+            URLQueryItem(name: "sort", value: sort.rawValue),
+            URLQueryItem(name: "order", value: order.rawValue),
+        ]
+        if let value = setSlug {
+            parameters.append(URLQueryItem(name: "set", value: value))
+        }
+        if let value = classSlug {
+            parameters.append(URLQueryItem(name: "class", value: value))
+        }
+        if let value = manaCost {
+            parameters.append(URLQueryItem(name: "manaCost", value: value.map(String.init).joined(separator: ",")))
+        }
+        if let value = attack {
+            parameters.append(URLQueryItem(name: "attack", value: value.map(String.init).joined(separator: ",")))
+        }
+        if let value = health {
+            parameters.append(URLQueryItem(name: "health", value: value.map(String.init).joined(separator: ",")))
+        }
+        if let value = collectible {
+            parameters.append(URLQueryItem(name: "collectible", value: value ? "1" : "0"))
+        }
+        if let value = raritySlug {
+            parameters.append(URLQueryItem(name: "rarity", value: value))
+        }
+        if let value = typeSlug {
+            parameters.append(URLQueryItem(name: "type", value: value))
+        }
+        if let value = minionTypeSlug {
+            parameters.append(URLQueryItem(name: "minionType", value: value))
+        }
+        if let value = keywordSlug {
+            parameters.append(URLQueryItem(name: "keyword", value: value))
+        }
+        if let value = textFilter {
+            parameters.append(URLQueryItem(name: "textFilter", value: value))
+        }
+        if let value = pageSize {
+            parameters.append(URLQueryItem(name: "pageSize", value: String(value)))
+        }
+        
+        var components = URLComponents()
+        components.host = locale.apiRegion.host.absoluteString
+        components.path = "hearthstone/cards"
+        components.queryItems = parameters
+        
+        let request: URLRequest = URLRequest(url: components.url!)
         return session.dataTaskPublisher(for: request)
             .tryExtractData()
             .decode(type: CardSearch.self, decoder: JSONDecoder())
