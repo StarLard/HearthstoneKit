@@ -43,13 +43,16 @@ public enum HearthstoneAPI {
                     raritySlug: String? = nil, typeSlug: String? = nil, minionTypeSlug: String? = nil, keywordSlug: String? = nil,
                     textFilter: String? = nil, gameMode: GameMode.Kind = .constructed, page: Int = 1, pageSize: Int? = nil,
                     sort: CardSearch.SortPriority = .manaCost, order: CardSearch.SortOrder = .ascending) -> AnyPublisher<CardSearch, Error> {
+        
         switch gameMode {
         case .battlegrounds, .constructed:
             break
         case .arena, .unknown:
             assertionFailure("battlegrounds and constructed are the only currently supported game modes.")
         }
+        
         var parameters = [
+            URLQueryItem(name: "access_token", value: "TODO"),
             URLQueryItem(name: "locale", value: locale.rawValue),
             URLQueryItem(name: "page", value: String(page)),
             URLQueryItem(name: "gameMode", value: gameMode.rawValue),
@@ -103,7 +106,6 @@ public enum HearthstoneAPI {
             .tryExtractData()
             .decode(type: CardSearch.self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
-        
     }
     
     // MARK: - Card Backs
