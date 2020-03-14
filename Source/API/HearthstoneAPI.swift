@@ -38,18 +38,31 @@ public enum HearthstoneAPI {
     ///   - sort: The field used to sort the results. Results are sorted by `manaCost` by default. Cards will also be sorted by class automatically in most cases.
     ///   - order: The order in which to sort the results. The default value is `ascending`.
     /// - Returns: A publisher which can be canceled and sends a `CardSearch` if the request succeeds or an error on failure.
-    static func searchCards(with session: URLSession = .shared, for locale: PlayerLocale, setSlug: String? = nil, classSlug: String? = nil,
+    public static func searchCards(with session: URLSession = .shared, for locale: PlayerLocale, setSlug: String? = nil, classSlug: String? = nil,
                     manaCost: [Int]? = nil, attack: [Int]? = nil, health: [Int]? = nil, collectible: Bool? = nil,
                     raritySlug: String? = nil, typeSlug: String? = nil, minionTypeSlug: String? = nil, keywordSlug: String? = nil,
                     textFilter: String? = nil, gameMode: GameMode.Kind = .constructed, page: Int = 1, pageSize: Int? = nil,
                     sort: CardSearch.SortPriority = .manaCost, order: CardSearch.SortOrder = .ascending) -> AnyPublisher<CardSearch, Error> {
         
-        return authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<CardSearch, Error> in
+        return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<CardSearch, Error> in
             return searchCards(with: accessToken, session: session, for: locale, setSlug: setSlug,
                               classSlug: classSlug, manaCost: manaCost, attack: attack, health: health,
                               collectible: collectible, raritySlug: raritySlug, typeSlug: typeSlug,
                               minionTypeSlug: minionTypeSlug, keywordSlug: keywordSlug, textFilter: textFilter,
                               gameMode: gameMode, page: page, pageSize: pageSize, sort: sort, order: order)
+        })
+        .eraseToAnyPublisher()
+    }
+    
+    /// Returns the card with an ID or slug that matches the one you specify. For more information, see the [Card Search Guide](https://develop.battle.net/documentation/hearthstone/guides).
+    /// - Parameters:
+    ///   - session: A `URLSession` to create the request in. The default value is `shared`.
+    ///   - locale: The locale to reflect in localized data.
+    ///   - slug: An ID or slug that uniquely identifies a card. You can discover these values by using `HearthstoneAPI.searchCards()`.
+    ///   - gameMode: A recognized game mode (for example, battlegrounds or constructed). The default value is `constructed`. See the [Game Modes Guide](https://develop.battle.net/documentation/hearthstone/guides/game-modes) for more information.
+    public static func card(with session: URLSession = .shared, for locale: PlayerLocale, slug: String, gameMode: GameMode.Kind = .constructed) -> AnyPublisher<Card, Error> {
+        return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<Card, Error> in
+            return card(with: accessToken, session: session, for: locale, slug: slug, gameMode: gameMode)
         })
         .eraseToAnyPublisher()
     }
@@ -62,7 +75,7 @@ public enum HearthstoneAPI {
 // MARK: - Private
 
 private extension HearthstoneAPI {
-    static func searchCards(with accessToken: AccessToken, session: URLSession = .shared, for locale: PlayerLocale, setSlug: String?, classSlug: String?,
+    static func searchCards(with accessToken: BattleNetAPI.AccessToken, session: URLSession = .shared, for locale: PlayerLocale, setSlug: String?, classSlug: String?,
                            manaCost: [Int]?, attack: [Int]?, health: [Int]?, collectible: Bool?, raritySlug: String?, typeSlug: String?,
                            minionTypeSlug: String?, keywordSlug: String?, textFilter: String?, gameMode: GameMode.Kind, page: Int,
                            pageSize: Int?, sort: CardSearch.SortPriority, order: CardSearch.SortOrder) -> AnyPublisher<CardSearch, Error> {
@@ -128,6 +141,21 @@ private extension HearthstoneAPI {
         return session.dataTaskPublisher(for: request)
             .tryExtractData()
             .decode(type: CardSearch.self, decoder: JSONDecoder())
+            .eraseToAnyPublisher()
+    }
+    
+    static func card(with accessToken: BattleNetAPI.AccessToken, session: URLSession, for locale: PlayerLocale, slug: String, gameMode: GameMode.Kind) -> AnyPublisher<Card, Error> {
+        var components = URLComponents()
+        components.host = locale.gameDataAPIRegion.host
+        components.path = "/hearthstone/cards/\(slug)"
+        components.queryItems = [URLQueryItem(name: "access_token", value: accessToken.value),
+                                 URLQueryItem(name: "gameMode", value: gameMode.rawValue),
+                                 URLQueryItem(name: "locale", value: locale.rawValue)]
+        
+        let request: URLRequest = URLRequest(url: components.url!)
+        return session.dataTaskPublisher(for: request)
+            .tryExtractData()
+            .decode(type: Card.self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
     }
 }
