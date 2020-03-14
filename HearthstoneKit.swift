@@ -36,15 +36,10 @@ public final class HearthstoneKit {
     
     // MARK: Public Methods
     
-    /// Configures a default Andiron app. Raises an exception if any configuration
+    /// Configures a default HearthstoneKit app. Raises an exception if any configuration
     /// step fails. This method should be called after the app is launched and
-    /// before using Andiron services. This method is thread safe and contains
-    /// synchronous file I/O (reading GoogleService-Info.plist from disk).
-    ///
-    /// - Parameters:
-    ///   - scheme: The custom URL scheme you have registered with your app.
-    ///   - battleNetRedirectUrl: The redirect URL you have registered on
-    /// the Battle.net developer portal.
+    /// before using HearthstoneKit services. This method is not thread safe and must
+    /// be called on the main thread.
     public static func configure() {
         guard let configurationDictionary = shared.defaultConfigurationDictionary() else {
             preconditionFailure("""
@@ -58,10 +53,15 @@ public final class HearthstoneKit {
         configure(with: configuration)
     }
     
+    /// Configures a HearthstoneKit app with a custom configuration. Raises an exception
+    /// if any configuration step fails. This method should be called after the app is launched
+    /// and before using HearthstoneKit services. This method is not thread safe and must
+    /// be called on the main thread.
+    /// - Parameter configuration: A custom configuration for your app.
     public static func configure(with configuration: Configuration) {
         assert(Thread.isMainThread)
         guard shared._configuration == nil else {
-            preconditionFailure("App name cannot be empty.")
+            preconditionFailure("App has already been configured. Only call `HearthstoneKit.configure()` once per app launch.")
         }
         HSKLog.log(.debug, "Configuring app.")
         shared._configuration = configuration

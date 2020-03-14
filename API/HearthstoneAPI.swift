@@ -38,14 +38,14 @@ public enum HearthstoneAPI {
     ///   - sort: The field used to sort the results. Results are sorted by `manaCost` by default. Cards will also be sorted by class automatically in most cases.
     ///   - order: The order in which to sort the results. The default value is `ascending`.
     /// - Returns: A publisher which can be canceled and sends a `CardSearch` if the request succeeds or an error on failure.
-    static func cardSearch(session: URLSession = .shared, locale: PlayerLocale, setSlug: String? = nil, classSlug: String? = nil,
+    static func searchCards(with session: URLSession = .shared, for locale: PlayerLocale, setSlug: String? = nil, classSlug: String? = nil,
                     manaCost: [Int]? = nil, attack: [Int]? = nil, health: [Int]? = nil, collectible: Bool? = nil,
                     raritySlug: String? = nil, typeSlug: String? = nil, minionTypeSlug: String? = nil, keywordSlug: String? = nil,
                     textFilter: String? = nil, gameMode: GameMode.Kind = .constructed, page: Int = 1, pageSize: Int? = nil,
                     sort: CardSearch.SortPriority = .manaCost, order: CardSearch.SortOrder = .ascending) -> AnyPublisher<CardSearch, Error> {
         
-        return fetchAccessTokenIfNeeded().flatMap({ (accessToken) -> AnyPublisher<CardSearch, Error> in
-            return cardSearch(accessToken: accessToken, session: session, locale: locale, setSlug: setSlug,
+        return authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<CardSearch, Error> in
+            return searchCards(with: accessToken, session: session, for: locale, setSlug: setSlug,
                               classSlug: classSlug, manaCost: manaCost, attack: attack, health: health,
                               collectible: collectible, raritySlug: raritySlug, typeSlug: typeSlug,
                               minionTypeSlug: minionTypeSlug, keywordSlug: keywordSlug, textFilter: textFilter,
@@ -62,7 +62,7 @@ public enum HearthstoneAPI {
 // MARK: - Private
 
 private extension HearthstoneAPI {
-    static func cardSearch(accessToken: AccessToken, session: URLSession, locale: PlayerLocale, setSlug: String?, classSlug: String?,
+    static func searchCards(with accessToken: AccessToken, session: URLSession = .shared, for locale: PlayerLocale, setSlug: String?, classSlug: String?,
                            manaCost: [Int]?, attack: [Int]?, health: [Int]?, collectible: Bool?, raritySlug: String?, typeSlug: String?,
                            minionTypeSlug: String?, keywordSlug: String?, textFilter: String?, gameMode: GameMode.Kind, page: Int,
                            pageSize: Int?, sort: CardSearch.SortPriority, order: CardSearch.SortOrder) -> AnyPublisher<CardSearch, Error> {
@@ -75,7 +75,7 @@ private extension HearthstoneAPI {
         }
         
         var parameters = [
-            URLQueryItem(name: "access_token", value: accessToken),
+            URLQueryItem(name: "access_token", value: accessToken.value),
             URLQueryItem(name: "locale", value: locale.rawValue),
             URLQueryItem(name: "page", value: String(page)),
             URLQueryItem(name: "gameMode", value: gameMode.rawValue),
