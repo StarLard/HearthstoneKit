@@ -120,8 +120,8 @@ private extension HearthstoneAPI {
         }
         
         var components = URLComponents()
-        components.host = locale.apiRegion.host.absoluteString
-        components.path = "hearthstone/cards"
+        components.host = locale.gameDataAPIRegion.host
+        components.path = "/hearthstone/cards"
         components.queryItems = parameters
         
         let request: URLRequest = URLRequest(url: components.url!)

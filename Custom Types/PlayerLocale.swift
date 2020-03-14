@@ -36,12 +36,20 @@ public enum PlayerLocale: String, CaseIterable, Codable {
     /// Chinese - Taiwan
     case zhTW = "zh_TW"
     
-    public var apiRegion: APIRegion {
+    public var gameDataAPIRegion: GameDataAPIRegion {
         switch self {
         case .enUS, .esMX, .ptBR: return .northAmerica
         case .esES, .frFR, .ruRU, .deDE, .itIT, .plPL: return .europe
         case .koKR, .jaJP, .thTH: return .korea
         case .zhTW: return .taiwan
+        }
+    }
+    
+    public var oauthAPIRegion: OAuthAPIRegion {
+        switch self {
+        case .enUS, .esMX, .ptBR: return .us
+        case .esES, .frFR, .ruRU, .deDE, .itIT, .plPL: return .eu
+        case .koKR, .jaJP, .thTH, .zhTW: return .apac
         }
     }
     

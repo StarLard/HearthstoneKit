@@ -15,13 +15,14 @@
 		453FD060434C0105301904BAF7A58111 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE00D57FFA04DF37E89FBD8F398E47E /* Card.swift */; };
 		5C3DC40DCFCAF55D21033FF70E846B45 /* CardBack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667CDF06054DB3CD3F5632CC220034CD /* CardBack.swift */; };
 		850659D1240A2F430099BE74 /* Deckstring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850659D0240A2F430099BE74 /* Deckstring.swift */; };
-		85C67FEF241886360080F868 /* APIRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C67FEE241886360080F868 /* APIRegion.swift */; };
+		85C67FEF241886360080F868 /* APIRegions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C67FEE241886360080F868 /* APIRegions.swift */; };
 		85C67FF224188ED30080F868 /* HearthstoneAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C67FF124188ED30080F868 /* HearthstoneAPI.swift */; };
 		85C67FF42418979E0080F868 /* CardSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C67FF32418979E0080F868 /* CardSearch.swift */; };
 		85C67FF624189B490080F868 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C67FF524189B490080F868 /* Error.swift */; };
 		85C67FF8241B63640080F868 /* HearthstoneKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C67FF7241B63640080F868 /* HearthstoneKit.swift */; };
 		85C67FFA241B74D40080F868 /* HSKLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C67FF9241B74D40080F868 /* HSKLog.swift */; };
 		85C67FFC241B79D00080F868 /* Oauth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C67FFB241B79D00080F868 /* Oauth.swift */; };
+		85C67FFE241C96DA0080F868 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C67FFD241C96DA0080F868 /* Networking.swift */; };
 		85F9FC6F23FFC07C00FDA1E0 /* PlayerLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F9FC6E23FFC07C00FDA1E0 /* PlayerLocale.swift */; };
 		85F9FC7923FFD56400FDA1E0 /* Decklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F9FC7823FFD56400FDA1E0 /* Decklist.swift */; };
 		85F9FC7F240388BD00FDA1E0 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F9FC7E240388BD00FDA1E0 /* Deck.swift */; };
@@ -60,13 +61,14 @@
 		72046FC2E61B0AD524C47A9BEF4FE05A /* HearthstoneKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HearthstoneKit-umbrella.h"; sourceTree = "<group>"; };
 		7EE00D57FFA04DF37E89FBD8F398E47E /* Card.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		850659D0240A2F430099BE74 /* Deckstring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deckstring.swift; sourceTree = "<group>"; };
-		85C67FEE241886360080F868 /* APIRegion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRegion.swift; sourceTree = "<group>"; };
+		85C67FEE241886360080F868 /* APIRegions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRegions.swift; sourceTree = "<group>"; };
 		85C67FF124188ED30080F868 /* HearthstoneAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HearthstoneAPI.swift; sourceTree = "<group>"; };
 		85C67FF32418979E0080F868 /* CardSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSearch.swift; sourceTree = "<group>"; };
 		85C67FF524189B490080F868 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		85C67FF7241B63640080F868 /* HearthstoneKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HearthstoneKit.swift; sourceTree = "<group>"; };
 		85C67FF9241B74D40080F868 /* HSKLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSKLog.swift; sourceTree = "<group>"; };
 		85C67FFB241B79D00080F868 /* Oauth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Oauth.swift; sourceTree = "<group>"; };
+		85C67FFD241C96DA0080F868 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		85F9FC6E23FFC07C00FDA1E0 /* PlayerLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerLocale.swift; sourceTree = "<group>"; };
 		85F9FC7823FFD56400FDA1E0 /* Decklist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decklist.swift; sourceTree = "<group>"; };
 		85F9FC7E240388BD00FDA1E0 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				85C67FF32418979E0080F868 /* CardSearch.swift */,
 				85C67FF524189B490080F868 /* Error.swift */,
 				85C67FFB241B79D00080F868 /* Oauth.swift */,
+				85C67FFD241C96DA0080F868 /* Networking.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -154,7 +157,7 @@
 				85F9FC6E23FFC07C00FDA1E0 /* PlayerLocale.swift */,
 				85F9FC7823FFD56400FDA1E0 /* Decklist.swift */,
 				850659D0240A2F430099BE74 /* Deckstring.swift */,
-				85C67FEE241886360080F868 /* APIRegion.swift */,
+				85C67FEE241886360080F868 /* APIRegions.swift */,
 			);
 			path = "Custom Types";
 			sourceTree = "<group>";
@@ -385,11 +388,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				85F9FC7F240388BD00FDA1E0 /* Deck.swift in Sources */,
+				85C67FFE241C96DA0080F868 /* Networking.swift in Sources */,
 				85F9FC8B2403A66D00FDA1E0 /* GameMode.swift in Sources */,
 				33C74963EDF5B66EE072A6E525BEDB33 /* BlizzardIdentifier.swift in Sources */,
 				85F9FC892403A5BB00FDA1E0 /* ExpansionSetGroup.swift in Sources */,
 				453FD060434C0105301904BAF7A58111 /* Card.swift in Sources */,
-				85C67FEF241886360080F868 /* APIRegion.swift in Sources */,
+				85C67FEF241886360080F868 /* APIRegions.swift in Sources */,
 				5C3DC40DCFCAF55D21033FF70E846B45 /* CardBack.swift in Sources */,
 				2DCE2B933D445C69DE0241E1925393C9 /* HearthstoneKit-dummy.m in Sources */,
 				85F9FC7923FFD56400FDA1E0 /* Decklist.swift in Sources */,
