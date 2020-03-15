@@ -257,8 +257,8 @@
 				85760F03241DC62C00437BE3 /* Error.swift */,
 				85760F04241DC62C00437BE3 /* CardSearch.swift */,
 				85760F05241DC62C00437BE3 /* Networking.swift */,
-				85760F06241DC62C00437BE3 /* HearthstoneAPI.swift */,
 				85760F07241DC62C00437BE3 /* BattleNetAPI.swift */,
+				85760F06241DC62C00437BE3 /* HearthstoneAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";

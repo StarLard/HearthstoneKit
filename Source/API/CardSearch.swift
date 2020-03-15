@@ -28,4 +28,23 @@ extension HearthstoneAPI {
             case descending = "desc"
         }
     }
+    
+    public struct CardBackSearch: Decodable {
+        public let cardCount: Int
+        public let pageCount: Int
+        public let page: Int
+        public let cardBacks: [CardBack]
+        
+        // MARK: Filters
+        
+        public enum SortPriority: String {
+            case date
+            case name
+        }
+        
+        public enum SortOrder: String {
+            case ascending = "asc"
+            case descending = "desc"
+        }
+    }
 }

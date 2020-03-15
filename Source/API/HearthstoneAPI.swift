@@ -31,7 +31,7 @@ public enum HearthstoneAPI {
     ///    metadata. The default value is `nil`.
     ///   - keywordSlug: A required keyword on the card (for example, battlecry, deathrattle, and so on). This value must match the keyword slugs found in
     ///    metadata. The default value is `nil`.
-    ///   - textFilter: A text string used to filter cards. You must include a locale along with the textFilter parameter. The default value is `nil`.
+    ///   - textFilter: A text string used to filter cards. The default value is `nil`.
     ///   - page: A page number. The default value is `1`.
     ///   - pageSize: The number of results to choose per page. A value will be selected automatically if you do not supply a pageSize or if the pageSize is higher
     ///    than the maximum allowed. The default value is `nil`.
@@ -73,7 +73,8 @@ public enum HearthstoneAPI {
     ///    metadata. The default value is `nil`.
     ///   - keywordSlug: A required keyword on the card (for example, battlecry, deathrattle, and so on). This value must match the keyword slugs found in
     ///    metadata. The default value is `nil`.
-    ///   - textFilter: A text string used to filter cards. You must include a locale along with the textFilter parameter. The default value is `nil`.
+    ///   - tiers: This special parameter is for tavern tier, which is only recognized when searching for Battlegrounds cards. The default value is `nil`.
+    ///   - textFilter: A text string used to filter cards. The default value is `nil`.
     ///   - page: A page number. The default value is `1`.
     ///   - pageSize: The number of results to choose per page. A value will be selected automatically if you do not supply a pageSize or if the pageSize is higher
     ///    than the maximum allowed. The default value is `nil`.
@@ -115,6 +116,27 @@ public enum HearthstoneAPI {
     }
     
     // MARK: - Card Backs
+    
+    /// Returns an up-to-date list of all card backs matching the search criteria. For more information about the search parameters,
+    /// see the [Card Search Guide](https://develop.battle.net/documentation/hearthstone/guides).
+    /// - Parameters:
+    ///   - session: A `URLSession` to create the request in. The default value is `shared`.
+    ///   - locale: The locale to reflect in localized data.
+    ///   - cardBackCategory: A category of the card back. The category must match a valid category. The default value is `nil`.
+    ///   - textFilter: A text string used to filter card backs. The default value is `nil`.
+    ///   - sort: The field used to sort the results. Results are sorted by `date` by default.
+    ///   - order: The order in which to sort the results. The default value is `descending`.
+    /// - Returns: A publisher which can be canceled and sends a `CardBackSearch` if the request succeeds or an error on failure.
+    public static func searchCardBacks(with session: URLSession = .shared, for locale: PlayerLocale, cardBackCategory: String? = nil,
+                                   textFilter: String? = nil, sort: CardBackSearch.SortPriority = .date,
+                                   order: CardBackSearch.SortOrder = .descending) -> AnyPublisher<CardBackSearch, Error> {
+        return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<CardBackSearch, Error> in
+            return searchCardBacks(with: session, for: locale, cardBackCategory: cardBackCategory,
+                                   textFilter: textFilter, sort: sort, order: order)
+        })
+        .eraseToAnyPublisher()
+    }
+    
     // MARK: - Decks
     // MARK: - Metadata
 }
@@ -218,6 +240,37 @@ private extension HearthstoneAPI {
     }
     
     // MARK: Card Backs (Requests)
+    
+    static func searchCardBacks(with accessToken: BattleNetAPI.AccessToken, session: URLSession, for locale: PlayerLocale,
+                                cardBackCategory: String?, textFilter: String?, sort: CardBackSearch.SortPriority,
+                                order: CardBackSearch.SortOrder) -> AnyPublisher<CardBackSearch, Error> {
+        var parameters = [
+            URLQueryItem(name: "access_token", value: accessToken.value),
+            URLQueryItem(name: "locale", value: locale.rawValue),
+            URLQueryItem(name: "sort", value: sort.rawValue),
+            URLQueryItem(name: "order", value: order.rawValue),
+        ]
+            
+        if let value = cardBackCategory {
+            parameters.append(URLQueryItem(name: "cardBackCategory", value: value))
+        }
+        if let value = textFilter {
+            parameters.append(URLQueryItem(name: "textFilter", value: value))
+        }
+        
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = locale.gameDataAPIRegion.host
+        components.path = "/hearthstone/cardbacks"
+        components.queryItems = parameters
+        
+        let request: URLRequest = URLRequest(url: components.url!)
+        return session.dataTaskPublisher(for: request)
+            .tryExtractData()
+            .decode(type: CardBackSearch.self, decoder: JSONDecoder())
+            .eraseToAnyPublisher()
+    }
+    
     // MARK: Decks (Requests)
     // MARK: Metadata (Requests)
 }
