@@ -1,0 +1,22 @@
+{
+  "name": "HearthstoneKit",
+  "version": "0.1.0",
+  "summary": "A short description of HearthstoneKit.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/StarLard/HearthstoneKit",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "StarLard": "caleb.cfri@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/StarLard/HearthstoneKit.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "HearthstoneKit/Classes/**/*"
+}

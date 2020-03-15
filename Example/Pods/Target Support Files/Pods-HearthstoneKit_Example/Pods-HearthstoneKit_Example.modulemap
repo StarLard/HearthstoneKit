@@ -1,0 +1,6 @@
+framework module Pods_HearthstoneKit_Example {
+  umbrella header "Pods-HearthstoneKit_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,7 @@
+{
+	"id": 3,
+	"slug": "divine-shield",
+	"name": "Divine Shield",
+	"refText": "The first time a Shielded minion takes damage, ignore it.",
+	"text": "The first time this minion takes damage, ignore it."
+}

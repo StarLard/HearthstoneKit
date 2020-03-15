@@ -1,0 +1,13 @@
+{
+  "slug": "dragon",
+  "year": 2019,
+  "cardSets": [
+    "galakronds-awakening",
+    "descent-of-dragons",
+    "saviors-of-uldum",
+    "rise-of-shadows"
+  ],
+  "name": "Year of the Dragon",
+  "standard": true,
+  "icon": "icon_cardset_yearofthedragon"
+}

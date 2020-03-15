@@ -12,7 +12,32 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		85760F55241DC67F00437BE3 /* HearthstoneKit-Configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85760F54241DC67F00437BE3 /* HearthstoneKit-Configuration.plist */; };
+		85760F56241DC75E00437BE3 /* DecklistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85760F1E241DC65400437BE3 /* DecklistTests.swift */; };
+		85760F57241DC75E00437BE3 /* DeckstringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85760F26241DC65400437BE3 /* DeckstringTests.swift */; };
+		85760F58241DC76200437BE3 /* HearthstoneAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85760F20241DC65400437BE3 /* HearthstoneAPITests.swift */; };
+		85760F59241DC76700437BE3 /* MetadataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85760F22241DC65400437BE3 /* MetadataTests.swift */; };
+		85760F5A241DC76700437BE3 /* CardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85760F23241DC65400437BE3 /* CardTests.swift */; };
+		85760F5B241DC76700437BE3 /* CardBackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85760F24241DC65400437BE3 /* CardBackTests.swift */; };
+		85760F5C241DC76700437BE3 /* DeckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85760F25241DC65400437BE3 /* DeckTests.swift */; };
+		85760F5D241DC76D00437BE3 /* sample_minion_type.json in Resources */ = {isa = PBXBuildFile; fileRef = 85760F28241DC65400437BE3 /* sample_minion_type.json */; };
+		85760F5E241DC76D00437BE3 /* sample_card_keyword.json in Resources */ = {isa = PBXBuildFile; fileRef = 85760F29241DC65400437BE3 /* sample_card_keyword.json */; };
+		85760F5F241DC76D00437BE3 /* sample_card_weapon.json in Resources */ = {isa = PBXBuildFile; fileRef = 85760F2A241DC65400437BE3 /* sample_card_weapon.json */; };
+		85760F60241DC76D00437BE3 /* sample_card_hero_skin.json in Resources */ = {isa = PBXBuildFile; fileRef = 85760F2B241DC65400437BE3 /* sample_card_hero_skin.json */; };
+		85760F61241DC76D00437BE3 /* sample_card_hero_playable.json in Resources */ = {isa = PBXBuildFile; fileRef = 85760F2C241DC65400437BE3 /* sample_card_hero_playable.json */; };
+		85760F62241DC76D00437BE3 /* sample_card_back_category.json in Resources */ = {isa = PBXBuildFile; fileRef = 85760F2D241DC65400437BE3 /* sample_card_back_category.json */; };
+		85760F63241DC76D00437BE3 /* sample_deck.json in Resources */ = {isa = PBXBuildFile; fileRef = 85760F2E241DC65400437BE3 /* sample_deck.json */; };
+		85760F64241DC76D00437BE3 /* sample_expansion_set.json in Resources */ = {isa = PBXBuildFile; fileRef = 85760F2F241DC65400437BE3 /* sample_expansion_set.json */; };
+		85760F65241DC76D00437BE3 /* sample_player_class.json in Resources */ = {isa = PBXBuildFile; fileRef = 85760F30241DC65400437BE3 /* sample_player_class.json */; };
+		85760F66241DC76D00437BE3 /* sample_card_type.json in Resources */ = {isa = PBXBuildFile; fileRef = 85760F31241DC65400437BE3 /* sample_card_type.json */; };
+		85760F67241DC76D00437BE3 /* sample_card_spell.json in Resources */ = {isa = PBXBuildFile; fileRef = 85760F32241DC65400437BE3 /* sample_card_spell.json */; };
+		85760F68241DC76D00437BE3 /* sample_card_minion.json in Resources */ = {isa = PBXBuildFile; fileRef = 85760F33241DC65400437BE3 /* sample_card_minion.json */; };
+		85760F69241DC76D00437BE3 /* sample_card_back.json in Resources */ = {isa = PBXBuildFile; fileRef = 85760F34241DC65400437BE3 /* sample_card_back.json */; };
+		85760F6A241DC76D00437BE3 /* sample_expansion_set_group.json in Resources */ = {isa = PBXBuildFile; fileRef = 85760F35241DC65400437BE3 /* sample_expansion_set_group.json */; };
+		85760F6B241DC76D00437BE3 /* sample_game_mode.json in Resources */ = {isa = PBXBuildFile; fileRef = 85760F36241DC65400437BE3 /* sample_game_mode.json */; };
+		85760F6C241DC76D00437BE3 /* sample_rarity.json in Resources */ = {isa = PBXBuildFile; fileRef = 85760F37241DC65400437BE3 /* sample_rarity.json */; };
+		85760F6D241DC77200437BE3 /* HSKitTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85760F39241DC65400437BE3 /* HSKitTestCase.swift */; };
+		85760F6E241DC77200437BE3 /* SampleFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85760F3A241DC65400437BE3 /* SampleFile.swift */; };
 		9A6C313D03CE6F80F651B257 /* Pods_HearthstoneKit_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FFFBAE469EEAE6B8719AC06 /* Pods_HearthstoneKit_Example.framework */; };
 		BB0B6715EEC1709038825DB2 /* Pods_HearthstoneKit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD5E9CDD2B356E7F2BF4F251 /* Pods_HearthstoneKit_Tests.framework */; };
 /* End PBXBuildFile section */
@@ -28,8 +53,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		151418238202E5A175756EEA /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		1A78218C0C81B5F7B2649127 /* HearthstoneKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = HearthstoneKit.podspec; path = ../HearthstoneKit.podspec; sourceTree = "<group>"; };
+		151418238202E5A175756EEA /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		1A78218C0C81B5F7B2649127 /* HearthstoneKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = HearthstoneKit.podspec; path = ../HearthstoneKit.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		29852CE3AC8C15E0B3983648 /* Pods-HearthstoneKit_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HearthstoneKit_Tests.debug.xcconfig"; path = "Target Support Files/Pods-HearthstoneKit_Tests/Pods-HearthstoneKit_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		3981DA56150863E524FA00B5 /* Pods-HearthstoneKit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HearthstoneKit_Example.debug.xcconfig"; path = "Target Support Files/Pods-HearthstoneKit_Example/Pods-HearthstoneKit_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		45A83DB064C6B0AC366F116C /* Pods-HearthstoneKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HearthstoneKit_Tests.release.xcconfig"; path = "Target Support Files/Pods-HearthstoneKit_Tests/Pods-HearthstoneKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -43,10 +68,35 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* HearthstoneKit_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HearthstoneKit_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		85760F1E241DC65400437BE3 /* DecklistTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecklistTests.swift; sourceTree = "<group>"; };
+		85760F20241DC65400437BE3 /* HearthstoneAPITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HearthstoneAPITests.swift; sourceTree = "<group>"; };
+		85760F22241DC65400437BE3 /* MetadataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetadataTests.swift; sourceTree = "<group>"; };
+		85760F23241DC65400437BE3 /* CardTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTests.swift; sourceTree = "<group>"; };
+		85760F24241DC65400437BE3 /* CardBackTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardBackTests.swift; sourceTree = "<group>"; };
+		85760F25241DC65400437BE3 /* DeckTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckTests.swift; sourceTree = "<group>"; };
+		85760F26241DC65400437BE3 /* DeckstringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckstringTests.swift; sourceTree = "<group>"; };
+		85760F28241DC65400437BE3 /* sample_minion_type.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_minion_type.json; sourceTree = "<group>"; };
+		85760F29241DC65400437BE3 /* sample_card_keyword.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card_keyword.json; sourceTree = "<group>"; };
+		85760F2A241DC65400437BE3 /* sample_card_weapon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card_weapon.json; sourceTree = "<group>"; };
+		85760F2B241DC65400437BE3 /* sample_card_hero_skin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card_hero_skin.json; sourceTree = "<group>"; };
+		85760F2C241DC65400437BE3 /* sample_card_hero_playable.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card_hero_playable.json; sourceTree = "<group>"; };
+		85760F2D241DC65400437BE3 /* sample_card_back_category.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card_back_category.json; sourceTree = "<group>"; };
+		85760F2E241DC65400437BE3 /* sample_deck.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_deck.json; sourceTree = "<group>"; };
+		85760F2F241DC65400437BE3 /* sample_expansion_set.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_expansion_set.json; sourceTree = "<group>"; };
+		85760F30241DC65400437BE3 /* sample_player_class.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_player_class.json; sourceTree = "<group>"; };
+		85760F31241DC65400437BE3 /* sample_card_type.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card_type.json; sourceTree = "<group>"; };
+		85760F32241DC65400437BE3 /* sample_card_spell.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card_spell.json; sourceTree = "<group>"; };
+		85760F33241DC65400437BE3 /* sample_card_minion.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card_minion.json; sourceTree = "<group>"; };
+		85760F34241DC65400437BE3 /* sample_card_back.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_card_back.json; sourceTree = "<group>"; };
+		85760F35241DC65400437BE3 /* sample_expansion_set_group.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_expansion_set_group.json; sourceTree = "<group>"; };
+		85760F36241DC65400437BE3 /* sample_game_mode.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_game_mode.json; sourceTree = "<group>"; };
+		85760F37241DC65400437BE3 /* sample_rarity.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample_rarity.json; sourceTree = "<group>"; };
+		85760F39241DC65400437BE3 /* HSKitTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSKitTestCase.swift; sourceTree = "<group>"; };
+		85760F3A241DC65400437BE3 /* SampleFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleFile.swift; sourceTree = "<group>"; };
+		85760F54241DC67F00437BE3 /* HearthstoneKit-Configuration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HearthstoneKit-Configuration.plist"; sourceTree = "<group>"; };
 		9D68D4031AF876CEAD4550F3 /* Pods-HearthstoneKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HearthstoneKit_Example.release.xcconfig"; path = "Target Support Files/Pods-HearthstoneKit_Example/Pods-HearthstoneKit_Example.release.xcconfig"; sourceTree = "<group>"; };
 		BD5E9CDD2B356E7F2BF4F251 /* Pods_HearthstoneKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HearthstoneKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F9A0EDC64EA403F46FB57603 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		F9A0EDC64EA403F46FB57603 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +143,7 @@
 		607FACD21AFB9204008FA782 /* Example for HearthstoneKit */ = {
 			isa = PBXGroup;
 			children = (
+				85760F54241DC67F00437BE3 /* HearthstoneKit-Configuration.plist */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
@@ -115,7 +166,12 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
+				85760F1F241DC65400437BE3 /* API */,
+				85760F1E241DC65400437BE3 /* DecklistTests.swift */,
+				85760F26241DC65400437BE3 /* DeckstringTests.swift */,
+				85760F21241DC65400437BE3 /* Models */,
+				85760F27241DC65400437BE3 /* Resources */,
+				85760F38241DC65400437BE3 /* Testing Support */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -139,6 +195,57 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		85760F1F241DC65400437BE3 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				85760F20241DC65400437BE3 /* HearthstoneAPITests.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		85760F21241DC65400437BE3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				85760F22241DC65400437BE3 /* MetadataTests.swift */,
+				85760F23241DC65400437BE3 /* CardTests.swift */,
+				85760F24241DC65400437BE3 /* CardBackTests.swift */,
+				85760F25241DC65400437BE3 /* DeckTests.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		85760F27241DC65400437BE3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				85760F28241DC65400437BE3 /* sample_minion_type.json */,
+				85760F29241DC65400437BE3 /* sample_card_keyword.json */,
+				85760F2A241DC65400437BE3 /* sample_card_weapon.json */,
+				85760F2B241DC65400437BE3 /* sample_card_hero_skin.json */,
+				85760F2C241DC65400437BE3 /* sample_card_hero_playable.json */,
+				85760F2D241DC65400437BE3 /* sample_card_back_category.json */,
+				85760F2E241DC65400437BE3 /* sample_deck.json */,
+				85760F2F241DC65400437BE3 /* sample_expansion_set.json */,
+				85760F30241DC65400437BE3 /* sample_player_class.json */,
+				85760F31241DC65400437BE3 /* sample_card_type.json */,
+				85760F32241DC65400437BE3 /* sample_card_spell.json */,
+				85760F33241DC65400437BE3 /* sample_card_minion.json */,
+				85760F34241DC65400437BE3 /* sample_card_back.json */,
+				85760F35241DC65400437BE3 /* sample_expansion_set_group.json */,
+				85760F36241DC65400437BE3 /* sample_game_mode.json */,
+				85760F37241DC65400437BE3 /* sample_rarity.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		85760F38241DC65400437BE3 /* Testing Support */ = {
+			isa = PBXGroup;
+			children = (
+				85760F39241DC65400437BE3 /* HSKitTestCase.swift */,
+				85760F3A241DC65400437BE3 /* SampleFile.swift */,
+			);
+			path = "Testing Support";
+			sourceTree = "<group>";
+		};
 		DFD3CB96D80D45CA6DA727ED /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,7 +263,6 @@
 				29852CE3AC8C15E0B3983648 /* Pods-HearthstoneKit_Tests.debug.xcconfig */,
 				45A83DB064C6B0AC366F116C /* Pods-HearthstoneKit_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -227,6 +333,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -247,6 +354,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
+				85760F55241DC67F00437BE3 /* HearthstoneKit-Configuration.plist in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
@@ -256,6 +364,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85760F63241DC76D00437BE3 /* sample_deck.json in Resources */,
+				85760F66241DC76D00437BE3 /* sample_card_type.json in Resources */,
+				85760F62241DC76D00437BE3 /* sample_card_back_category.json in Resources */,
+				85760F68241DC76D00437BE3 /* sample_card_minion.json in Resources */,
+				85760F64241DC76D00437BE3 /* sample_expansion_set.json in Resources */,
+				85760F5D241DC76D00437BE3 /* sample_minion_type.json in Resources */,
+				85760F6C241DC76D00437BE3 /* sample_rarity.json in Resources */,
+				85760F5F241DC76D00437BE3 /* sample_card_weapon.json in Resources */,
+				85760F61241DC76D00437BE3 /* sample_card_hero_playable.json in Resources */,
+				85760F67241DC76D00437BE3 /* sample_card_spell.json in Resources */,
+				85760F60241DC76D00437BE3 /* sample_card_hero_skin.json in Resources */,
+				85760F6A241DC76D00437BE3 /* sample_expansion_set_group.json in Resources */,
+				85760F6B241DC76D00437BE3 /* sample_game_mode.json in Resources */,
+				85760F5E241DC76D00437BE3 /* sample_card_keyword.json in Resources */,
+				85760F65241DC76D00437BE3 /* sample_player_class.json in Resources */,
+				85760F69241DC76D00437BE3 /* sample_card_back.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,7 +464,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				85760F5B241DC76700437BE3 /* CardBackTests.swift in Sources */,
+				85760F58241DC76200437BE3 /* HearthstoneAPITests.swift in Sources */,
+				85760F56241DC75E00437BE3 /* DecklistTests.swift in Sources */,
+				85760F5C241DC76700437BE3 /* DeckTests.swift in Sources */,
+				85760F6E241DC77200437BE3 /* SampleFile.swift in Sources */,
+				85760F5A241DC76700437BE3 /* CardTests.swift in Sources */,
+				85760F6D241DC77200437BE3 /* HSKitTestCase.swift in Sources */,
+				85760F59241DC76700437BE3 /* MetadataTests.swift in Sources */,
+				85760F57241DC75E00437BE3 /* DeckstringTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,7 +551,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -465,7 +597,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -479,6 +611,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = HearthstoneKit/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
@@ -494,6 +627,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = HearthstoneKit/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";

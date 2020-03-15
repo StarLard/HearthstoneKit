@@ -1,0 +1,28 @@
+{
+      "id": 43406,
+      "collectible": 1,
+      "slug": "43406-uther-of-the-ebon-blade",
+      "classId": 5,
+      "multiClassIds": [],
+      "cardTypeId": 3,
+      "cardSetId": 1001,
+      "rarityId": 5,
+      "artistName": "James Ryman",
+      "health": 30,
+      "manaCost": 9,
+      "armor": 5,
+      "name": "Uther of the Ebon Blade",
+      "text": "<b>Battlecry:</b> Equip a 5/3 <b>Lifesteal</b> weapon.",
+      "image": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/3d140b58399f20b6e7e3ad05b562975820a6702f6beb3fee040f1baf2f3a7a14.png",
+      "imageGold": "",
+      "flavorText": "\"Step forward. Confess! Once I was a mere servant of the Light. Now I alone stand in judgement.\"",
+      "cropImage": "https://d15f34w2p8l1cc.cloudfront.net/hearthstone/de37186287a73f6a463b6de0254f8f61aa65b22015b9b821546fb240274f6b80.jpg",
+      "childIds": [
+          43013,
+          43405
+    ],
+      "keywordIds": [
+          8,
+          38
+    ]
+}

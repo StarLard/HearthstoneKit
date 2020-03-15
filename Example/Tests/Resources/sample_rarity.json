@@ -1,0 +1,13 @@
+{
+  "id": 5,
+  "slug": "legendary",
+  "craftingCost": [
+    1600,
+    3200
+  ],
+  "dustValue": [
+    400,
+    1600
+  ],
+  "name": "Legendary"
+}
