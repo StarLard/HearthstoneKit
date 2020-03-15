@@ -144,6 +144,7 @@ private extension HearthstoneAPI {
         }
         
         var components = URLComponents()
+        components.scheme = "https"
         components.host = locale.gameDataAPIRegion.host
         components.path = "/hearthstone/cards"
         components.queryItems = parameters
@@ -158,6 +159,7 @@ private extension HearthstoneAPI {
     static func card(with accessToken: BattleNetAPI.AccessToken, session: URLSession, for locale: PlayerLocale,
                      slug: String, gameMode: GameMode.Kind) -> AnyPublisher<Card, Error> {
         var components = URLComponents()
+        components.scheme = "https"
         components.host = locale.gameDataAPIRegion.host
         components.path = "/hearthstone/cards/\(slug)"
         components.queryItems = [URLQueryItem(name: "access_token", value: accessToken.value),
