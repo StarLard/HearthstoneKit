@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'HearthstoneKit_Example' do
+  pod 'HearthstoneKit', :path => '../'
+
+  target 'HearthstoneKit_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
