@@ -123,5 +123,29 @@ final class HearthstoneAPITests: HSKitTestCase {
     }
     
     // MARK: Decks
+    
+    func testGetDeck() {
+        let valueExpectation = XCTestExpectation()
+        let completeExpectation = XCTestExpectation()
+        let subscriber = HearthstoneAPI
+            .deck(for: .enUS, deckcode: "AAECAQcG+wyd8AKS+AKggAOblAPanQMMS6IE/web8wLR9QKD+wKe+wKz/AL1gAOXlAOalAOSnwMA")
+            .sink(receiveCompletion: { (result) in
+            switch result {
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            case .finished:
+                completeExpectation.fulfill()
+            }
+        }) { (deck) in
+            XCTAssertEqual(deck.class.slug, "warrior")
+            XCTAssertEqual(deck.heroPower.slug, "725-armor-up")
+            XCTAssertEqual(deck.hero.slug, "7-garrosh-hellscream")
+            XCTAssertTrue(deck.cards.contains(where: { (slot) -> Bool in slot.quantity == 1 && slot.card.slug == "1659-acolyte-of-pain" }))
+            valueExpectation.fulfill()
+        }
+        wait(for: [valueExpectation, completeExpectation], timeout: 10, enforceOrder: true)
+        subscriber.cancel()
+    }
+    
     // MARK: Metadata
 }

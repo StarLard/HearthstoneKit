@@ -20,10 +20,11 @@ public struct Deckstring: Hashable {
     public let heroID: BlizzardIdentifier
     /// A map where keys are card IDs and values are quantities of that card.
     public let cards: [BlizzardIdentifier: Int]
-    /// The string representation of the deck.
+    /// An ecodede `String` representation of a deck.
     ///
-    /// Two identical decks are not guarenteed to have the same `rawValue` as cards are unordered.
-    public let rawValue: String
+    ///  Can be created from a `Deck` or can be copied from the game or various Hearthstone websites.
+    /// - Note: Two identical decks are not guarenteed to have the same `deckcode` as cards are unordered.
+    public let deckcode: String
     
     // MARK: Hashable
     
@@ -46,12 +47,13 @@ public struct Deckstring: Hashable {
     ///
     /// Will also parse the name if included in the header.
     ///
-    /// - Parameter rawValue: The string representation of the deckstring as it is exported from hearthstone.
-    public init(rawValue: String) throws {
+    /// - Parameter deckcode: An ecodede `String` representation of a deck. You create one from a `Deck`
+    /// or you can copy one from the game or various Hearthstone websites.
+    public init(deckcode: String) throws {
         var deckstringInput: String?
         var name: String?
         
-        rawValue.enumerateLines {
+        deckcode.enumerateLines {
             (line, stop) in
             if line.first != "#" && !line.isEmpty && deckstringInput == nil {
                 deckstringInput = line
@@ -122,7 +124,7 @@ public struct Deckstring: Hashable {
         self.heroID = BlizzardIdentifier(rawValue: heroNum)
         self.formatID = BlizzardIdentifier(rawValue: frmtNumber)
         self.cards = cards
-        self.rawValue = rawValue
+        self.deckcode = deckcode
     }
     
     // MARK: Export
@@ -136,13 +138,13 @@ public struct Deckstring: Hashable {
     /// in it's header.
     public init(formatID: BlizzardIdentifier, heroID: BlizzardIdentifier, cards: Dictionary<BlizzardIdentifier, Int>, name: String? = nil, version: Int = 0) {
         if let name = name {
-            self.rawValue = """
+            self.deckcode = """
             ### \(name)\n
             \(Self.varIntData(from: cards, formatID: formatID, heroID: heroID, version: version).base64EncodedString())\n
             # To use this deck, copy it to your clipboard and create a new deck in Hearthstone\n
             """
         } else {
-            self.rawValue = Self.varIntData(from: cards, formatID: formatID, heroID: heroID, version: version).base64EncodedString()
+            self.deckcode = Self.varIntData(from: cards, formatID: formatID, heroID: heroID, version: version).base64EncodedString()
         }
         self.name = name
         self.cards = cards

@@ -35,20 +35,20 @@ final class DeckstringTests: HSKitTestCase {
     
     func testImporting() throws {
         try XCTContext.runActivity(named: "Test importing without header") { _ in
-            let deckstring = try Deckstring(rawValue: "AAECAR8K7QaHB4f7Ap6dA6CFA9SLA94ElwikpQPHAwr4rwP8rwPslgOFsAPJBIAHhwSNAcMIgQoA")
-            XCTAssertEqual(deckstring.rawValue, "AAECAR8K7QaHB4f7Ap6dA6CFA9SLA94ElwikpQPHAwr4rwP8rwPslgOFsAPJBIAHhwSNAcMIgQoA")
+            let deckstring = try Deckstring(deckcode: "AAECAR8K7QaHB4f7Ap6dA6CFA9SLA94ElwikpQPHAwr4rwP8rwPslgOFsAPJBIAHhwSNAcMIgQoA")
+            XCTAssertEqual(deckstring.deckcode, "AAECAR8K7QaHB4f7Ap6dA6CFA9SLA94ElwikpQPHAwr4rwP8rwPslgOFsAPJBIAHhwSNAcMIgQoA")
             XCTAssertEqual(deckstring.heroID, 31)
             XCTAssertEqual(deckstring.formatID, 2)
             XCTAssertNil(deckstring.name)
             XCTAssertEqual(deckstring.cards, Self.cardMap)
         }
         try XCTContext.runActivity(named: "Test importing with header") { _ in
-            let deckstring = try Deckstring(rawValue: """
+            let deckstring = try Deckstring(deckcode: """
                 ### We go face\n
                 AAECAR8K7QaHB4f7Ap6dA6CFA9SLA94ElwikpQPHAwr4rwP8rwPslgOFsAPJBIAHhwSNAcMIgQoA\n
                 # To use this deck, copy it to your clipboard and create a new deck in Hearthstone\n
                 """)
-            XCTAssertEqual(deckstring.rawValue, """
+            XCTAssertEqual(deckstring.deckcode, """
             ### We go face\n
             AAECAR8K7QaHB4f7Ap6dA6CFA9SLA94ElwikpQPHAwr4rwP8rwPslgOFsAPJBIAHhwSNAcMIgQoA\n
             # To use this deck, copy it to your clipboard and create a new deck in Hearthstone\n
@@ -59,8 +59,8 @@ final class DeckstringTests: HSKitTestCase {
             XCTAssertEqual(deckstring.cards, Self.cardMap)
         }
         try XCTContext.runActivity(named: "Test deckstring equality") { _ in
-            let deckstringWithoutHeader = try Deckstring(rawValue: "AAECAR8K7QaHB4f7Ap6dA6CFA9SLA94ElwikpQPHAwr4rwP8rwPslgOFsAPJBIAHhwSNAcMIgQoA")
-            let deckstringWithHeader = try Deckstring(rawValue: """
+            let deckstringWithoutHeader = try Deckstring(deckcode: "AAECAR8K7QaHB4f7Ap6dA6CFA9SLA94ElwikpQPHAwr4rwP8rwPslgOFsAPJBIAHhwSNAcMIgQoA")
+            let deckstringWithHeader = try Deckstring(deckcode: """
                 ### We go face\n
                 AAECAR8K7QaHB4f7Ap6dA6CFA9SLA94ElwikpQPHAwr4rwP8rwPslgOFsAPJBIAHhwSNAcMIgQoA\n
                 # To use this deck, copy it to your clipboard and create a new deck in Hearthstone\n
