@@ -12,14 +12,14 @@ import XCTest
 final class DeckTests: HSKitTestCase {
     func testDecodeFromValidData() throws {
         let data = openSampleFile(.deck)
-        let deck = try JSONDecoder().decode(Deck.self, from: data)
-        XCTAssertEqual(deck.version, 0)
-        XCTAssertEqual(deck.format, "standard")
-        XCTAssertEqual(deck.hero.id.rawValue, 7)
-        XCTAssertEqual(deck.heroPower.id.rawValue, 725)
-        XCTAssertEqual(deck.class.id.rawValue, 10)
-        XCTAssertEqual(deck.cards.numberOfCards, 30)
-        XCTAssertEqual(deck.cards.numberOfSlots, 18)
-
+        assertDoesNotThrow(try JSONDecoder().decode(Deck.self, from: data)) { (deck) in
+            XCTAssertEqual(deck.version, 0)
+            XCTAssertEqual(deck.format, "standard")
+            XCTAssertEqual(deck.hero.id.rawValue, 7)
+            XCTAssertEqual(deck.heroPower.id.rawValue, 725)
+            XCTAssertEqual(deck.class.id.rawValue, 10)
+            XCTAssertEqual(deck.cards.numberOfCards, 30)
+            XCTAssertEqual(deck.cards.numberOfSlots, 18)
+        }
     }
 }

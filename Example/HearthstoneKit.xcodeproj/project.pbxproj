@@ -38,6 +38,7 @@
 		85760F6C241DC76D00437BE3 /* sample_rarity.json in Resources */ = {isa = PBXBuildFile; fileRef = 85760F37241DC65400437BE3 /* sample_rarity.json */; };
 		85760F6D241DC77200437BE3 /* HSKitTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85760F39241DC65400437BE3 /* HSKitTestCase.swift */; };
 		85760F6E241DC77200437BE3 /* SampleFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85760F3A241DC65400437BE3 /* SampleFile.swift */; };
+		85760F70241DCC4A00437BE3 /* BattleNetAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85760F6F241DCC4A00437BE3 /* BattleNetAPITests.swift */; };
 		9A6C313D03CE6F80F651B257 /* Pods_HearthstoneKit_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FFFBAE469EEAE6B8719AC06 /* Pods_HearthstoneKit_Example.framework */; };
 		BB0B6715EEC1709038825DB2 /* Pods_HearthstoneKit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD5E9CDD2B356E7F2BF4F251 /* Pods_HearthstoneKit_Tests.framework */; };
 /* End PBXBuildFile section */
@@ -94,6 +95,7 @@
 		85760F39241DC65400437BE3 /* HSKitTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSKitTestCase.swift; sourceTree = "<group>"; };
 		85760F3A241DC65400437BE3 /* SampleFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleFile.swift; sourceTree = "<group>"; };
 		85760F54241DC67F00437BE3 /* HearthstoneKit-Configuration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HearthstoneKit-Configuration.plist"; sourceTree = "<group>"; };
+		85760F6F241DCC4A00437BE3 /* BattleNetAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleNetAPITests.swift; sourceTree = "<group>"; };
 		9D68D4031AF876CEAD4550F3 /* Pods-HearthstoneKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HearthstoneKit_Example.release.xcconfig"; path = "Target Support Files/Pods-HearthstoneKit_Example/Pods-HearthstoneKit_Example.release.xcconfig"; sourceTree = "<group>"; };
 		BD5E9CDD2B356E7F2BF4F251 /* Pods_HearthstoneKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HearthstoneKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9A0EDC64EA403F46FB57603 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				85760F20241DC65400437BE3 /* HearthstoneAPITests.swift */,
+				85760F6F241DCC4A00437BE3 /* BattleNetAPITests.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -472,6 +475,7 @@
 				85760F5A241DC76700437BE3 /* CardTests.swift in Sources */,
 				85760F6D241DC77200437BE3 /* HSKitTestCase.swift in Sources */,
 				85760F59241DC76700437BE3 /* MetadataTests.swift in Sources */,
+				85760F70241DCC4A00437BE3 /* BattleNetAPITests.swift in Sources */,
 				85760F57241DC75E00437BE3 /* DeckstringTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -614,7 +618,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.calebfriden.demo.HearthstoneKit-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -630,7 +634,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.calebfriden.demo.HearthstoneKit-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;

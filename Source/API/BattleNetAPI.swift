@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 enum BattleNetAPI {
-    struct AccessToken: Codable {
+    struct AccessToken: Codable, Equatable {
         let value: String
         let type: String
         let expiration: Date
@@ -38,9 +38,7 @@ enum BattleNetAPI {
     }
     
     static func authenticate(with session: URLSession, for locale: PlayerLocale) -> AnyPublisher<AccessToken, Error> {
-        let host = locale.oauthAPIRegion.host
-        let service = "\(host)/oauth/token"
-        if let tokenData = Keychain.retrieveTokenData(for: service) {
+        if let tokenData = Keychain.retrieveTokenData(for: locale) {
             do {
                 let token = try JSONDecoder().decode(AccessToken.self, from: tokenData)
                 if token.isValid {
@@ -55,7 +53,7 @@ enum BattleNetAPI {
         
         var components = URLComponents()
         components.scheme = "https"
-        components.host = host
+        components.host = locale.oauthAPIRegion.host
         components.path = "/oauth/token"
         components.queryItems = [
             URLQueryItem(name: "client_id", value: HearthstoneKit.shared.configuration.clientID),
@@ -76,7 +74,7 @@ enum BattleNetAPI {
             .handleEvents(receiveOutput: { (accessToken) in
                 do {
                     let tokenData = try JSONEncoder().encode(accessToken)
-                    Keychain.storeTokenData(tokenData, for: service)
+                    Keychain.storeTokenData(tokenData, for: locale)
                 } catch {
                     HSKLog.log(.error, "Error encoding access token for keychain storage.")
                 }
