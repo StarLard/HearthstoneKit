@@ -22,7 +22,7 @@ public struct Card: Codable, Hashable {
     public let multiClassIDs: [BlizzardIdentifier]
     public let cardTypeID: BlizzardIdentifier
     public let cardSetID: BlizzardIdentifier
-    public let rarityID: BlizzardIdentifier
+    public let rarityID: BlizzardIdentifier?
     public let artistName: String?
     public let health: Int?
     public let attack: Int?
@@ -30,9 +30,9 @@ public struct Card: Codable, Hashable {
     public let durability: Int?
     public let armor: Int?
     public let name: String
-    public let text: String
+    public let text: String?
     public let attributedText: NSAttributedString?
-    public let image: URL
+    public let image: URL?
     public let imageGold: URL?
     public let flavorText: String
     public let cropImage: URL?
@@ -88,7 +88,7 @@ public struct Card: Codable, Hashable {
         multiClassIDs = try values.decode(Array<BlizzardIdentifier>.self, forKey: .multiClassIDs)
         cardTypeID = try values.decode(BlizzardIdentifier.self, forKey: .cardTypeID)
         cardSetID = try values.decode(BlizzardIdentifier.self, forKey: .cardSetID)
-        rarityID = try values.decode(BlizzardIdentifier.self, forKey: .rarityID)
+        rarityID = try values.decodeIfPresent(BlizzardIdentifier.self, forKey: .rarityID)
         artistName = try values.decodeIfPresent(String.self, forKey: .artistName)
         health = try values.decodeIfPresent(Int.self, forKey: .health)
         attack = try values.decodeIfPresent(Int.self, forKey: .attack)
@@ -96,13 +96,15 @@ public struct Card: Codable, Hashable {
         armor = try values.decodeIfPresent(Int.self, forKey: .armor)
         manaCost = try values.decode(Int.self, forKey: .manaCost)
         name = try values.decode(String.self, forKey: .name)
-        
-        let unparsedText = try values.decode(String.self, forKey: .text)
-        text = unparsedText
-        let data = Data(unparsedText.utf8)
-        attributedText = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
-            
-        image = try values.decode(URL.self, forKey: .image)
+        if let unparsedText = try values.decodeIfPresent(String.self, forKey: .text) {
+            text = unparsedText
+            let data = Data(unparsedText.utf8)
+            attributedText = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
+        } else {
+            text = nil
+            attributedText = nil
+        }
+        image = URL(string: try values.decode(String.self, forKey: .image))
         imageGold = URL(string: try values.decode(String.self, forKey: .imageGold))
         flavorText = try values.decode(String.self, forKey: .flavorText)
         cropImage = try values.decodeIfPresent(URL.self, forKey: .cropImage)
@@ -129,8 +131,8 @@ public struct Card: Codable, Hashable {
         try container.encodeIfPresent(armor, forKey: .armor)
         try container.encode(manaCost, forKey: .manaCost)
         try container.encode(name, forKey: .name)
-        try container.encode(text, forKey: .text)
-        try container.encode(image.absoluteString, forKey: .image)
+        try container.encode(text ?? "", forKey: .text)
+        try container.encode(image?.absoluteString ?? "", forKey: .image)
         try container.encode(imageGold?.absoluteString ?? "", forKey: .imageGold)
         try container.encode(flavorText, forKey: .flavorText)
         try container.encodeIfPresent(cropImage?.absoluteString, forKey: .cropImage)
