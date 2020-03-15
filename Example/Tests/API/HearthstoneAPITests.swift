@@ -15,7 +15,8 @@ final class HearthstoneAPITests: HSKitTestCase {
     func testGetCard() {
         let valueExpectation = XCTestExpectation()
         let completeExpectation = XCTestExpectation()
-        let subscriber = HearthstoneAPI.card(for: .enUS, slug: "52119-arch-villain-rafaam").sink(receiveCompletion: { (result) in
+        let slug = "52119-arch-villain-rafaam"
+        let subscriber = HearthstoneAPI.card(for: .enUS, idOrSlug: slug).sink(receiveCompletion: { (result) in
             switch result {
             case .failure(let error):
                 XCTFail(error.localizedDescription)
@@ -23,7 +24,7 @@ final class HearthstoneAPITests: HSKitTestCase {
                 completeExpectation.fulfill()
             }
         }) { (card) in
-            XCTAssertEqual(card.slug, "52119-arch-villain-rafaam")
+            XCTAssertEqual(card.slug, slug)
             valueExpectation.fulfill()
         }
         wait(for: [valueExpectation, completeExpectation], timeout: 10, enforceOrder: true)
@@ -79,6 +80,48 @@ final class HearthstoneAPITests: HSKitTestCase {
     }
     
     // MARK: Card Backs
+    
+    func testGetCardBack() {
+        let valueExpectation = XCTestExpectation()
+        let completeExpectation = XCTestExpectation()
+        let slug = "155-pizza-stone"
+        let subscriber = HearthstoneAPI.cardBack(for: .enUS, idOrSlug: slug).sink(receiveCompletion: { (result) in
+            switch result {
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            case .finished:
+                completeExpectation.fulfill()
+            }
+        }) { (cardBack) in
+            XCTAssertEqual(cardBack.slug, slug)
+            valueExpectation.fulfill()
+        }
+        wait(for: [valueExpectation, completeExpectation], timeout: 10, enforceOrder: true)
+        subscriber.cancel()
+    }
+    
+    func testCardBackSearch() {
+        let valueExpectation = XCTestExpectation()
+        let completeExpectation = XCTestExpectation()
+        let subscriber = HearthstoneAPI.searchCardBacks(for: .enUS, textFilter: "The only card back you'll ever need.",
+                                                        sort: .name, order: .ascending).sink(receiveCompletion: { (result) in
+                switch result {
+                case .failure(let error):
+                    XCTFail(error.localizedDescription)
+                case .finished:
+                    completeExpectation.fulfill()
+                }
+            }) { (searchResult) in
+                XCTAssertEqual(searchResult.cardCount, 1)
+                XCTAssertEqual(searchResult.page, 1)
+                XCTAssertEqual(searchResult.pageCount, 1)
+                XCTAssertEqual(searchResult.cardBacks.first?.slug, "0-classic")
+                valueExpectation.fulfill()
+        }
+        wait(for: [valueExpectation, completeExpectation], timeout: 10, enforceOrder: true)
+        subscriber.cancel()
+    }
+    
     // MARK: Decks
     // MARK: Metadata
 }

@@ -132,7 +132,7 @@ public enum HearthstoneAPI {
                                    textFilter: String? = nil, sort: CardBackSearch.SortPriority = .date,
                                    order: CardBackSearch.SortOrder = .descending) -> AnyPublisher<CardBackSearch, Error> {
         return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<CardBackSearch, Error> in
-            return searchCardBacks(with: session, for: locale, cardBackCategory: cardBackCategory,
+            return searchCardBacks(with: accessToken, session: session, for: locale, cardBackCategory: cardBackCategory,
                                    textFilter: textFilter, sort: sort, order: order)
         })
         .eraseToAnyPublisher()
