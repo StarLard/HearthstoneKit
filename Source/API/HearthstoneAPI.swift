@@ -103,14 +103,15 @@ public enum HearthstoneAPI {
     /// - Parameters:
     ///   - session: A `URLSession` to create the request in. The default value is `shared`.
     ///   - locale: The locale to reflect in localized data.
-    ///   - slug: An ID or slug that uniquely identifies a card. You can discover these values by using `HearthstoneAPI.searchCards()`.
+    ///   - idOrSlug: An ID or slug that uniquely identifies a card. You can discover these values by using `HearthstoneAPI.searchConstructedCards()`
+    ///   or `HearthstoneAPI.searchBattlegroundsCards()`.
     ///   - gameMode: A recognized game mode (for example, battlegrounds or constructed). The default value is `constructed`. See the
     ///   [Game Modes Guide](https://develop.battle.net/documentation/hearthstone/guides/game-modes) for more information.
     /// - Returns: A publisher which can be canceled and sends a `Card` if the request succeeds or an error on failure.
-    public static func card(with session: URLSession = .shared, for locale: PlayerLocale, slug: String,
+    public static func card(with session: URLSession = .shared, for locale: PlayerLocale, idOrSlug: String,
                             gameMode: GameMode.Kind = .constructed) -> AnyPublisher<Card, Error> {
         return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<Card, Error> in
-            return card(with: accessToken, session: session, for: locale, slug: slug, gameMode: gameMode)
+            return card(with: accessToken, session: session, for: locale, idOrSlug: idOrSlug, gameMode: gameMode)
         })
         .eraseToAnyPublisher()
     }
@@ -133,6 +134,21 @@ public enum HearthstoneAPI {
         return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<CardBackSearch, Error> in
             return searchCardBacks(with: session, for: locale, cardBackCategory: cardBackCategory,
                                    textFilter: textFilter, sort: sort, order: order)
+        })
+        .eraseToAnyPublisher()
+    }
+    
+    /// Returns a specific card back by using card back ID or slug.
+    /// see the [Card Search Guide](https://develop.battle.net/documentation/hearthstone/guides).
+    /// - Parameters:
+    ///   - session: A `URLSession` to create the request in. The default value is `shared`.
+    ///   - locale: The locale to reflect in localized data.
+    ///   - idOrSlug: An ID or slug that uniquely identifies a card back. You can discover these values by using `HearthstoneAPI.searchCardBacks()`.
+    /// - Returns: A publisher which can be canceled and sends a `Card` if the request succeeds or an error on failure.
+    public static func cardBack(with session: URLSession = .shared, for locale: PlayerLocale,
+                                idOrSlug: String) -> AnyPublisher<CardBack, Error> {
+        return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<CardBack, Error> in
+            return cardBack(with: accessToken, session: session, for: locale, idOrSlug: idOrSlug)
         })
         .eraseToAnyPublisher()
     }
@@ -223,11 +239,11 @@ private extension HearthstoneAPI {
     }
     
     static func card(with accessToken: BattleNetAPI.AccessToken, session: URLSession, for locale: PlayerLocale,
-                     slug: String, gameMode: GameMode.Kind) -> AnyPublisher<Card, Error> {
+                     idOrSlug: String, gameMode: GameMode.Kind) -> AnyPublisher<Card, Error> {
         var components = URLComponents()
         components.scheme = "https"
         components.host = locale.gameDataAPIRegion.host
-        components.path = "/hearthstone/cards/\(slug)"
+        components.path = "/hearthstone/cards/\(idOrSlug)"
         components.queryItems = [URLQueryItem(name: "access_token", value: accessToken.value),
                                  URLQueryItem(name: "gameMode", value: gameMode.rawValue),
                                  URLQueryItem(name: "locale", value: locale.rawValue)]
@@ -268,6 +284,22 @@ private extension HearthstoneAPI {
         return session.dataTaskPublisher(for: request)
             .tryExtractData()
             .decode(type: CardBackSearch.self, decoder: JSONDecoder())
+            .eraseToAnyPublisher()
+    }
+    
+    static func cardBack(with accessToken: BattleNetAPI.AccessToken, session: URLSession, for locale: PlayerLocale,
+                     idOrSlug: String) -> AnyPublisher<CardBack, Error> {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = locale.gameDataAPIRegion.host
+        components.path = "/hearthstone/cardbacks/\(idOrSlug)"
+        components.queryItems = [URLQueryItem(name: "access_token", value: accessToken.value),
+                                 URLQueryItem(name: "locale", value: locale.rawValue)]
+        
+        let request: URLRequest = URLRequest(url: components.url!)
+        return session.dataTaskPublisher(for: request)
+            .tryExtractData()
+            .decode(type: CardBack.self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
     }
     

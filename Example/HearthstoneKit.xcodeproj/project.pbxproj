@@ -200,8 +200,8 @@
 		85760F1F241DC65400437BE3 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				85760F20241DC65400437BE3 /* HearthstoneAPITests.swift */,
 				85760F6F241DCC4A00437BE3 /* BattleNetAPITests.swift */,
+				85760F20241DC65400437BE3 /* HearthstoneAPITests.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
