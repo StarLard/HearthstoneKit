@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'HearthstoneKit'
-  s.version          = '0.1.0'
+  s.version          = '1.0.0-beta'
   s.summary          = 'An elegant pure-swift SDK for consuming the official Hearthstone API.'
   s.description      = <<-DESC
 HearthstoneKit is a pure-swift SDK for consuming the official Hearthstone API. With it you can interact with the official API using native swift types. HearthstoneKit's design goals are to be lightweight, simple to use, and leverage the power of swift.
