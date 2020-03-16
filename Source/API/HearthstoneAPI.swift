@@ -45,11 +45,11 @@ public enum HearthstoneAPI {
                                               page: Int = 1, pageSize: Int? = nil, sort: CardSearch.SortPriority = .manaCost,
                                               order: CardSearch.SortOrder = .ascending) -> AnyPublisher<CardSearch, Error> {
         return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<CardSearch, Error> in
-            return searchCards(with: accessToken, session: session, for: locale, setSlug: setSlug,
-                               classSlug: classSlug, manaCost: manaCost, attack: attack, health: health,
-                               collectible: collectible, raritySlug: raritySlug, typeSlug: typeSlug,
-                               minionTypeSlug: minionTypeSlug, keywordSlug: keywordSlug, textFilter: textFilter,
-                               gameMode: .constructed, tiers: nil, page: page, pageSize: pageSize, sort: sort, order: order)
+            return requestCards(with: accessToken, session: session, for: locale, setSlug: setSlug,
+                                classSlug: classSlug, manaCost: manaCost, attack: attack, health: health,
+                                collectible: collectible, raritySlug: raritySlug, typeSlug: typeSlug,
+                                minionTypeSlug: minionTypeSlug, keywordSlug: keywordSlug, textFilter: textFilter,
+                                gameMode: .constructed, tiers: nil, page: page, pageSize: pageSize, sort: sort, order: order)
         }).eraseToAnyPublisher()
     }
     
@@ -88,11 +88,11 @@ public enum HearthstoneAPI {
                                                 sort: CardSearch.SortPriority = .manaCost, order: CardSearch.SortOrder = .ascending)
         -> AnyPublisher<CardSearch, Error> {
             return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<CardSearch, Error> in
-                return searchCards(with: accessToken, session: session, for: locale, setSlug: setSlug,
-                                   classSlug: classSlug, manaCost: manaCost, attack: attack, health: health,
-                                   collectible: collectible, raritySlug: raritySlug, typeSlug: typeSlug,
-                                   minionTypeSlug: minionTypeSlug, keywordSlug: keywordSlug, textFilter: textFilter,
-                                   gameMode: .battlegrounds, tiers: tiers, page: page, pageSize: pageSize, sort: sort, order: order)
+                return requestCards(with: accessToken, session: session, for: locale, setSlug: setSlug,
+                                    classSlug: classSlug, manaCost: manaCost, attack: attack, health: health,
+                                    collectible: collectible, raritySlug: raritySlug, typeSlug: typeSlug,
+                                    minionTypeSlug: minionTypeSlug, keywordSlug: keywordSlug, textFilter: textFilter,
+                                    gameMode: .battlegrounds, tiers: tiers, page: page, pageSize: pageSize, sort: sort, order: order)
             }).eraseToAnyPublisher()
     }
     
@@ -106,10 +106,10 @@ public enum HearthstoneAPI {
     ///   - gameMode: A recognized game mode (for example, battlegrounds or constructed). The default value is `constructed`. See the
     ///   [Game Modes Guide](https://develop.battle.net/documentation/hearthstone/guides/game-modes) for more information.
     /// - Returns: A publisher which can be canceled and sends a `Card` if the request succeeds or an error on failure.
-    public static func card(with session: URLSession = .shared, for locale: PlayerLocale, idOrSlug: String,
-                            gameMode: GameMode.Kind = .constructed) -> AnyPublisher<Card, Error> {
+    public static func getCard(with session: URLSession = .shared, for locale: PlayerLocale, idOrSlug: String,
+                               gameMode: GameMode.Kind = .constructed) -> AnyPublisher<Card, Error> {
         return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<Card, Error> in
-            return card(with: accessToken, session: session, for: locale, idOrSlug: idOrSlug, gameMode: gameMode)
+            return requestCard(with: accessToken, session: session, for: locale, idOrSlug: idOrSlug, gameMode: gameMode)
         }).eraseToAnyPublisher()
     }
     
@@ -129,8 +129,8 @@ public enum HearthstoneAPI {
                                        textFilter: String? = nil, sort: CardBackSearch.SortPriority = .date,
                                        order: CardBackSearch.SortOrder = .descending) -> AnyPublisher<CardBackSearch, Error> {
         return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<CardBackSearch, Error> in
-            return searchCardBacks(with: accessToken, session: session, for: locale, cardBackCategory: cardBackCategory,
-                                   textFilter: textFilter, sort: sort, order: order)
+            return requestCardBacks(with: accessToken, session: session, for: locale, cardBackCategory: cardBackCategory,
+                                    textFilter: textFilter, sort: sort, order: order)
         }).eraseToAnyPublisher()
     }
     
@@ -141,10 +141,10 @@ public enum HearthstoneAPI {
     ///   - locale: The locale to reflect in localized data.
     ///   - idOrSlug: An ID or slug that uniquely identifies a card back. You can discover these values by using `HearthstoneAPI.searchCardBacks()`.
     /// - Returns: A publisher which can be canceled and sends a `Card` if the request succeeds or an error on failure.
-    public static func cardBack(with session: URLSession = .shared, for locale: PlayerLocale,
-                                idOrSlug: String) -> AnyPublisher<CardBack, Error> {
+    public static func getCardBack(with session: URLSession = .shared, for locale: PlayerLocale,
+                                   idOrSlug: String) -> AnyPublisher<CardBack, Error> {
         return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<CardBack, Error> in
-            return cardBack(with: accessToken, session: session, for: locale, idOrSlug: idOrSlug)
+            return requestCardBack(with: accessToken, session: session, for: locale, idOrSlug: idOrSlug)
         }).eraseToAnyPublisher()
     }
     
@@ -157,26 +157,54 @@ public enum HearthstoneAPI {
     ///   - locale: The locale to reflect in localized data.
     ///   - deckcode: A code that identifies a deck. You can get one from a `Deckstring` or you copy one from the game or various Hearthstone websites.
     /// - Returns: A publisher which can be canceled and sends a `Deck` if the request succeeds or an error on failure.
-    public static func deck(with session: URLSession = .shared, for locale: PlayerLocale,
-                            deckcode: String) -> AnyPublisher<Deck, Error> {
+    public static func getDeck(with session: URLSession = .shared, for locale: PlayerLocale,
+                               deckcode: String) -> AnyPublisher<Deck, Error> {
         return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<Deck, Error> in
-            return deck(with: accessToken, session: session, for: locale, deckcode: deckcode)
+            return requestDeck(with: accessToken, session: session, for: locale, deckcode: deckcode)
         }).eraseToAnyPublisher()
     }
     
     // MARK: - Metadata
+    
+    /// Returns information about just one type of metadata. For more information, see the
+    /// [Metadata Guide](https://develop.battle.net/documentation/hearthstone/guides/metadata).
+    /// - Parameters:
+    ///   - session: A `URLSession` to create the request in. The default value is `shared`.
+    ///   - locale: The locale to reflect in localized data.
+    ///   - metadataType: The type of the metadata to retrieve. Valid values include `ExpansionSet`, `ExpansionSet.Group`, `Rarity`,
+    ///   `Card.Keyword`, `PlayerClass`, `Card.CardType`, and `MinionType`.
+    /// - Returns: A publisher which can be canceled and sends a `MetadataType` if the request succeeds or an error on failure.
+    public static func getMetadata<MetadataType: Metadata>(with session: URLSession = .shared, for locale: PlayerLocale,
+                                                           metadataType: MetadataType.Type) -> AnyPublisher<Set<MetadataType>, Error> {
+        return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<Set<MetadataType>, Error> in
+            return requestMetadata(with: accessToken, session: session, for: locale, metadataType: metadataType)
+        }).eraseToAnyPublisher()
+    }
+    
+    /// Returns information about the categorization of cards. Metadata includes the card set, set group (for example, Standard or Year of
+    ///  the Dragon), rarity, class, card type, minion type, and keywords. For more information, see the
+    ///  [Metadata Guide](https://develop.battle.net/documentation/hearthstone/guides/metadata).
+    /// - Parameters:
+    ///   - session: A `URLSession` to create the request in. The default value is `shared`.
+    ///   - locale: The locale to reflect in localized data.
+    /// - Returns: A publisher which can be canceled and sends a `MetadataSummary` if the request succeeds or an error on failure.
+    public static func getAllMetadata(with session: URLSession = .shared, for locale: PlayerLocale) -> AnyPublisher<MetadataSummary, Error> {
+        return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<MetadataSummary, Error> in
+            return requestAllMetadata(with: accessToken, session: session, for: locale)
+        }).eraseToAnyPublisher()
+    }
 }
 
-// MARK: - Private
+// MARK: - Network Requests
 
 private extension HearthstoneAPI {
-    // MARK: Cards (Requests)
+    // MARK: Cards
     
-    static func searchCards(with accessToken: BattleNetAPI.AccessToken, session: URLSession = .shared, for locale: PlayerLocale,
-                            setSlug: String?, classSlug: String?, manaCost: [Int]?, attack: [Int]?, health: [Int]?, collectible: Bool?,
-                            raritySlug: String?, typeSlug: String?, minionTypeSlug: String?, keywordSlug: String?, textFilter: String?,
-                            gameMode: GameMode.Kind, tiers: [BattlegroundsTier]?, page: Int, pageSize: Int?, sort: CardSearch.SortPriority,
-                            order: CardSearch.SortOrder) -> AnyPublisher<CardSearch, Error> {
+    static func requestCards(with accessToken: BattleNetAPI.AccessToken, session: URLSession = .shared, for locale: PlayerLocale,
+                             setSlug: String?, classSlug: String?, manaCost: [Int]?, attack: [Int]?, health: [Int]?, collectible: Bool?,
+                             raritySlug: String?, typeSlug: String?, minionTypeSlug: String?, keywordSlug: String?, textFilter: String?,
+                             gameMode: GameMode.Kind, tiers: [BattlegroundsTier]?, page: Int, pageSize: Int?, sort: CardSearch.SortPriority,
+                             order: CardSearch.SortOrder) -> AnyPublisher<CardSearch, Error> {
         
         switch gameMode {
         case .battlegrounds:
@@ -248,8 +276,8 @@ private extension HearthstoneAPI {
             .eraseToAnyPublisher()
     }
     
-    static func card(with accessToken: BattleNetAPI.AccessToken, session: URLSession, for locale: PlayerLocale,
-                     idOrSlug: String, gameMode: GameMode.Kind) -> AnyPublisher<Card, Error> {
+    static func requestCard(with accessToken: BattleNetAPI.AccessToken, session: URLSession, for locale: PlayerLocale,
+                            idOrSlug: String, gameMode: GameMode.Kind) -> AnyPublisher<Card, Error> {
         var components = URLComponents()
         components.scheme = "https"
         components.host = locale.gameDataAPIRegion.host
@@ -265,11 +293,11 @@ private extension HearthstoneAPI {
             .eraseToAnyPublisher()
     }
     
-    // MARK: Card Backs (Requests)
+    // MARK: Card Backs
     
-    static func searchCardBacks(with accessToken: BattleNetAPI.AccessToken, session: URLSession, for locale: PlayerLocale,
-                                cardBackCategory: String?, textFilter: String?, sort: CardBackSearch.SortPriority,
-                                order: CardBackSearch.SortOrder) -> AnyPublisher<CardBackSearch, Error> {
+    static func requestCardBacks(with accessToken: BattleNetAPI.AccessToken, session: URLSession, for locale: PlayerLocale,
+                                 cardBackCategory: String?, textFilter: String?, sort: CardBackSearch.SortPriority,
+                                 order: CardBackSearch.SortOrder) -> AnyPublisher<CardBackSearch, Error> {
         var parameters = [
             URLQueryItem(name: "access_token", value: accessToken.value),
             URLQueryItem(name: "locale", value: locale.rawValue),
@@ -297,8 +325,8 @@ private extension HearthstoneAPI {
             .eraseToAnyPublisher()
     }
     
-    static func cardBack(with accessToken: BattleNetAPI.AccessToken, session: URLSession, for locale: PlayerLocale,
-                         idOrSlug: String) -> AnyPublisher<CardBack, Error> {
+    static func requestCardBack(with accessToken: BattleNetAPI.AccessToken, session: URLSession, for locale: PlayerLocale,
+                                idOrSlug: String) -> AnyPublisher<CardBack, Error> {
         var components = URLComponents()
         components.scheme = "https"
         components.host = locale.gameDataAPIRegion.host
@@ -313,10 +341,10 @@ private extension HearthstoneAPI {
             .eraseToAnyPublisher()
     }
     
-    // MARK: Decks (Requests)
+    // MARK: Decks
     
-    static func deck(with accessToken: BattleNetAPI.AccessToken, session: URLSession,
-                     for locale: PlayerLocale, deckcode: String) -> AnyPublisher<Deck, Error> {
+    static func requestDeck(with accessToken: BattleNetAPI.AccessToken, session: URLSession,
+                            for locale: PlayerLocale, deckcode: String) -> AnyPublisher<Deck, Error> {
         var components = URLComponents()
         components.scheme = "https"
         components.host = locale.gameDataAPIRegion.host
@@ -331,5 +359,37 @@ private extension HearthstoneAPI {
             .eraseToAnyPublisher()
     }
     
-    // MARK: Metadata (Requests)
+    // MARK: Metadata
+    
+    static func requestMetadata<MetadataType: Metadata>(with accessToken: BattleNetAPI.AccessToken, session: URLSession,
+                                                        for locale: PlayerLocale, metadataType: MetadataType.Type) -> AnyPublisher<Set<MetadataType>, Error> {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = locale.gameDataAPIRegion.host
+        components.path = "/hearthstone/metadata/\(MetadataType.metadataKind)"
+        components.queryItems = [URLQueryItem(name: "access_token", value: accessToken.value),
+                                 URLQueryItem(name: "locale", value: locale.rawValue)]
+        
+        let request: URLRequest = URLRequest(url: components.url!)
+        return session.dataTaskPublisher(for: request)
+            .tryExtractData()
+            .decode(type: Set<MetadataType>.self, decoder: JSONDecoder())
+            .eraseToAnyPublisher()
+    }
+    
+    static func requestAllMetadata(with accessToken: BattleNetAPI.AccessToken, session: URLSession,
+                                   for locale: PlayerLocale) -> AnyPublisher<MetadataSummary, Error> {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = locale.gameDataAPIRegion.host
+        components.path = "/hearthstone/metadata"
+        components.queryItems = [URLQueryItem(name: "access_token", value: accessToken.value),
+                                 URLQueryItem(name: "locale", value: locale.rawValue)]
+        
+        let request: URLRequest = URLRequest(url: components.url!)
+        return session.dataTaskPublisher(for: request)
+            .tryExtractData()
+            .decode(type: MetadataSummary.self, decoder: JSONDecoder())
+            .eraseToAnyPublisher()
+    }
 }

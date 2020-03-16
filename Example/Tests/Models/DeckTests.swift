@@ -15,9 +15,9 @@ final class DeckTests: HSKitTestCase {
         assertDoesNotThrow(try JSONDecoder().decode(Deck.self, from: data)) { (deck) in
             XCTAssertEqual(deck.version, 0)
             XCTAssertEqual(deck.format, "standard")
-            XCTAssertEqual(deck.hero.id.rawValue, 7)
-            XCTAssertEqual(deck.heroPower.id.rawValue, 725)
-            XCTAssertEqual(deck.class.id.rawValue, 10)
+            XCTAssertEqual(deck.hero.id, 7)
+            XCTAssertEqual(deck.heroPower.id, 725)
+            XCTAssertEqual(deck.class.id, 10)
             XCTAssertEqual(deck.cards.numberOfCards, 30)
             XCTAssertEqual(deck.cards.numberOfSlots, 18)
         }

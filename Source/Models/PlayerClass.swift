@@ -7,12 +7,13 @@
 
 import Foundation
 
-public struct PlayerClass: Codable, Hashable {
+public struct PlayerClass: Metadata {
     public let id: BlizzardIdentifier
     public let cardID: BlizzardIdentifier?
     public let slug: String
     public let name: String
     public var kind: Kind { Kind(slug: slug) }
+    public static let metadataKind: MetadataKind = .classes
     
     public enum Kind {
         case all

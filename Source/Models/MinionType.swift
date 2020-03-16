@@ -7,11 +7,12 @@
 
 import Foundation
 
-public struct MinionType: Codable, Hashable {
+public struct MinionType: Metadata {
     public let id: BlizzardIdentifier
     public let slug: String
     public let name: String
     public var kind: Kind { Kind(slug: slug) }
+    public static let metadataKind: MetadataKind = .minionTypes
     
     public enum Kind {
         case murloc

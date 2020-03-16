@@ -147,12 +147,13 @@ public struct Card: Codable, Hashable {
 extension Card {
     // MARK: Keyword
     
-    public struct Keyword: Codable {
+    public struct Keyword: Metadata {
         public let id: BlizzardIdentifier
         public let slug: String
         public let name: String
         public let text: String
         public let referenceText: String
+        public static let metadataKind: MetadataKind = .keywords
         
         enum CodingKeys: String, CodingKey {
             case id
@@ -165,11 +166,12 @@ extension Card {
     
     // MARK: Card Type
     
-    public struct CardType: Codable {
+    public struct CardType: Metadata {
         public let id: BlizzardIdentifier
         public let slug: String
         public let name: String
         public var kind: Kind { Kind(slug: slug) }
+        public static let metadataKind: MetadataKind = .types
         
         public enum Kind {
             case hero

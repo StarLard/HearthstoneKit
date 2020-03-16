@@ -225,27 +225,31 @@ private extension Deckstring {
         
         append(number: 0)
         append(number: version)
-        append(number: formatID.rawValue)
+        append(number: formatID.intValue ?? 0)
         
         let heroIDs = [heroID]
         append(number: heroIDs.count)
         for id in heroIDs {
-            append(number: id.rawValue)
+            guard let id = id.intValue else { continue }
+            append(number: id)
         }
         
         append(number: oneOfs.count)
         for cardID in oneOfs {
-            append(number: cardID.rawValue)
+            guard let cardID = cardID.intValue else { continue }
+            append(number: cardID)
         }
         
         append(number: twoOfs.count)
         for cardID in twoOfs {
-            append(number: cardID.rawValue)
+            guard let cardID = cardID.intValue else { continue }
+            append(number: cardID)
         }
         
         append(number: xOfs.count)
         for (cardID, cardQuantity) in xOfs {
-            append(number: cardID.rawValue)
+            guard let cardID = cardID.intValue else { continue }
+            append(number: cardID)
             append(number: cardQuantity)
         }
         return Data(varIntArray)

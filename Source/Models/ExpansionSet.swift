@@ -7,16 +7,17 @@
 
 import Foundation
 
-public struct ExpansionSet: Codable, Hashable {
+public struct ExpansionSet: Metadata {
     public let id: BlizzardIdentifier
     public let slug: String
-    public let releaseDate: Date
+    public let releaseDate: Date?
     public let name: String
-    public let type: String
+    public let type: String?
     public let collectibleCount: Int
     public let collectibleRevealedCount: Int
     public let nonCollectibleCount: Int
     public let nonCollectibleRevealedCount: Int
+    public static let metadataKind: MetadataKind = .sets
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -35,15 +36,19 @@ public struct ExpansionSet: Codable, Hashable {
         id = try values.decode(BlizzardIdentifier.self, forKey: .id)
         slug = try values.decode(String.self, forKey: .slug)
         name = try values.decode(String.self, forKey: .name)
-        type = try values.decode(String.self, forKey: .type)
+        type = try values.decodeIfPresent(String.self, forKey: .type)
         collectibleCount = try values.decode(Int.self, forKey: .collectibleCount)
         collectibleRevealedCount = try values.decode(Int.self, forKey: .collectibleRevealedCount)
         nonCollectibleCount = try values.decode(Int.self, forKey: .nonCollectibleCount)
         nonCollectibleRevealedCount = try values.decode(Int.self, forKey: .nonCollectibleRevealedCount)
-        guard let date = Self.APIDateFormatter().date(from: try values.decode(String.self, forKey: .releaseDate)) else {
-            throw DecodingError.dataCorruptedError(forKey: .releaseDate, in: values, debugDescription: "Date string did not match expected format.")
+        if let dateString = try values.decodeIfPresent(String.self, forKey: .releaseDate) {
+            guard let date = Self.APIDateFormatter().date(from: dateString) else {
+                throw DecodingError.dataCorruptedError(forKey: .releaseDate, in: values, debugDescription: "Date string did not match expected format.")
+            }
+            releaseDate = date
+        } else {
+            releaseDate = nil
         }
-        releaseDate = date
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -52,12 +57,14 @@ public struct ExpansionSet: Codable, Hashable {
         try container.encode(id, forKey: .id)
         try container.encode(slug, forKey: .slug)
         try container.encode(name, forKey: .name)
-        try container.encode(type, forKey: .type)
+        try container.encodeIfPresent(type, forKey: .type)
         try container.encode(collectibleCount, forKey: .collectibleCount)
         try container.encode(collectibleRevealedCount, forKey: .collectibleRevealedCount)
         try container.encode(nonCollectibleCount, forKey: .nonCollectibleCount)
         try container.encode(nonCollectibleRevealedCount, forKey: .nonCollectibleRevealedCount)
-        try container.encode(Self.APIDateFormatter().string(from: releaseDate), forKey: .releaseDate)
+        if let date = releaseDate {
+            try container.encode(Self.APIDateFormatter().string(from: date), forKey: .releaseDate)
+        }
     }
     
     static func APIDateFormatter() -> DateFormatter {

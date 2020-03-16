@@ -13,18 +13,18 @@ final class MetadataTests: HSKitTestCase {
     func testPlayerClassDecodeFromValidData() throws {
         let data = openSampleFile(.playerClass)
         assertDoesNotThrow(try JSONDecoder().decode(PlayerClass.self, from: data)) { (model) in
-            XCTAssertEqual(model.id.rawValue, 3)
+            XCTAssertEqual(model.id, 3)
             XCTAssertEqual(model.slug, "hunter")
             XCTAssertEqual(model.name, "Hunter")
             XCTAssertEqual(model.kind, .hunter)
-            XCTAssertEqual(model.cardID?.rawValue, 31)
+            XCTAssertEqual(model.cardID, 31)
         }
     }
     
     func testExpansionSetDecodeFromValidData() {
         let data = openSampleFile(.expansionSet)
         assertDoesNotThrow(try JSONDecoder().decode(ExpansionSet.self, from: data)) { (model) in
-            XCTAssertEqual(model.id.rawValue, 1403)
+            XCTAssertEqual(model.id, 1403)
             XCTAssertEqual(model.slug, "galakronds-awakening")
             XCTAssertEqual(model.name, "Galakrond's Awakening")
             XCTAssertEqual(model.releaseDate, Date(timeIntervalSince1970: 1577858400))
@@ -38,7 +38,7 @@ final class MetadataTests: HSKitTestCase {
     
     func testExpansionSetGroupDecodeFromValidData() {
         let data = openSampleFile(.expansionSetGroup)
-        assertDoesNotThrow(try JSONDecoder().decode(ExpansionSetGroup.self, from: data)) { (model) in
+        assertDoesNotThrow(try JSONDecoder().decode(ExpansionSet.Group.self, from: data)) { (model) in
             XCTAssertEqual(model.year, 2019)
             XCTAssertEqual(model.slug, "dragon")
             XCTAssertEqual(model.name, "Year of the Dragon")
@@ -56,7 +56,7 @@ final class MetadataTests: HSKitTestCase {
     func testGameModeDecodeFromValidData() {
         let data = openSampleFile(.gameMode)
         assertDoesNotThrow(try JSONDecoder().decode(GameMode.self, from: data)) { (model) in
-            XCTAssertEqual(model.id.rawValue, 1)
+            XCTAssertEqual(model.id, 1)
             XCTAssertEqual(model.slug, "constructed")
             XCTAssertEqual(model.name, "Standard & Wild Formats")
             XCTAssertEqual(model.kind, .constructed)
@@ -66,7 +66,7 @@ final class MetadataTests: HSKitTestCase {
     func testMinionTypeDecodeFromValidData() {
         let data = openSampleFile(.minionType)
         assertDoesNotThrow(try JSONDecoder().decode(MinionType.self, from: data)) { (model) in
-            XCTAssertEqual(model.id.rawValue, 14)
+            XCTAssertEqual(model.id, 14)
             XCTAssertEqual(model.slug, "murloc")
             XCTAssertEqual(model.name, "Murloc")
             XCTAssertEqual(model.kind, .murloc)
@@ -76,7 +76,7 @@ final class MetadataTests: HSKitTestCase {
     func testRarityDecodeFromValidData() throws {
         let data = openSampleFile(.rarity)
         assertDoesNotThrow(try JSONDecoder().decode(Rarity.self, from: data)) { (model) in
-            XCTAssertEqual(model.id.rawValue, 5)
+            XCTAssertEqual(model.id, 5)
             XCTAssertEqual(model.slug, "legendary")
             XCTAssertEqual(model.name, "Legendary")
             XCTAssertEqual(model.craftingCost.regular, 1600)

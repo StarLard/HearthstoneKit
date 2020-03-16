@@ -7,13 +7,14 @@
 
 import Foundation
 
-public struct Rarity: Codable, Hashable {
+public struct Rarity: Metadata {
     public let id: BlizzardIdentifier
     public let slug: String
     public let name: String
     public let craftingCost: CardFormValue
     public let dustValue: CardFormValue
     public var kind: Kind { Kind(slug: slug) }
+    public static let metadataKind: MetadataKind = .rarities
     
     public struct CardFormValue: Codable, Hashable {
         public let regular: Int?
