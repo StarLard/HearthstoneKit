@@ -13,8 +13,8 @@ public final class HearthstoneKit {
     
     static let shared = HearthstoneKit()
     
-    var configuration: Configuration {
-        guard let config = _configuration else {
+    public static var configuration: Configuration {
+        guard let config = shared.configuration else {
             preconditionFailure("`HearthstoneKit.configure()` must be called at app launch.")
         }
         return config
@@ -60,18 +60,18 @@ public final class HearthstoneKit {
     /// - Parameter configuration: A custom configuration for your app.
     public static func configure(with configuration: Configuration) {
         assert(Thread.isMainThread)
-        guard shared._configuration == nil else {
+        guard shared.configuration == nil else {
             preconditionFailure("App has already been configured. Only call `HearthstoneKit.configure()` once per app launch.")
         }
         HSKLog.log(.debug, "Configuring app.")
-        shared._configuration = configuration
+        shared.configuration = configuration
     }
     
     // MARK: Private Properties
     
     private static let configurationFileName = "HearthstoneKit-Configuration"
     private static let configurationFileType = "plist"
-    private var _configuration: Configuration?
+    private var configuration: Configuration?
     private var appBundles: [Bundle] { [Bundle.main, Bundle(for: Self.self)] }
     
     // MARK: Private Methods

@@ -56,8 +56,8 @@ enum BattleNetAPI {
         components.host = locale.oauthAPIRegion.host
         components.path = "/oauth/token"
         components.queryItems = [
-            URLQueryItem(name: "client_id", value: HearthstoneKit.shared.configuration.clientID),
-            URLQueryItem(name: "client_secret", value: HearthstoneKit.shared.configuration.clientSecret)
+            URLQueryItem(name: "client_id", value: HearthstoneKit.configuration.clientID),
+            URLQueryItem(name: "client_secret", value: HearthstoneKit.configuration.clientSecret)
         ]
         var request: URLRequest = URLRequest(url: components.url!)
         request.httpMethod = "POST"

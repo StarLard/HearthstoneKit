@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit.UIColor
 
 public struct Rarity: Metadata {
     public let id: BlizzardIdentifier
@@ -53,6 +54,20 @@ public struct Rarity: Metadata {
             case "epic": self = .epic
             case "legendary": self = .legendary
             default: self = .unknown
+            }
+        }
+        
+
+
+        // MARK: - Constants
+
+        public var gemColor: UIColor? {
+            switch self {
+            case .common: return  #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // HEX: #FFFFFF
+            case .free, .unknown: return nil
+            case .rare: return #colorLiteral(red: 0, green: 0.44, blue: 0.87, alpha: 1) // HEX: #0070DD
+            case .epic: return #colorLiteral(red: 0.64, green: 0.21, blue: 0.93, alpha: 1) // HEX: #A336ED
+            case .legendary: return #colorLiteral(red: 1, green: 0.5, blue: 0, alpha: 1) // HEX: #FF7F00
             }
         }
     }
