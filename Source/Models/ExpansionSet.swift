@@ -42,10 +42,13 @@ public struct ExpansionSet: Metadata {
         nonCollectibleCount = try values.decode(Int.self, forKey: .nonCollectibleCount)
         nonCollectibleRevealedCount = try values.decode(Int.self, forKey: .nonCollectibleRevealedCount)
         if let dateString = try values.decodeIfPresent(String.self, forKey: .releaseDate) {
-            guard let date = Self.APIDateFormatter().date(from: dateString) else {
+            if let releasedDate = Self.ReleasedSetDateFormatter().date(from: dateString) {
+                releaseDate = releasedDate
+            } else if let unreleasedDate = Self.UnreleasedSetDateFormatter().date(from: dateString) {
+                releaseDate = unreleasedDate
+            } else {
                 throw DecodingError.dataCorruptedError(forKey: .releaseDate, in: values, debugDescription: "Date string did not match expected format.")
             }
-            releaseDate = date
         } else {
             releaseDate = nil
         }
@@ -63,13 +66,22 @@ public struct ExpansionSet: Metadata {
         try container.encode(nonCollectibleCount, forKey: .nonCollectibleCount)
         try container.encode(nonCollectibleRevealedCount, forKey: .nonCollectibleRevealedCount)
         if let date = releaseDate {
-            try container.encode(Self.APIDateFormatter().string(from: date), forKey: .releaseDate)
+            try container.encode(Self.ReleasedSetDateFormatter().string(from: date), forKey: .releaseDate)
         }
     }
     
-    static func APIDateFormatter() -> DateFormatter {
+    static func ReleasedSetDateFormatter() -> DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.timeZone = TimeZone(secondsFromGMT: -21600) // Central Time
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter
+    }
+    
+    static func UnreleasedSetDateFormatter() -> DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
         formatter.calendar = Calendar(identifier: .iso8601)
         formatter.timeZone = TimeZone(secondsFromGMT: -21600) // Central Time
         formatter.locale = Locale(identifier: "en_US_POSIX")

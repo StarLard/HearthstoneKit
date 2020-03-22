@@ -44,7 +44,7 @@ public enum HearthstoneAPI {
                                               minionTypeSlug: String? = nil, keywordSlug: String? = nil, textFilter: String? = nil,
                                               page: Int = 1, pageSize: Int? = nil, sort: CardSearch.SortPriority = .manaCost,
                                               order: CardSearch.SortOrder = .ascending) -> AnyPublisher<CardSearch, Error> {
-        return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<CardSearch, Error> in
+        return BattleNetAPI.getAccessToken(with: session, for: locale.oauthAPIRegion).flatMap({ (accessToken) -> AnyPublisher<CardSearch, Error> in
             return requestCards(with: accessToken, session: session, for: locale, setSlug: setSlug,
                                 classSlug: classSlug, manaCost: manaCost, attack: attack, health: health,
                                 collectible: collectible, raritySlug: raritySlug, typeSlug: typeSlug,
@@ -87,7 +87,7 @@ public enum HearthstoneAPI {
                                                 tiers: [BattlegroundsTier]? = nil, page: Int = 1, pageSize: Int? = nil,
                                                 sort: CardSearch.SortPriority = .manaCost, order: CardSearch.SortOrder = .ascending)
         -> AnyPublisher<CardSearch, Error> {
-            return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<CardSearch, Error> in
+            return BattleNetAPI.getAccessToken(with: session, for: locale.oauthAPIRegion).flatMap({ (accessToken) -> AnyPublisher<CardSearch, Error> in
                 return requestCards(with: accessToken, session: session, for: locale, setSlug: setSlug,
                                     classSlug: classSlug, manaCost: manaCost, attack: attack, health: health,
                                     collectible: collectible, raritySlug: raritySlug, typeSlug: typeSlug,
@@ -108,7 +108,7 @@ public enum HearthstoneAPI {
     /// - Returns: A publisher which can be canceled and sends a `Card` if the request succeeds or an error on failure.
     public static func getCard(with session: URLSession = .shared, for locale: PlayerLocale, idOrSlug: String,
                                gameMode: GameMode.Kind = .constructed) -> AnyPublisher<Card, Error> {
-        return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<Card, Error> in
+        return BattleNetAPI.getAccessToken(with: session, for: locale.oauthAPIRegion).flatMap({ (accessToken) -> AnyPublisher<Card, Error> in
             return requestCard(with: accessToken, session: session, for: locale, idOrSlug: idOrSlug, gameMode: gameMode)
         }).eraseToAnyPublisher()
     }
@@ -128,7 +128,7 @@ public enum HearthstoneAPI {
     public static func searchCardBacks(with session: URLSession = .shared, for locale: PlayerLocale, cardBackCategory: String? = nil,
                                        textFilter: String? = nil, sort: CardBackSearch.SortPriority = .date,
                                        order: CardBackSearch.SortOrder = .descending) -> AnyPublisher<CardBackSearch, Error> {
-        return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<CardBackSearch, Error> in
+        return BattleNetAPI.getAccessToken(with: session, for: locale.oauthAPIRegion).flatMap({ (accessToken) -> AnyPublisher<CardBackSearch, Error> in
             return requestCardBacks(with: accessToken, session: session, for: locale, cardBackCategory: cardBackCategory,
                                     textFilter: textFilter, sort: sort, order: order)
         }).eraseToAnyPublisher()
@@ -143,7 +143,7 @@ public enum HearthstoneAPI {
     /// - Returns: A publisher which can be canceled and sends a `Card` if the request succeeds or an error on failure.
     public static func getCardBack(with session: URLSession = .shared, for locale: PlayerLocale,
                                    idOrSlug: String) -> AnyPublisher<CardBack, Error> {
-        return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<CardBack, Error> in
+        return BattleNetAPI.getAccessToken(with: session, for: locale.oauthAPIRegion).flatMap({ (accessToken) -> AnyPublisher<CardBack, Error> in
             return requestCardBack(with: accessToken, session: session, for: locale, idOrSlug: idOrSlug)
         }).eraseToAnyPublisher()
     }
@@ -159,7 +159,7 @@ public enum HearthstoneAPI {
     /// - Returns: A publisher which can be canceled and sends a `Deck` if the request succeeds or an error on failure.
     public static func getDeck(with session: URLSession = .shared, for locale: PlayerLocale,
                                deckcode: String) -> AnyPublisher<Deck, Error> {
-        return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<Deck, Error> in
+        return BattleNetAPI.getAccessToken(with: session, for: locale.oauthAPIRegion).flatMap({ (accessToken) -> AnyPublisher<Deck, Error> in
             return requestDeck(with: accessToken, session: session, for: locale, deckcode: deckcode)
         }).eraseToAnyPublisher()
     }
@@ -176,7 +176,7 @@ public enum HearthstoneAPI {
     /// - Returns: A publisher which can be canceled and sends a `MetadataType` if the request succeeds or an error on failure.
     public static func getMetadata<MetadataType: Metadata>(with session: URLSession = .shared, for locale: PlayerLocale,
                                                            metadataType: MetadataType.Type) -> AnyPublisher<Set<MetadataType>, Error> {
-        return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<Set<MetadataType>, Error> in
+        return BattleNetAPI.getAccessToken(with: session, for: locale.oauthAPIRegion).flatMap({ (accessToken) -> AnyPublisher<Set<MetadataType>, Error> in
             return requestMetadata(with: accessToken, session: session, for: locale, metadataType: metadataType)
         }).eraseToAnyPublisher()
     }
@@ -189,7 +189,7 @@ public enum HearthstoneAPI {
     ///   - locale: The locale to reflect in localized data.
     /// - Returns: A publisher which can be canceled and sends a `MetadataSummary` if the request succeeds or an error on failure.
     public static func getAllMetadata(with session: URLSession = .shared, for locale: PlayerLocale) -> AnyPublisher<MetadataSummary, Error> {
-        return BattleNetAPI.authenticate(with: session, for: locale).flatMap({ (accessToken) -> AnyPublisher<MetadataSummary, Error> in
+        return BattleNetAPI.getAccessToken(with: session, for: locale.oauthAPIRegion).flatMap({ (accessToken) -> AnyPublisher<MetadataSummary, Error> in
             return requestAllMetadata(with: accessToken, session: session, for: locale)
         }).eraseToAnyPublisher()
     }

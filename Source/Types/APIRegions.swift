@@ -27,7 +27,7 @@ public enum GameDataAPIRegion {
 }
 
 /// All requests to the BattleNet Oauth API are specified by region. Regions are described in [Using and OAuth](https://develop.battle.net/documentation/guides/using-oauth).
-public enum OAuthAPIRegion {
+public enum OAuthAPIRegion: String, Codable {
     case us
     case eu
     case apac

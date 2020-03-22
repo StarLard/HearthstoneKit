@@ -28,23 +28,11 @@ enum Keychain {
         static let account = "com.calebfriden.hearthstone-kit"
     }
     
+    enum Service: String {
+        case battleNetAccessToken = "com.hearthstone-kit.battle-net-api-access-token"
+    }
+    
     // MARK: Methods
-    
-    
-    static func tokenService(for locale: PlayerLocale) -> String {
-        return "\(locale.oauthAPIRegion.host)/oauth/token"
-    }
-    
-    /// Adds a key to the device keychain for secure storage
-    ///
-    /// - Parameters:
-    ///   - locale: The locale for which the token was created.
-    ///   - value: `Data` representing an acceess token
-    /// - Returns: True if the operation was successful, false otherwise
-    @discardableResult
-    static func storeTokenData(_ tokenData: Data, for locale: PlayerLocale) -> Bool {
-        return storeTokenData(tokenData, for: tokenService(for: locale))
-    }
     
     /// Adds a key to the device keychain for secure storage
     ///
@@ -53,17 +41,17 @@ enum Keychain {
     ///   - value: `Data` representing an acceess token
     /// - Returns: True if the operation was successful, false otherwise
     @discardableResult
-    static func storeTokenData(_ tokenData: Data, for service: String) -> Bool {
-        guard retrieveTokenData(for: service) == nil else {
-            return updateTokenData(tokenData, for: service)
+    static func storeData(_ data: Data, for service: Service) -> Bool {
+        guard retrieveData(for: service) == nil else {
+            return updateData(data, for: service)
         }
-        let keychainQuery = newTokenKeychainQuery(with: tokenData, for: service)
+        let keychainQuery = newTokenKeychainQuery(with: data, for: service)
         let status = SecItemAdd(keychainQuery, nil)
         guard status == errSecSuccess else {    // Always check the status
             if let errorMessage = SecCopyErrorMessageString(status, nil) as String? {
-                HSKLog.log(.error, "Error storing token in keychain: \(errorMessage)")
+                HSKLog.log(.error, "Error storing data in keychain for \(service.rawValue) service: \(errorMessage)")
             } else {
-                HSKLog.log(.error, "Error storing token in keychain.")
+                HSKLog.log(.error, "Error storing data in keychain for \(service.rawValue) service.")
             }
             return false
         }
@@ -72,17 +60,9 @@ enum Keychain {
     
     /// Retrieves a specified key from the devices keychain
     ///
-    /// - Parameter locale: The locale for which the token was created.
-    /// - Returns: `Data` representing an acceess token
-    static func retrieveTokenData(for locale: PlayerLocale) -> Data? {
-        return retrieveTokenData(for: tokenService(for: locale))
-    }
-    
-    /// Retrieves a specified key from the devices keychain
-    ///
     /// - Parameter service: The name of the key to be retrieved
     /// - Returns: `Data` representing an acceess token
-    static func retrieveTokenData(for service: String) -> Data? {
+    static func retrieveData(for service: Service) -> Data? {
         let keychainQuery = existingTokenKeychainQuery(for: service)
         var dataTypeRef: AnyObject?
         let status = SecItemCopyMatching(keychainQuery, &dataTypeRef)
@@ -90,9 +70,9 @@ enum Keychain {
         guard status == errSecSuccess, let data = dataTypeRef as? Data else {
             let logLevel: OSLogType = status == errSecItemNotFound ? .info : .error
             if let errorMessage = SecCopyErrorMessageString(status, nil) as String? {
-                HSKLog.log(logLevel, "Error loading token from keychain: \(errorMessage)")
+                HSKLog.log(logLevel, "Error loading data from keychain for \(service.rawValue) service: \(errorMessage)")
             } else {
-                HSKLog.log(logLevel, "Error loading token from keychain.")
+                HSKLog.log(logLevel, "Error loading data from keychain for \(service.rawValue) service.")
             }
             return nil
         }
@@ -101,66 +81,57 @@ enum Keychain {
     
     /// Retrieves a specified key from the devices keychain
     ///
-    /// - Parameter locale: The locale for which the token was created.
-    /// - Returns: `Data` representing an acceess token
-    @discardableResult
-    static func clearTokenData(for locale: PlayerLocale) -> Bool {
-        return clearTokenData(for: tokenService(for: locale))
-    }
-    
-    /// Retrieves a specified key from the devices keychain
-    ///
     /// - Parameter service: The name of the key to be retrieved
     /// - Returns: `Data` representing an acceess token
     @discardableResult
-    static func clearTokenData(for service: String) -> Bool {
+    static func clearData(for service: Service) -> Bool {
         let keychainQuery = clearExistingTokenKeychainQuery(for: service)
         let status = SecItemDelete(keychainQuery)
         
         guard status == errSecSuccess else {
             let logLevel: OSLogType = status == errSecItemNotFound ? .info : .error
             if let errorMessage = SecCopyErrorMessageString(status, nil) as String? {
-                HSKLog.log(logLevel, "Error clearing token from keychain: \(errorMessage)")
+                HSKLog.log(logLevel, "Error clearing data from keychain for \(service.rawValue) service: \(errorMessage)")
             } else {
-                HSKLog.log(logLevel, "Error clearing token from keychain.")
+                HSKLog.log(logLevel, "Error clearing data from keychain for \(service.rawValue) service.")
             }
             return false
         }
         return true
     }
     
-    private static func updateTokenData(_ tokenData: Data , for service: String) -> Bool {
+    private static func updateData(_ data: Data , for service: Service) -> Bool {
         let keychainQuery = existingTokenKeychainQuery(for: service)
-        let status = SecItemUpdate(keychainQuery, [QueryKeys.data: tokenData] as CFDictionary)
+        let status = SecItemUpdate(keychainQuery, [QueryKeys.data: data] as CFDictionary)
         guard status == errSecSuccess else {
             if let errorMessage = SecCopyErrorMessageString(status, nil) as String? {
-                HSKLog.log(.error, "Error updating token in keychain: \(errorMessage)")
+                HSKLog.log(.error, "Error updating data in keychain for \(service.rawValue) service: \(errorMessage)")
             } else {
-                HSKLog.log(.error, "Error updating token in keychain.")
+                HSKLog.log(.error, "Error updating data in keychain for \(service.rawValue) service.")
             }
             return false
         }
         return true
     }
     
-    private static func clearExistingTokenKeychainQuery(for service: String) -> CFDictionary {
+    private static func clearExistingTokenKeychainQuery(for service: Service) -> CFDictionary {
         return [QueryKeys.class: QueryValues.class,
-                QueryKeys.service: service,
+                QueryKeys.service: service.rawValue,
                 QueryKeys.account: QueryValues.account] as CFDictionary
     }
     
     
-    private static func existingTokenKeychainQuery(for service: String) -> CFDictionary {
+    private static func existingTokenKeychainQuery(for service: Service) -> CFDictionary {
         return [QueryKeys.class: QueryValues.class,
-                QueryKeys.service: service,
+                QueryKeys.service: service.rawValue,
                 QueryKeys.account: QueryValues.account,
                 QueryKeys.returnData: kCFBooleanTrue as Any,
                 QueryKeys.limit: QueryValues.limit] as CFDictionary
     }
     
-    private static func newTokenKeychainQuery(with tokenData: Data, for service: String) -> CFDictionary {
+    private static func newTokenKeychainQuery(with tokenData: Data, for service: Service) -> CFDictionary {
         return [QueryKeys.class: QueryValues.class,
-                QueryKeys.service: service,
+                QueryKeys.service: service.rawValue,
                 QueryKeys.account: QueryValues.account,
                 QueryKeys.data: tokenData] as CFDictionary
     }

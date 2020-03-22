@@ -12,13 +12,13 @@ import XCTest
 final class BattleNetAPITests: HSKitTestCase {
     func testAuthenticateFromNetwork() {
         let locale: PlayerLocale = .enUS
-        Keychain.clearTokenData(for: locale)
+        Keychain.clearData(for: .battleNetAccessToken)
         XCTAssertNil(getCachedToken(for: locale))
         
         let tokenExpectation = XCTestExpectation()
         let completeExpectation = XCTestExpectation()
         
-        let authSubscriber = BattleNetAPI.authenticate(with: .shared, for: locale).sink(receiveCompletion: { (completion) in
+        let authSubscriber = BattleNetAPI.getAccessToken(with: .shared, for: locale.oauthAPIRegion).sink(receiveCompletion: { (completion) in
             switch completion {
             case .failure(let error):
                 XCTFail(error.localizedDescription)
@@ -31,7 +31,7 @@ final class BattleNetAPITests: HSKitTestCase {
                 return
             }
             XCTAssertEqual(justCachedToken, token)
-            XCTAssertTrue(token.isValid)
+            XCTAssertFalse(token.isExpired)
             tokenExpectation.fulfill()
         }
         
@@ -50,7 +50,7 @@ final class BattleNetAPITests: HSKitTestCase {
         let tokenExpectation = XCTestExpectation()
         let completeExpectation = XCTestExpectation()
         
-        let authSubscriber = BattleNetAPI.authenticate(with: .shared, for: locale).sink(receiveCompletion: { (completion) in
+        let authSubscriber = BattleNetAPI.getAccessToken(with: .shared, for: locale.oauthAPIRegion).sink(receiveCompletion: { (completion) in
             switch completion {
             case .failure(let error):
                 XCTFail(error.localizedDescription)
@@ -70,7 +70,7 @@ final class BattleNetAPITests: HSKitTestCase {
 
 private extension BattleNetAPITests {
     func getCachedToken(for locale: PlayerLocale) -> BattleNetAPI.AccessToken? {
-        guard let tokenData = Keychain.retrieveTokenData(for: locale) else {
+        guard let tokenData = Keychain.retrieveData(for: .battleNetAccessToken) else {
             return nil
         }
         XCTAssertNoThrow(try JSONDecoder().decode(BattleNetAPI.AccessToken.self, from: tokenData))
