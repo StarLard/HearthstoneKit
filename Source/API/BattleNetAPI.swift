@@ -64,6 +64,8 @@ public enum BattleNetAPI {
     /// See the [using oauth](https://develop.battle.net/documentation/guides/using-oauth) guide
     /// for more information.
     ///
+    /// - Note: The only method in HearthstoneKit at this time that requires user authorization is `getUserInfo(session:region:)`.
+    ///
     /// - Parameters:
     ///   - session: A `URLSession` to create the request in. The default value is `shared`.
     ///   - region: The user's region. If providing an authorization code, this should match the region for which the code was generated.
@@ -72,7 +74,8 @@ public enum BattleNetAPI {
     ///   Defaults to `false`.
     ///
     /// - Note: The only endpoint supported by HearthstoneKit at this time that requires user authorization is `userInfo(for:)`
-    public static func authenticateIfNeeded(with session: URLSession, for region: OAuthAPIRegion, authorization: Authorization?, forceRefresh: Bool = false) -> AnyPublisher<Void, Error> {
+    public static func authenticateIfNeeded(with session: URLSession = .shared, for region: OAuthAPIRegion, authorization: Authorization?,
+                                            forceRefresh: Bool = false) -> AnyPublisher<Void, Error> {
         guard !forceRefresh  else {
             return requestAccessToken(with: session, for: region, authorization: authorization)
                 .map { (token) -> Void in return () }
@@ -81,6 +84,12 @@ public enum BattleNetAPI {
         return getAccessToken(with: session, for: region, authorization: authorization)
             .map { (token) -> Void in return () }
             .eraseToAnyPublisher()
+    }
+    
+    public static func getUserInfo(with session: URLSession = .shared, for region: OAuthAPIRegion) -> AnyPublisher<BattleNetUserInfo, Error> {
+        return getAccessToken(with: session, for: region).flatMap({ (accessToken) -> AnyPublisher<BattleNetUserInfo, Error> in
+            return requestUserInfo(with: accessToken, session: session, for: region)
+        }).eraseToAnyPublisher()
     }
 }
 
@@ -165,6 +174,19 @@ private extension BattleNetAPI {
                 HSKLog.log(.info, "New access token recieved. Storing new token.")
                 storeAccessToken(accessToken)
             })
+            .eraseToAnyPublisher()
+    }
+    
+    static func requestUserInfo(with accessToken: BattleNetAPI.AccessToken, session: URLSession, for region: OAuthAPIRegion) -> AnyPublisher<BattleNetUserInfo, Error> {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = region.host
+        components.path = "/oauth/userinfo"
+        var request: URLRequest = URLRequest(url: components.url!)
+        request.setValue("Bearer \(accessToken.value)", forHTTPHeaderField: "Authorization")
+        return session.dataTaskPublisher(for: request)
+            .tryExtractData()
+            .decode(type: BattleNetUserInfo.self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
     }
 }
