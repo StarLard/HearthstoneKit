@@ -4,8 +4,6 @@ An elegant pure-swift SDK for consuming the official Hearthstone API.
 
 ## Installation
 
-# Swift Package Manager
-
 HearthstoneKit is available through [Swift Package Manager](https://swift.org/package-manager/), a dependency manager built into Xcode.
 
 If you are using Xcode 11 or higher, go to **File / Swift Packages / Add Package Dependency...** and enter package repository URL **https://github.com/StarLard/HearthstoneKit.git**, then follow the instructions.
