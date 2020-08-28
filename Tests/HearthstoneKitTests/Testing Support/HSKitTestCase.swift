@@ -7,22 +7,34 @@
 //
 
 import XCTest
+@testable import HearthstoneKit
 
 /// A wrapper around `XCTestCase` that provides additional utilities.
 class HSKitTestCase: XCTestCase {
+    private static var hasConfiguredSDK = false
+    private static var testingConfiguration: HearthstoneKit.Configuration { HearthstoneKit.Configuration(bundle: Bundle.module)! }
+    
+    class override func setUp() {
+        super.setUp()
+        if !hasConfiguredSDK {
+            HearthstoneKit.configure(with: testingConfiguration)
+            hasConfiguredSDK = true
+        }
+    }
+    
     func openSampleFile(_ file: SampleFile) -> Data {
-        let url = Bundle(for: Self.self).url(forResource: file.rawValue, withExtension: "json")!
+        let url = Bundle.module.url(forResource: file.rawValue, withExtension: "json")!
         return try! Data(contentsOf: url, options: .mappedIfSafe)
     }
     
     /// A wrapper around `XCTAssertNoThrow` that passes the result of the throwing call to a closure.
     func assertDoesNotThrow<Value>(_ expression: @autoclosure () throws -> Value, _ message: String = "",
-                                       file: StaticString = #file, line: UInt = #line, onSuccess successHandler: (Value) -> Void) {
+                                   file: StaticString = #filePath, line: UInt = #line, onSuccess successHandler: (Value) -> Void) {
         func executeAndAssign(_ assignment: @autoclosure () throws -> Value, to assignable: inout Value?) rethrows {
             assignable = try assignment()
         }
         var value: Value?
-        XCTAssertNoThrow(try executeAndAssign(expression, to: &value), message, file: file, line: line)
+        XCTAssertNoThrow(try executeAndAssign(expression(), to: &value), message, file: file, line: line)
         if let value = value {
             successHandler(value)
         }

@@ -1,24 +1,18 @@
 # HearthstoneKit
 
-[![CI Status](https://img.shields.io/travis/StarLard/HearthstoneKit.svg?style=flat)](https://travis-ci.org/StarLard/HearthstoneKit)
-[![Version](https://img.shields.io/cocoapods/v/HearthstoneKit.svg?style=flat)](https://cocoapods.org/pods/HearthstoneKit)
-[![License](https://img.shields.io/cocoapods/l/HearthstoneKit.svg?style=flat)](https://cocoapods.org/pods/HearthstoneKit)
-[![Platform](https://img.shields.io/cocoapods/p/HearthstoneKit.svg?style=flat)](https://cocoapods.org/pods/HearthstoneKit)
-
-## Example
-
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
-## Requirements
+An elegant pure-swift SDK for consuming the official Hearthstone API.
 
 ## Installation
 
-HearthstoneKit is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+# Swift Package Manager
 
-```ruby
-pod 'HearthstoneKit'
-```
+HearthstoneKit is available through [Swift Package Manager](https://swift.org/package-manager/), a dependency manager built into Xcode.
+
+If you are using Xcode 11 or higher, go to **File / Swift Packages / Add Package Dependency...** and enter package repository URL **https://github.com/StarLard/HearthstoneKit.git**, then follow the instructions.
+
+To remove the dependency, select the project and open **Swift Packages** (which is next to **Build Settings**). You can add and remove packages from this tab.
+
+> Swift Package Manager can also be used [from the command line](https://swift.org/package-manager/).
 
 ## Author
 

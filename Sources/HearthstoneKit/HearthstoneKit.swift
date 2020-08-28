@@ -24,7 +24,13 @@ public final class HearthstoneKit {
         let clientID: String
         let clientSecret: String
         
-        init?(configurationDictionary: NSDictionary) {
+        public init?(bundle: Bundle) {
+            guard let filePath = bundle.path(forResource: Self.fileName, ofType: Self.fileType),
+                  let configurationDictionary = NSDictionary(contentsOfFile: filePath) else { return nil }
+            self.init(configurationDictionary: configurationDictionary)
+        }
+        
+        public init?(configurationDictionary: NSDictionary) {
             guard let id = configurationDictionary["CLIENT_ID"] as? String,
                 let secret = configurationDictionary["CLIENT_SECRET"] as? String else {
                 return nil
@@ -32,6 +38,9 @@ public final class HearthstoneKit {
             clientID = id
             clientSecret = secret
         }
+        
+        fileprivate static let fileName = "HearthstoneKit-Configuration"
+        fileprivate static let fileType = "plist"
     }
     
     // MARK: Public Methods
@@ -43,7 +52,7 @@ public final class HearthstoneKit {
     public static func configure() {
         guard let configurationDictionary = shared.defaultConfigurationDictionary() else {
             preconditionFailure("""
-                `HearthstoneKit.configure()` could not find\n" a valid \(Self.configurationFileName).\(Self.configurationFileType)\n
+                `HearthstoneKit.configure()` could not find\n" a valid \(Configuration.fileName).\(Configuration.fileType)\n
                 in your project. Please make one and include it in your app's bundle.
                 """)
         }
@@ -69,8 +78,6 @@ public final class HearthstoneKit {
     
     // MARK: Private Properties
     
-    private static let configurationFileName = "HearthstoneKit-Configuration"
-    private static let configurationFileType = "plist"
     private var configuration: Configuration?
     private var appBundles: [Bundle] { [Bundle.main, Bundle(for: Self.self)] }
     
@@ -86,16 +93,16 @@ public final class HearthstoneKit {
     }
     
     private func plistFilePath(withName fileName: String) -> String? {
-        guard let plistFilePath = pathForConfigurationDictionary(withResourceName: fileName, fileType: Self.configurationFileType, in: appBundles) else {
-            HSKLog.log(.error, "Could not locate configuration file: '\(fileName).\(Self.configurationFileType)'.")
+        guard let plistFilePath = pathForConfigurationDictionary(withResourceName: fileName, fileType: Configuration.fileType, in: appBundles) else {
+            HSKLog.log(.error, "Could not locate configuration file: '\(fileName).\(Configuration.fileType)'.")
             return nil
         }
         return plistFilePath
     }
     
     private func defaultConfigurationDictionary() -> NSDictionary? {
-        guard let filePath = plistFilePath(withName: Self.configurationFileName), let configurationDictionary = NSDictionary(contentsOfFile: filePath) else {
-            HSKLog.log(.error, "The configuration file is not a dictionary: \(Self.configurationFileName).\(Self.configurationFileType)")
+        guard let filePath = plistFilePath(withName: Configuration.fileName), let configurationDictionary = NSDictionary(contentsOfFile: filePath) else {
+            HSKLog.log(.error, "The configuration file is not a dictionary: \(Configuration.fileName).\(Configuration.fileType)")
             return nil
         }
         return configurationDictionary

@@ -1,6 +1,0 @@
-framework module HearthstoneKit {
-  umbrella header "HearthstoneKit-umbrella.h"
-
-  export *
-  module * { export * }
-}
