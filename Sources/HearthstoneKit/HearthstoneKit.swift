@@ -21,8 +21,8 @@ public final class HearthstoneKit {
     }
     
     public struct Configuration {
-        let clientID: String
-        let clientSecret: String
+        public let clientID: String
+        public let clientSecret: String
         
         public init?(bundle: Bundle) {
             guard let filePath = bundle.path(forResource: Self.fileName, ofType: Self.fileType),
