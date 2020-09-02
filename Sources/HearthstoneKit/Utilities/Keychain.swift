@@ -49,9 +49,9 @@ enum Keychain {
         let status = SecItemAdd(keychainQuery, nil)
         guard status == errSecSuccess else {    // Always check the status
             if let errorMessage = SecCopyErrorMessageString(status, nil) as String? {
-                HSKLog.log(.error, "Error storing data in keychain for \(service.rawValue) service: \(errorMessage)")
+                logger.error("Error storing data in keychain for \(service.rawValue) service: \(errorMessage, privacy: .public)")
             } else {
-                HSKLog.log(.error, "Error storing data in keychain for \(service.rawValue) service.")
+                logger.error("Error storing data in keychain for \(service.rawValue) service.")
             }
             return false
         }
@@ -70,9 +70,9 @@ enum Keychain {
         guard status == errSecSuccess, let data = dataTypeRef as? Data else {
             let logLevel: OSLogType = status == errSecItemNotFound ? .info : .error
             if let errorMessage = SecCopyErrorMessageString(status, nil) as String? {
-                HSKLog.log(logLevel, "Error loading data from keychain for \(service.rawValue) service: \(errorMessage)")
+                logger.log(level: logLevel, "Error loading data from keychain for \(service.rawValue) service: \(errorMessage, privacy: .public)")
             } else {
-                HSKLog.log(logLevel, "Error loading data from keychain for \(service.rawValue) service.")
+                logger.log(level: logLevel, "Error loading data from keychain for \(service.rawValue) service.")
             }
             return nil
         }
@@ -91,9 +91,9 @@ enum Keychain {
         guard status == errSecSuccess else {
             let logLevel: OSLogType = status == errSecItemNotFound ? .info : .error
             if let errorMessage = SecCopyErrorMessageString(status, nil) as String? {
-                HSKLog.log(logLevel, "Error clearing data from keychain for \(service.rawValue) service: \(errorMessage)")
+                logger.log(level: logLevel, "Error clearing data from keychain for \(service.rawValue) service: \(errorMessage, privacy: .public)")
             } else {
-                HSKLog.log(logLevel, "Error clearing data from keychain for \(service.rawValue) service.")
+                logger.log(level: logLevel, "Error clearing data from keychain for \(service.rawValue) service.")
             }
             return false
         }
@@ -105,9 +105,9 @@ enum Keychain {
         let status = SecItemUpdate(keychainQuery, [QueryKeys.data: data] as CFDictionary)
         guard status == errSecSuccess else {
             if let errorMessage = SecCopyErrorMessageString(status, nil) as String? {
-                HSKLog.log(.error, "Error updating data in keychain for \(service.rawValue) service: \(errorMessage)")
+                logger.error("Error updating data in keychain for \(service.rawValue) service: \(errorMessage, privacy: .public)")
             } else {
-                HSKLog.log(.error, "Error updating data in keychain for \(service.rawValue) service.")
+                logger.error("Error updating data in keychain for \(service.rawValue) service.")
             }
             return false
         }
@@ -137,3 +137,4 @@ enum Keychain {
     }
 }
 
+private let logger = Logger(category: "keychain")

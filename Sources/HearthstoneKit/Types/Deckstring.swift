@@ -8,7 +8,7 @@
 import Foundation
 
 /// A type that represents a deck in a form that can be exported an imported from Hearthstone
-public struct Deckstring: Hashable {
+public struct Deckstring: Hashable, CustomStringConvertible, CustomDebugStringConvertible, LosslessStringConvertible {
     // MARK: Properties
     
     public let version: Int
@@ -26,6 +26,9 @@ public struct Deckstring: Hashable {
     /// - Note: Two identical decks are not guarenteed to have the same `deckcode` as cards are unordered.
     public let deckcode: String
     
+    public var description: String { deckcode }
+    public var debugDescription: String { "\(String(describing: type(of: Self.self))):\(deckcode)" }
+    
     // MARK: Hashable
     
     public static func == (lhs: Deckstring, rhs: Deckstring) -> Bool {
@@ -42,6 +45,10 @@ public struct Deckstring: Hashable {
     }
     
     // MARK: Import
+    
+    public init?(_ description: String) {
+        try? self.init(deckcode: description)
+    }
     
     /// Creates a new deckstring from a string exported from the game.
     ///

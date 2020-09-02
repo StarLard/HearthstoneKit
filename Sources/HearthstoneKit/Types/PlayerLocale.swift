@@ -36,6 +36,49 @@ public enum PlayerLocale: String, CaseIterable, Codable {
     /// Chinese - Taiwan
     case zhTW = "zh_TW"
     
+    /// The `PlayerLocale` associated with the locale returned from `Locale.current` or `nil`
+    /// if the locale is unsupported.
+    public static var current: PlayerLocale? { Self.init(locale: .current) }
+    
+    public init?(locale: Locale) {
+        switch locale.identifier {
+        case "de_DE": self = .deDE
+        case "en_US": self = .enUS
+        case "es_ES": self = .esES
+        case "es_MX": self = .esMX
+        case "fr_FR": self = .frFR
+        case "it_IT": self = .itIT
+        case "ja_JP": self = .jaJP
+        case "ko_KR": self = .koKR
+        case "pl_PL": self = .plPL
+        case "pt_BR": self = .ptBR
+        case "ru_RU": self = .ruRU
+        case "th_TH": self = .thTH
+        case "zh_Hant_TW": self = .zhTW
+        default: return nil
+        }
+    }
+    
+    public var locale: Locale {
+        let localeID: String
+        switch self {
+        case .deDE: localeID = "de_DE"
+        case .enUS: localeID = "en_US"
+        case .esES: localeID = "es_ES"
+        case .esMX: localeID = "es_MX"
+        case .frFR: localeID = "fr_FR"
+        case .itIT: localeID = "it_IT"
+        case .jaJP: localeID = "ja_JP"
+        case .koKR: localeID = "ko_KR"
+        case .plPL: localeID = "pl_PL"
+        case .ptBR: localeID = "pt_BR"
+        case .ruRU: localeID = "ru_RU"
+        case .thTH: localeID = "th_TH"
+        case .zhTW: localeID = "zh_Hant_TW"
+        }
+        return Locale(identifier: localeID)
+    }
+    
     public var gameDataAPIRegion: GameDataAPIRegion {
         switch self {
         case .enUS, .esMX, .ptBR: return .northAmerica
