@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os.log
 
 /// Interfaces with Hearth Keeper API
 public final class HearthstoneKit {
@@ -15,7 +16,8 @@ public final class HearthstoneKit {
     
     public static var configuration: Configuration {
         guard let config = shared.configuration else {
-            preconditionFailure("`HearthstoneKit.configure()` must be called at app launch.")
+            logger.fault("`HearthstoneKit.configure()` must be called at app launch.")
+            fatalError("`HearthstoneKit.configure()` must be called at app launch.")
         }
         return config
     }
@@ -72,7 +74,7 @@ public final class HearthstoneKit {
         guard shared.configuration == nil else {
             preconditionFailure("App has already been configured. Only call `HearthstoneKit.configure()` once per app launch.")
         }
-        HSKLog.log(.debug, "Configuring app.")
+        logger.info("Configuring app.")
         shared.configuration = configuration
     }
     
@@ -94,7 +96,7 @@ public final class HearthstoneKit {
     
     private func plistFilePath(withName fileName: String) -> String? {
         guard let plistFilePath = pathForConfigurationDictionary(withResourceName: fileName, fileType: Configuration.fileType, in: appBundles) else {
-            HSKLog.log(.error, "Could not locate configuration file: '\(fileName).\(Configuration.fileType)'.")
+            logger.fault("Could not locate configuration file: '\(fileName,privacy: .public).\(Configuration.fileType, privacy: .public)'.")
             return nil
         }
         return plistFilePath
@@ -102,9 +104,11 @@ public final class HearthstoneKit {
     
     private func defaultConfigurationDictionary() -> NSDictionary? {
         guard let filePath = plistFilePath(withName: Configuration.fileName), let configurationDictionary = NSDictionary(contentsOfFile: filePath) else {
-            HSKLog.log(.error, "The configuration file is not a dictionary: \(Configuration.fileName).\(Configuration.fileType)")
+            logger.fault("The configuration file is not a dictionary: \(Configuration.fileName, privacy: .public).\(Configuration.fileType, privacy: .public)")
             return nil
         }
         return configurationDictionary
     }
 }
+
+private let logger = Logger(category: "configuration")

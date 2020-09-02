@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import os.log
 
 public enum BattleNetAPI {
     struct AccessToken: Codable, Equatable {
@@ -99,10 +100,10 @@ internal extension BattleNetAPI {
     static func getAccessToken(with session: URLSession, for region: OAuthAPIRegion, authorization: Authorization? = nil) -> AnyPublisher<AccessToken, Error> {
         if let token = retrieveAccessToken() {
             if validateAccessToken(token, for: region, authorization: authorization) {
-                HSKLog.log(.info, "Local access token is still valid. Using local token.")
+                logger.trace("Local access token is still valid. Using local token.")
                 return Just(token).setFailureType(to: Error.self).eraseToAnyPublisher()
             } else {
-                HSKLog.log(.info, "Local access token is no longer valid. Requesting new token.")
+                logger.info("Local access token is no longer valid. Requesting new token.")
             }
         }
         return requestAccessToken(with: session, for: region, authorization: authorization)
@@ -117,7 +118,7 @@ private extension BattleNetAPI {
             let tokenData = try JSONEncoder().encode(accessToken)
             Keychain.storeData(tokenData, for: .battleNetAccessToken)
         } catch {
-            HSKLog.log(.error, "Error encoding access token for keychain storage: \(error).")
+            logger.critical("Error encoding access token for keychain storage: \(error.localizedDescription, privacy: .public)")
         }
     }
     
@@ -126,7 +127,7 @@ private extension BattleNetAPI {
         do {
             return try JSONDecoder().decode(AccessToken.self, from: tokenData)
         } catch {
-            HSKLog.log(.error, "Error decoding access token from keychain: \(error).")
+            logger.critical("Error decoding access token from keychain: \(error.localizedDescription, privacy: .public)")
             return nil
         }
     }
@@ -171,7 +172,7 @@ private extension BattleNetAPI {
                 AccessToken(response: response, requestTime: requestTime, authorization: authorization, region: region)
             })
             .handleEvents(receiveOutput: { (accessToken) in
-                HSKLog.log(.info, "New access token recieved. Storing new token.")
+                logger.info("New access token recieved. Storing new token.")
                 storeAccessToken(accessToken)
             })
             .eraseToAnyPublisher()
@@ -190,3 +191,5 @@ private extension BattleNetAPI {
             .eraseToAnyPublisher()
     }
 }
+
+private let logger = Logger(category: "battle-net-api")
