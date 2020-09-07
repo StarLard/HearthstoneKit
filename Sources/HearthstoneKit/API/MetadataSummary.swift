@@ -8,18 +8,18 @@
 import Foundation
 
 public struct MetadataSummary: Decodable {
-    let sets: Set<ExpansionSet>
-    let setGroups: Set<ExpansionSet.Group>
-    let arenaIDs: Set<BlizzardIdentifier>
-    let types: Set<Card.CardType>
-    let rarities: Set<Rarity>
-    let classes: Set<PlayerClass>
-    let minionTypes: Set<MinionType>
-    let gameModes: Set<GameMode>
-    let keywords: Set<Card.Keyword>
-    let filterableFields: Set<String>
-    let numericFields: Set<String>
-    let cardBackCategories: Set<CardBack.SortCategory>
+    public let sets: Set<ExpansionSet>
+    public let setGroups: Set<ExpansionSet.Group>
+    public let arenaIDs: Set<BlizzardIdentifier>
+    public let types: Set<Card.CardType>
+    public let rarities: Set<Rarity>
+    public let classes: Set<PlayerClass>
+    public let minionTypes: Set<MinionType>
+    public let gameModes: Set<GameMode>
+    public let keywords: Set<Card.Keyword>
+    public let filterableFields: Set<String>
+    public let numericFields: Set<String>
+    public let cardBackCategories: Set<CardBack.SortCategory>
     
     enum CodingKeys: String, CodingKey {
         case sets
