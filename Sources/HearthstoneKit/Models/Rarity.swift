@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-public struct Rarity: Metadata {
+public struct Rarity: Metadata, Identifiable {
     public let id: BlizzardIdentifier
     public let slug: String
     public let name: String

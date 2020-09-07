@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ExpansionSet: Metadata {
+public struct ExpansionSet: Metadata, Identifiable {
     public let id: BlizzardIdentifier
     public let slug: String
     public let releaseDate: Date?

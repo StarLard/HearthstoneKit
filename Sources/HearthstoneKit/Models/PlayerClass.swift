@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PlayerClass: Metadata {
+public struct PlayerClass: Metadata, Identifiable {
     public let id: BlizzardIdentifier
     public let cardID: BlizzardIdentifier?
     public let slug: String

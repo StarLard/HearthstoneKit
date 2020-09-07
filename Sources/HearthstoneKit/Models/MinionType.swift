@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct MinionType: Metadata {
+public struct MinionType: Metadata, Identifiable {
     public let id: BlizzardIdentifier
     public let slug: String
     public let name: String

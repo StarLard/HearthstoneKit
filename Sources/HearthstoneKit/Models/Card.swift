@@ -8,7 +8,7 @@
 import Foundation
 
 /// Represents an in-game Hearthstone card.
-public struct Card: Codable, Hashable {
+public struct Card: Codable, Hashable, Identifiable {
     // MARK: Properties
     
     public let id: BlizzardIdentifier
@@ -147,7 +147,7 @@ public struct Card: Codable, Hashable {
 extension Card {
     // MARK: Keyword
     
-    public struct Keyword: Metadata {
+    public struct Keyword: Metadata, Identifiable {
         public let id: BlizzardIdentifier
         public let slug: String
         public let name: String
@@ -166,7 +166,7 @@ extension Card {
     
     // MARK: Card Type
     
-    public struct CardType: Metadata {
+    public struct CardType: Metadata, Identifiable {
         public let id: BlizzardIdentifier
         public let slug: String
         public let name: String

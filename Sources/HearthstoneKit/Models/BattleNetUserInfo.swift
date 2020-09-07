@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct BattleNetUserInfo: Codable {
+public struct BattleNetUserInfo: Codable, Identifiable {
     public let id: Int
     public let battletag: String
 }
