@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct GameMode: Codable, Hashable {
+public struct GameMode: Codable, Hashable, Identifiable {
     public let id: BlizzardIdentifier
     public let slug: String
     public let name: String
