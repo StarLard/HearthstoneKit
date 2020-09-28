@@ -17,9 +17,22 @@ public struct Rarity: Metadata, Identifiable {
     public var kind: Kind { Kind(slug: slug) }
     public static let metadataKind: MetadataKind = .rarities
     
+    public init(id: BlizzardIdentifier, slug: String, name: String, craftingCost: Rarity.CardFormValue, dustValue: Rarity.CardFormValue) {
+        self.id = id
+        self.slug = slug
+        self.name = name
+        self.craftingCost = craftingCost
+        self.dustValue = dustValue
+    }
+    
     public struct CardFormValue: Codable, Hashable {
         public let regular: Int?
         public let golden: Int?
+        
+        public init(regular: Int?, golden: Int?) {
+            self.regular = regular
+            self.golden = golden
+        }
         
         public init(from decoder: Decoder) throws {
             let container = try decoder.singleValueContainer()

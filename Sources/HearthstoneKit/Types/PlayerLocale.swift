@@ -36,9 +36,9 @@ public enum PlayerLocale: String, CaseIterable, Codable {
     /// Chinese - Taiwan
     case zhTW = "zh_TW"
     
-    /// The `PlayerLocale` associated with the locale returned from `Locale.current` or `nil`
+    /// The `PlayerLocale` associated with the locale returned from `Locale.autoupdatingCurrent` or `nil`
     /// if the locale is unsupported.
-    public static var current: PlayerLocale? { Self.init(locale: .current) }
+    public static var current: PlayerLocale? { Self.init(locale: .autoupdatingCurrent) }
     
     public init?(locale: Locale) {
         switch locale.identifier {

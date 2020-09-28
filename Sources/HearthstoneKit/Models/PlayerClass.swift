@@ -15,6 +15,13 @@ public struct PlayerClass: Metadata, Identifiable {
     public var kind: Kind { Kind(slug: slug) }
     public static let metadataKind: MetadataKind = .classes
     
+    public init(id: BlizzardIdentifier, cardID: BlizzardIdentifier?, slug: String, name: String) {
+        self.id = id
+        self.cardID = cardID
+        self.slug = slug
+        self.name = name
+    }
+    
     public enum Kind {
         case all
         case demonHunter

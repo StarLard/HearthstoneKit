@@ -14,4 +14,13 @@ public struct Deck: Codable, Hashable {
     public let heroPower: Card
     public let `class`: PlayerClass
     public let cards: Decklist
+    
+    public init(version: Int, format: String, hero: Card, heroPower: Card, class: PlayerClass, cards: Decklist) {
+        self.version = version
+        self.format = format
+        self.hero = hero
+        self.heroPower = heroPower
+        self.class = `class`
+        self.cards = cards
+    }
 }

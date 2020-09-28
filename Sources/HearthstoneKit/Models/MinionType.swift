@@ -14,6 +14,12 @@ public struct MinionType: Metadata, Identifiable {
     public var kind: Kind { Kind(slug: slug) }
     public static let metadataKind: MetadataKind = .minionTypes
     
+    public init(id: BlizzardIdentifier, slug: String, name: String) {
+        self.id = id
+        self.slug = slug
+        self.name = name
+    }
+    
     public enum Kind {
         case murloc
         case demon
