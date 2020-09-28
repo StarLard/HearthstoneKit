@@ -74,9 +74,8 @@ public struct Card: Codable, Hashable, Identifiable {
     
     public init(id: BlizzardIdentifier, isCollectible: Bool, slug: String, classID: BlizzardIdentifier, multiClassIDs: [BlizzardIdentifier],
                 cardTypeID: BlizzardIdentifier, cardSetID: BlizzardIdentifier, rarityID: BlizzardIdentifier?, artistName: String?, health: Int?,
-                attack: Int?, manaCost: Int, durability: Int?, armor: Int?, name: String, text: String?, attributedText: NSAttributedString?,
-                image: URL?, imageGold: URL?, flavorText: String, cropImage: URL?, keywordIDs: [BlizzardIdentifier]?, parentID: BlizzardIdentifier?,
-                childIDs: [BlizzardIdentifier]?) {
+                attack: Int?, manaCost: Int, durability: Int?, armor: Int?, name: String, text: String?, image: URL?, imageGold: URL?, flavorText: String,
+                cropImage: URL?, keywordIDs: [BlizzardIdentifier]?, parentID: BlizzardIdentifier?, childIDs: [BlizzardIdentifier]?) {
         self.id = id
         self.isCollectible = isCollectible
         self.slug = slug
@@ -93,7 +92,9 @@ public struct Card: Codable, Hashable, Identifiable {
         self.armor = armor
         self.name = name
         self.text = text
-        self.attributedText = attributedText
+        self.attributedText = text.map(\.utf8).map(Data.init(_:)).flatMap({ (textData) -> NSAttributedString? in
+            try? NSAttributedString(data: textData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
+        })
         self.image = image
         self.imageGold = imageGold
         self.flavorText = flavorText
