@@ -313,6 +313,11 @@ extension Decklist {
         public let card: Card
         public private(set) var quantity: Int
         
+        public init(card: Card, quantity: Int) {
+            self.card = card
+            self.quantity = quantity
+        }
+        
         /// Increases the card's quantity by one.
         fileprivate mutating func increment() {
             var count = quantity
