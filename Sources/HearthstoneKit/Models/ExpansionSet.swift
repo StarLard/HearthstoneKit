@@ -19,6 +19,19 @@ public struct ExpansionSet: Metadata, Identifiable {
     public let nonCollectibleRevealedCount: Int
     public static let metadataKind: MetadataKind = .sets
     
+    public init(id: BlizzardIdentifier, slug: String, releaseDate: Date?, name: String, type: String?, collectibleCount: Int,
+                collectibleRevealedCount: Int, nonCollectibleCount: Int, nonCollectibleRevealedCount: Int) {
+        self.id = id
+        self.slug = slug
+        self.releaseDate = releaseDate
+        self.name = name
+        self.type = type
+        self.collectibleCount = collectibleCount
+        self.collectibleRevealedCount = collectibleRevealedCount
+        self.nonCollectibleCount = nonCollectibleCount
+        self.nonCollectibleRevealedCount = nonCollectibleRevealedCount
+    }
+    
     enum CodingKeys: String, CodingKey {
         case id
         case releaseDate

@@ -16,6 +16,15 @@ public struct CardBack: Codable, Hashable, Identifiable {
     public let image: URL
     public let slug: String
     
+    public init(id: BlizzardIdentifier, sortCategoryID: BlizzardIdentifier, text: String, name: String, image: URL, slug: String) {
+        self.id = id
+        self.sortCategoryID = sortCategoryID
+        self.text = text
+        self.name = name
+        self.image = image
+        self.slug = slug
+    }
+    
     enum CodingKeys: String, CodingKey {
         case id
         case sortCategoryID = "sortCategory"
@@ -31,5 +40,11 @@ extension CardBack {
         public let id: BlizzardIdentifier
         public let name: String
         public let slug: String
+        
+        public init(id: BlizzardIdentifier, name: String, slug: String) {
+            self.id = id
+            self.name = name
+            self.slug = slug
+        }
     }
 }

@@ -17,6 +17,15 @@ extension ExpansionSet {
         public let icon: String?
         public static let metadataKind: MetadataKind = .setGroups
         
+        public init(slug: String, year: Int?, cardSets: [String], name: String, isStandard: Bool?, icon: String?) {
+            self.slug = slug
+            self.year = year
+            self.cardSets = cardSets
+            self.name = name
+            self.isStandard = isStandard
+            self.icon = icon
+        }
+        
         enum CodingKeys: String, CodingKey {
             case slug
             case year

@@ -72,6 +72,37 @@ public struct Card: Codable, Hashable, Identifiable {
         case childIDs = "childIds"
     }
     
+    public init(id: BlizzardIdentifier, isCollectible: Bool, slug: String, classID: BlizzardIdentifier, multiClassIDs: [BlizzardIdentifier],
+                cardTypeID: BlizzardIdentifier, cardSetID: BlizzardIdentifier, rarityID: BlizzardIdentifier?, artistName: String?, health: Int?,
+                attack: Int?, manaCost: Int, durability: Int?, armor: Int?, name: String, text: String?, attributedText: NSAttributedString?,
+                image: URL?, imageGold: URL?, flavorText: String, cropImage: URL?, keywordIDs: [BlizzardIdentifier]?, parentID: BlizzardIdentifier?,
+                childIDs: [BlizzardIdentifier]?) {
+        self.id = id
+        self.isCollectible = isCollectible
+        self.slug = slug
+        self.classID = classID
+        self.multiClassIDs = multiClassIDs
+        self.cardTypeID = cardTypeID
+        self.cardSetID = cardSetID
+        self.rarityID = rarityID
+        self.artistName = artistName
+        self.health = health
+        self.attack = attack
+        self.manaCost = manaCost
+        self.durability = durability
+        self.armor = armor
+        self.name = name
+        self.text = text
+        self.attributedText = attributedText
+        self.image = image
+        self.imageGold = imageGold
+        self.flavorText = flavorText
+        self.cropImage = cropImage
+        self.keywordIDs = keywordIDs
+        self.parentID = parentID
+        self.childIDs = childIDs
+    }
+    
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decode(BlizzardIdentifier.self, forKey: .id)
