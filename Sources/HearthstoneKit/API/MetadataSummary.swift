@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct MetadataSummary: Decodable {
+public struct MetadataSummary: Codable {
     public let sets: Set<ExpansionSet>
     public let setGroups: Set<ExpansionSet.Group>
     public let arenaIDs: Set<BlizzardIdentifier>
