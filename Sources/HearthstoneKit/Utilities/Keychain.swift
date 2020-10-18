@@ -12,7 +12,7 @@ import os.log
 enum Keychain {
     
     // MARK: Constants
-    
+        
     private enum QueryKeys {
         static let `class` = NSString(format: kSecClass)
         static let account = NSString(format: kSecAttrAccount)
@@ -45,7 +45,8 @@ enum Keychain {
         guard retrieveData(for: service) == nil else {
             return updateData(data, for: service)
         }
-        let keychainQuery = newTokenKeychainQuery(with: data, for: service)
+        logger.debug("Storing new data in keychain for \(service.rawValue) service...")
+        let keychainQuery = setTokenKeychainQuery(with: data, for: service)
         let status = SecItemAdd(keychainQuery, nil)
         guard status == errSecSuccess else {    // Always check the status
             if let errorMessage = SecCopyErrorMessageString(status, nil) as String? {
@@ -63,7 +64,7 @@ enum Keychain {
     /// - Parameter service: The name of the key to be retrieved
     /// - Returns: `Data` representing an acceess token
     static func retrieveData(for service: Service) -> Data? {
-        let keychainQuery = existingTokenKeychainQuery(for: service)
+        let keychainQuery = getTokenKeychainQuery(for: service)
         var dataTypeRef: AnyObject?
         let status = SecItemCopyMatching(keychainQuery, &dataTypeRef)
         
@@ -85,7 +86,8 @@ enum Keychain {
     /// - Returns: `Data` representing an acceess token
     @discardableResult
     static func clearData(for service: Service) -> Bool {
-        let keychainQuery = clearExistingTokenKeychainQuery(for: service)
+        logger.debug("Clearing stored data in keychain for \(service.rawValue) service...")
+        let keychainQuery = deleteTokenKeychainQuery(for: service)
         let status = SecItemDelete(keychainQuery)
         
         guard status == errSecSuccess else {
@@ -101,7 +103,10 @@ enum Keychain {
     }
     
     private static func updateData(_ data: Data , for service: Service) -> Bool {
-        let keychainQuery = existingTokenKeychainQuery(for: service)
+        logger.debug("Updating stored data in keychain for \(service.rawValue) service...")
+        // NOTE: We use the delete query because passing a limit and return data key in the query
+        // to SecItemUpdate causes an error.
+        let keychainQuery = deleteTokenKeychainQuery(for: service)
         let status = SecItemUpdate(keychainQuery, [QueryKeys.data: data] as CFDictionary)
         guard status == errSecSuccess else {
             if let errorMessage = SecCopyErrorMessageString(status, nil) as String? {
@@ -114,14 +119,14 @@ enum Keychain {
         return true
     }
     
-    private static func clearExistingTokenKeychainQuery(for service: Service) -> CFDictionary {
+    private static func deleteTokenKeychainQuery(for service: Service) -> CFDictionary {
         return [QueryKeys.class: QueryValues.class,
                 QueryKeys.service: service.rawValue,
                 QueryKeys.account: QueryValues.account] as CFDictionary
     }
     
     
-    private static func existingTokenKeychainQuery(for service: Service) -> CFDictionary {
+    private static func getTokenKeychainQuery(for service: Service) -> CFDictionary {
         return [QueryKeys.class: QueryValues.class,
                 QueryKeys.service: service.rawValue,
                 QueryKeys.account: QueryValues.account,
@@ -129,7 +134,7 @@ enum Keychain {
                 QueryKeys.limit: QueryValues.limit] as CFDictionary
     }
     
-    private static func newTokenKeychainQuery(with tokenData: Data, for service: Service) -> CFDictionary {
+    private static func setTokenKeychainQuery(with tokenData: Data, for service: Service) -> CFDictionary {
         return [QueryKeys.class: QueryValues.class,
                 QueryKeys.service: service.rawValue,
                 QueryKeys.account: QueryValues.account,
