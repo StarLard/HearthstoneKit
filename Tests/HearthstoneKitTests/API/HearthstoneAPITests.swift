@@ -164,7 +164,7 @@ final class HearthstoneAPITests: HSKitTestCase {
                 XCTAssertEqual(deck.class.slug, "warrior")
                 XCTAssertEqual(deck.heroPower.slug, "725-armor-up")
                 XCTAssertEqual(deck.hero.slug, "7-garrosh-hellscream")
-                XCTAssertTrue(deck.cards.contains(where: { (slot) -> Bool in slot.quantity == 1 && slot.card.slug == "1659-acolyte-of-pain" }))
+                XCTAssertTrue(deck.decklist.contains(where: { (slot) -> Bool in slot.quantity == 1 && slot.card.slug == "1659-acolyte-of-pain" }))
                 valueExpectation.fulfill()
         }
         wait(for: [valueExpectation, completeExpectation], timeout: Self.testTimeout, enforceOrder: true)

@@ -18,8 +18,8 @@ final class DeckTests: HSKitTestCase {
             XCTAssertEqual(deck.hero.id, 7)
             XCTAssertEqual(deck.heroPower.id, 725)
             XCTAssertEqual(deck.class.id, 10)
-            XCTAssertEqual(deck.cards.numberOfCards, 30)
-            XCTAssertEqual(deck.cards.numberOfSlots, 18)
+            XCTAssertEqual(deck.decklist.numberOfCards, 30)
+            XCTAssertEqual(deck.decklist.numberOfSlots, 18)
         }
     }
 }
