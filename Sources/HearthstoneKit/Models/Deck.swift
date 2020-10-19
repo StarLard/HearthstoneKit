@@ -15,6 +15,15 @@ public struct Deck: Codable, Hashable {
     public let `class`: PlayerClass
     public let decklist: Decklist
     
+    enum CodingKeys: String, CodingKey {
+        case version
+        case format
+        case hero
+        case heroPower
+        case `class`
+        case decklist = "cards"
+    }
+    
     public init(version: Int, format: String, hero: Card, heroPower: Card, class: PlayerClass, decklist: Decklist) {
         self.version = version
         self.format = format
