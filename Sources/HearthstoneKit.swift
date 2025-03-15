@@ -9,7 +9,7 @@ import Foundation
 import os.log
 
 /// Interfaces with Hearth Keeper API
-public final class HearthstoneKit {
+@MainActor public final class HearthstoneKit {
     // MARK: Internal Properties
     
     static let shared = HearthstoneKit()
@@ -22,7 +22,7 @@ public final class HearthstoneKit {
         return config
     }
     
-    public struct Configuration {
+    public struct Configuration: Sendable {
         public let clientID: String
         public let clientSecret: String
         

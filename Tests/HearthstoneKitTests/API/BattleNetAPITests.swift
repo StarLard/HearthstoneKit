@@ -10,59 +10,22 @@ import XCTest
 @testable import HearthstoneKit
 
 final class BattleNetAPITests: HSKitTestCase {
-    func testAuthenticateFromNetwork() {
+    func testAuthenticateFromNetwork() async throws {
         let locale: PlayerLocale = .enUS
         Keychain.clearData(for: .battleNetAccessToken)
         XCTAssertNil(getCachedToken(for: locale))
-        
-        let tokenExpectation = XCTestExpectation()
-        let completeExpectation = XCTestExpectation()
-        
-        let authSubscriber = BattleNetAPI.getAccessToken(with: .shared, for: locale.oauthAPIRegion).sink(receiveCompletion: { (completion) in
-            switch completion {
-            case .failure(let error):
-                XCTFail(error.localizedDescription)
-            case .finished:
-                completeExpectation.fulfill()
-            }
-        }) { (token) in
-            guard let justCachedToken = self.getCachedToken(for: locale) else {
-                XCTFail("Access token which was just requested was not in cache")
-                return
-            }
-            XCTAssertEqual(justCachedToken, token)
-            XCTAssertFalse(token.isExpired)
-            tokenExpectation.fulfill()
-        }
-        
-        wait(for: [tokenExpectation, completeExpectation], timeout: 10, enforceOrder: true)
-        authSubscriber.cancel()
+
+        let token = try await BattleNetAPI.getAccessToken(with: .shared, for: locale.oauthAPIRegion)
+        let justCachedToken = try XCTUnwrap(self.getCachedToken(for: locale), "Access token which was just requested was not in cache")
+        XCTAssertEqual(justCachedToken, token)
+        XCTAssertFalse(token.isExpired)
     }
     
-    func testAuthenticateFromCache() {
+    func testAuthenticateFromCache() async throws {
         let locale: PlayerLocale = .enUS
-        
-        guard let alreadyCachedToken = getCachedToken(for: locale) else {
-            XCTFail("No token in cache")
-            return
-        }
-        
-        let tokenExpectation = XCTestExpectation()
-        let completeExpectation = XCTestExpectation()
-        
-        let authSubscriber = BattleNetAPI.getAccessToken(with: .shared, for: locale.oauthAPIRegion).sink(receiveCompletion: { (completion) in
-            switch completion {
-            case .failure(let error):
-                XCTFail(error.localizedDescription)
-            case .finished:
-                completeExpectation.fulfill()
-            }
-        }) { (token) in
-            XCTAssertEqual(alreadyCachedToken, token)
-            tokenExpectation.fulfill()
-        }
-        wait(for: [tokenExpectation, completeExpectation], timeout: 10, enforceOrder: true)
-        authSubscriber.cancel()
+        let alreadyCachedToken = try XCTUnwrap(getCachedToken(for: locale), "No token in cache")
+        let token = try await BattleNetAPI.getAccessToken(with: .shared, for: locale.oauthAPIRegion)
+        XCTAssertEqual(alreadyCachedToken, token)
     }
 }
 

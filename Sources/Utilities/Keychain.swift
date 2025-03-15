@@ -14,17 +14,17 @@ enum Keychain {
     // MARK: Constants
         
     private enum QueryKeys {
-        static let `class` = NSString(format: kSecClass)
-        static let account = NSString(format: kSecAttrAccount)
-        static let data = NSString(format: kSecValueData)
-        static let service = NSString(format: kSecAttrService)
-        static let limit = NSString(format: kSecMatchLimit)
-        static let returnData = NSString(format: kSecReturnData)
+        static var `class`: NSString { NSString(format: kSecClass) }
+        static var account: NSString { NSString(format: kSecAttrAccount) }
+        static var data: NSString { NSString(format: kSecValueData) }
+        static var service: NSString { NSString(format: kSecAttrService) }
+        static var limit: NSString { NSString(format: kSecMatchLimit) }
+        static var returnData: NSString { NSString(format: kSecReturnData) }
     }
     
     private enum QueryValues {
-        static let limit = NSString(format: kSecMatchLimitOne)
-        static let `class` = NSString(format: kSecClassGenericPassword)
+        static var limit: NSString { NSString(format: kSecMatchLimitOne) }
+        static var `class`: NSString { NSString(format: kSecClassGenericPassword) }
         static let account = "com.calebfriden.hearthstone-kit"
     }
     

@@ -8,7 +8,7 @@
 import Foundation
 
 /// All requests to the Hearthstone API include a required region parameter. Regions are described in [Regionality and APIs](https://develop.battle.net/documentation/guides/regionality-and-apis).
-public enum GameDataAPIRegion {
+public enum GameDataAPIRegion: Sendable {
     case northAmerica
     case europe
     case korea
@@ -27,7 +27,7 @@ public enum GameDataAPIRegion {
 }
 
 /// All requests to the BattleNet Oauth API are specified by region. Regions are described in [Using and OAuth](https://develop.battle.net/documentation/guides/using-oauth).
-public enum OAuthAPIRegion: String, Codable {
+public enum OAuthAPIRegion: String, Codable, Sendable {
     case us
     case eu
     case apac
