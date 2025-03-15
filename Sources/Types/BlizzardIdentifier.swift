@@ -8,7 +8,7 @@
 import Foundation
 
 /// A type that servers as a wrapper around `Int` to enforce type restrictions on identifiers.
-public struct BlizzardIdentifier: Hashable, RawRepresentable, LosslessStringConvertible, CustomDebugStringConvertible, Codable, ExpressibleByIntegerLiteral {
+public struct BlizzardIdentifier: Hashable, RawRepresentable, LosslessStringConvertible, CustomDebugStringConvertible, Codable, ExpressibleByIntegerLiteral, Sendable {
     // MARK: Properties
     
     public let rawValue: String

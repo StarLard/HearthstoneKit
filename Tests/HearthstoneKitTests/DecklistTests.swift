@@ -10,7 +10,7 @@ import XCTest
 @testable import HearthstoneKit
 
 final class DecklistTests: HSKitTestCase {
-    func testDecklistFlows() throws {
+    @MainActor func testDecklistFlows() throws {
         var decklist = try makeDecklist()
         let newCard = try JSONDecoder().decode(Card.self, from: openSampleFile(.cardHeroSkin))
         let spell = try makeCard(.spell)

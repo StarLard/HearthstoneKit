@@ -11,7 +11,7 @@ import Foundation
 ///
 /// Decklist leverages a binary search algorithm to keep the decklist sorted as it would appear in-game and
 /// optimize card increment and decrement operations.
-public struct Decklist: Sequence, Codable, Hashable {
+public struct Decklist: Sequence, Codable, Hashable, Sendable {
     // MARK: Properties (Public)
     
     private var slots: Array<Element>
@@ -78,27 +78,35 @@ public struct Decklist: Sequence, Codable, Hashable {
     
     /// A predicate that returns true if its first card should be ordered before its second card, false if visa-versa,
     /// or `nil` if the cards are equal.
-    private let areInIncreasingOrder: (Card, Card) -> Bool?
-    
+    private let areInIncreasingOrder: @Sendable (Card, Card) -> Bool?
+
     // MARK: Init
-    
+
+    /// Creates a decklist from a dictionary that describes a decklist
+    ///
+    /// Sorts cards firstly by manacost and secondly alphabetically by name.
+    public init(cards: [Card] = []) {
+        self .init(
+            cards: cards,
+            areInIncreasingOrder: { (lhs: Card, rhs: Card) -> Bool? in
+                guard lhs != rhs else { return nil }
+                if lhs.manaCost != rhs.manaCost {
+                    return lhs.manaCost < rhs.manaCost
+                } else {
+                    return lhs.name < rhs.name
+                }
+            }
+        )
+    }
+
     /// Creates a decklist from a dictionary that describes a decklist
     ///
     /// - Parameters:
     ///   - cards: Dictionary where keys are cards and values are quantities
     ///   - areInIncreasingOrder: (Optional) A predicate that returns true if its first card should
-    ///   be ordered before its second card, false if visa-versa, or `nil` if the cards are equal. The default
-    ///   sorting will priortizing cards firstly by manacost and secondly alphabetically by name.
+    ///   be ordered before its second card, false if visa-versa, or `nil` if the cards are equal.
     public init(cards: [Card] = [],
-                areInIncreasingOrder: @escaping ((_ lhs: Card, _ rhs: Card) -> Bool?) =
-        { (lhs: Card, rhs: Card) -> Bool? in
-            guard lhs != rhs else { return nil }
-            if lhs.manaCost != rhs.manaCost {
-                return lhs.manaCost < rhs.manaCost
-            } else {
-                return lhs.name < rhs.name
-            }
-        }) {
+                areInIncreasingOrder: @Sendable @escaping (_ lhs: Card, _ rhs: Card) -> Bool?) {
         var cardQuantities: [Card: Int] = [:]
         for card in cards {
             if let quantity = cardQuantities[card] {
@@ -309,7 +317,7 @@ extension Decklist {
     ///
     /// A slot is a position within the decklist which defines the card at that position and the quantity
     /// of it.
-    public struct Slot: Hashable {
+    public struct Slot: Hashable, Sendable {
         public let card: Card
         public private(set) var quantity: Int
         

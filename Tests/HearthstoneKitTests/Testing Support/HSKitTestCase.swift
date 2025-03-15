@@ -11,14 +11,16 @@ import XCTest
 
 /// A wrapper around `XCTestCase` that provides additional utilities.
 class HSKitTestCase: XCTestCase {
-    private static var hasConfiguredSDK = false
+    @MainActor private static var hasConfiguredSDK = false
     private static var testingConfiguration: HearthstoneKit.Configuration { HearthstoneKit.Configuration(bundle: Bundle.module)! }
     
     class override func setUp() {
         super.setUp()
-        if !hasConfiguredSDK {
-            HearthstoneKit.configure(with: testingConfiguration)
-            hasConfiguredSDK = true
+        onMain {
+            if !hasConfiguredSDK {
+                HearthstoneKit.configure(with: testingConfiguration)
+                hasConfiguredSDK = true
+            }
         }
     }
     
@@ -37,6 +39,20 @@ class HSKitTestCase: XCTestCase {
         XCTAssertNoThrow(try executeAndAssign(expression(), to: &value), message, file: file, line: line)
         if let value = value {
             successHandler(value)
+        }
+    }
+}
+
+private func onMain(_ block: @MainActor () -> Void) {
+    if Thread.isMainThread {
+        MainActor.assumeIsolated {
+            block()
+        }
+    } else {
+        DispatchQueue.main.sync {
+            MainActor.assumeIsolated {
+                block()
+            }
         }
     }
 }

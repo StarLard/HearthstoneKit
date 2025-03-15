@@ -33,7 +33,7 @@ final class DeckstringTests: HSKitTestCase {
         1281: 2
     ]
     
-    func testImporting() throws {
+    @MainActor func testImporting() throws {
         try XCTContext.runActivity(named: "Test importing without header") { _ in
             let deckstring = try Deckstring(deckcode: "AAECAR8K7QaHB4f7Ap6dA6CFA9SLA94ElwikpQPHAwr4rwP8rwPslgOFsAPJBIAHhwSNAcMIgQoA")
             XCTAssertEqual(deckstring.deckcode, "AAECAR8K7QaHB4f7Ap6dA6CFA9SLA94ElwikpQPHAwr4rwP8rwPslgOFsAPJBIAHhwSNAcMIgQoA")
@@ -69,7 +69,7 @@ final class DeckstringTests: HSKitTestCase {
         }
     }
     
-    func testExporting() {
+    @MainActor func testExporting() {
         XCTContext.runActivity(named: "Test exporting without header") { _ in
             let deckstring = Deckstring(formatID: 2, heroID: 31, cards: Self.cardMap)
             XCTAssertEqual(deckstring.heroID, 31)

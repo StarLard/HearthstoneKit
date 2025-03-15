@@ -8,7 +8,7 @@
 import Foundation
 
 /// Represents an in-game Hearthstone card.
-public struct Card: Codable, Hashable, Identifiable {
+public struct Card: Codable, Hashable, Identifiable, Sendable {
     // MARK: Properties
     
     public let id: BlizzardIdentifier
@@ -31,7 +31,7 @@ public struct Card: Codable, Hashable, Identifiable {
     public let armor: Int?
     public let name: String
     public let text: String?
-    public let attributedText: NSAttributedString?
+    public let attributedText: AttributedString?
     public let image: URL?
     public let imageGold: URL?
     public let flavorText: String
@@ -92,8 +92,10 @@ public struct Card: Codable, Hashable, Identifiable {
         self.armor = armor
         self.name = name
         self.text = text
-        self.attributedText = text.map(\.utf8).map(Data.init(_:)).flatMap({ (textData) -> NSAttributedString? in
-            try? NSAttributedString(data: textData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
+        self.attributedText = text.map(\.utf8).map(Data.init(_:)).flatMap({ (textData) -> AttributedString? in
+            try? AttributedString(
+                NSAttributedString(data: textData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
+            )
         })
         self.image = image
         self.imageGold = imageGold
@@ -131,7 +133,9 @@ public struct Card: Codable, Hashable, Identifiable {
         if let unparsedText = try values.decodeIfPresent(String.self, forKey: .text) {
             text = unparsedText
             let data = Data(unparsedText.utf8)
-            attributedText = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
+            attributedText = try? AttributedString(
+                NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
+            )
         } else {
             text = nil
             attributedText = nil

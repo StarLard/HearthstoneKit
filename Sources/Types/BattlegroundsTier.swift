@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum BattlegroundsTier: String {
+public enum BattlegroundsTier: String, Sendable {
     case one = "1"
     case two = "2"
     case three = "3"

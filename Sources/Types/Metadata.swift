@@ -11,7 +11,7 @@ public protocol Metadata: Codable, Hashable {
     static var metadataKind: MetadataKind { get }
 }
 
-public enum MetadataKind: String {
+public enum MetadataKind: String, Sendable {
     case sets
     case setGroups
     case types
