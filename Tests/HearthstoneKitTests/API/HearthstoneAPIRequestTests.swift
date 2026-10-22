@@ -34,7 +34,7 @@ struct HearthstoneAPIRequestTests {
             case .card: return "/hearthstone/cards/52119-arch-villain-rafaam"
             case .cardBackSearch: return "/hearthstone/cardbacks"
             case .cardBack: return "/hearthstone/cardbacks/155-pizza-stone"
-            case .deck: return "/hearthstone/deck/AAECAR8K7QaHB4f7Ap6dA6CFA9SLA94ElwikpQPHAwr4rwP8rwPslgOFsAPJBIAHhwSNAcMIgQoA"
+            case .deck: return "/hearthstone/deck"
             case .metadata: return "/hearthstone/metadata/rarities"
             case .allMetadata: return "/hearthstone/metadata"
             }
@@ -146,6 +146,27 @@ struct HearthstoneAPIRequestTests {
         #expect(query["mercenaryRole"] == "tank,caster")
         #expect(query["defaultMercenary"] == "1")
         #expect(query["sort"] == "tier:desc")
+    }
+
+    @Test func `Deck by code sends an encoded code parameter`() async throws {
+        let deckcode = "AAECAQcG+wyd8AKS+AKggAOblAPanQMMS6IE/web8wLR9QKD+wKe+wKz/AL1gAOXlAOalAOSnwMA"
+        let (session, stub) = StubURLProtocol.makeSession()
+        _ = try? await HearthstoneAPI.requestDeck(with: Self.token, session: session, for: .enUS, deckcode: deckcode)
+
+        let url = try #require(stub.requests.only?.url)
+        #expect(url.path == "/hearthstone/deck")
+        #expect(queryItems(of: url)["code"] == deckcode)
+        // A raw "+" would be read as a space by the server.
+        #expect(url.query?.contains("+") == false)
+    }
+
+    @Test func `Deck by card list sends IDs and hero`() async throws {
+        let (session, stub) = StubURLProtocol.makeSession()
+        _ = try? await HearthstoneAPI.requestDeck(with: Self.token, session: session, for: .enUS, cardIDs: [906, 906, 1099], heroID: 813)
+
+        let url = try #require(stub.requests.only?.url)
+        #expect(url.path == "/hearthstone/deck")
+        #expect(queryItems(of: url) == ["locale": "en_US", "ids": "906,906,1099", "hero": "813"])
     }
 
     @Test func `Card back search sends filters`() async throws {

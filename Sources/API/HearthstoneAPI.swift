@@ -305,6 +305,25 @@ public enum HearthstoneAPI {
         return try await requestDeck(with: accessToken, session: session, for: locale, deckcode: deckcode)
     }
 
+    /// Builds a deck from a list of cards. For more information, see the
+    /// [Retrieving Decks Guide](https://develop.battle.net/documentation/hearthstone/guides/decks).
+    /// - Parameters:
+    ///   - session: A `URLSession` to create the request in. The default value is `shared`.
+    ///   - locale: The locale to reflect in localized data.
+    ///   - cardIDs: The IDs of the cards in the deck. Include an ID once for each copy of the card.
+    ///   - heroID: The card ID of the deck's hero. If you do not supply a value, the API will choose a default hero and class based on the cards
+    ///   in the deck. The default value is `nil`.
+    /// - Returns: The deck the cards describe.
+    public static func getDeck(
+        with session: URLSession = .shared,
+        for locale: PlayerLocale,
+        cardIDs: [BlizzardIdentifier],
+        heroID: BlizzardIdentifier? = nil
+    ) async throws -> Deck {
+        let accessToken = try await BattleNetAPI.getAccessToken(with: session, for: locale.oauthAPIRegion)
+        return try await requestDeck(with: accessToken, session: session, for: locale, cardIDs: cardIDs, heroID: heroID)
+    }
+
     // MARK: - Metadata
 
     /// Returns information about just one type of metadata. For more information, see the
@@ -499,11 +518,27 @@ extension HearthstoneAPI {
 
     static func requestDeck(with accessToken: BattleNetAPI.AccessToken, session: URLSession,
                             for locale: PlayerLocale, deckcode: String) async throws -> Deck {
+        return try await requestDeck(with: accessToken, session: session, for: locale, parameters: [URLQueryItem(name: "code", value: deckcode)])
+    }
+
+    static func requestDeck(with accessToken: BattleNetAPI.AccessToken, session: URLSession, for locale: PlayerLocale,
+                            cardIDs: [BlizzardIdentifier], heroID: BlizzardIdentifier?) async throws -> Deck {
+        var parameters = [URLQueryItem(name: "ids", value: cardIDs.map(\.rawValue).joined(separator: ","))]
+        if let heroID = heroID {
+            parameters.append(URLQueryItem(name: "hero", value: heroID.rawValue))
+        }
+        return try await requestDeck(with: accessToken, session: session, for: locale, parameters: parameters)
+    }
+
+    private static func requestDeck(with accessToken: BattleNetAPI.AccessToken, session: URLSession, for locale: PlayerLocale,
+                                    parameters: [URLQueryItem]) async throws -> Deck {
         var components = URLComponents()
         components.scheme = "https"
         components.host = locale.gameDataAPIRegion.host
-        components.path = "/hearthstone/deck/\(deckcode)"
-        components.queryItems = [URLQueryItem(name: "locale", value: locale.rawValue)]
+        components.path = "/hearthstone/deck"
+        components.queryItems = [URLQueryItem(name: "locale", value: locale.rawValue)] + parameters
+        // URLComponents leaves "+" unencoded in queries, where servers read it as a space. Deck codes are base64, so encode it.
+        components.percentEncodedQuery = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
 
         let request = authorizedRequest(for: components.url!, with: accessToken)
         return try await session.value(Deck.self, for: request, using: decoder)

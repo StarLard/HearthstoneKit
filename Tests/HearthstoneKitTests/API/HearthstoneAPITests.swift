@@ -107,6 +107,14 @@ extension LiveAPITests {
             #expect(deck.decklist.contains(where: { (slot) -> Bool in slot.quantity == 1 && slot.card.slug == "1659-acolyte-of-pain" }))
         }
 
+        @Test func `Get deck from card list`() async throws {
+            let cardIDs: [BlizzardIdentifier] = [906, 1099, 1363, 1367, 46706, 48099, 48759, 49184, 50071, 50278, 51714, 52109, 52632, 52715, 53409,
+                                                 53413, 53756, 53969, 54148, 54425, 54431, 54874, 54898, 54917, 55166, 55245, 55438, 55441, 55907, 57416]
+            let deck = try await HearthstoneAPI.getDeck(for: .enUS, cardIDs: cardIDs, heroID: 813)
+            #expect(deck.hero.slug == "813-anduin-wrynn")
+            #expect(deck.decklist.numberOfCards == 30)
+        }
+
         // MARK: Metadata
 
         @Test func `Get metadata`() async throws {
