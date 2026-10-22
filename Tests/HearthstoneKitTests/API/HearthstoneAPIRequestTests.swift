@@ -10,14 +10,12 @@ import Testing
 /// Offline tests for the requests `HearthstoneAPI` builds. These pass the access token directly and use a stubbed session,
 /// so they never touch the network or the keychain.
 struct HearthstoneAPIRequestTests {
-    static var token: BattleNetAPI.AccessToken {
-        BattleNetAPI.AccessToken(
-            response: .init(value: "test-token", type: "bearer", lifespan: 3600),
-            requestTime: Date(),
-            authorization: nil,
-            region: .us
-        )
-    }
+    static let token = BattleNetAPI.AccessToken(
+        response: .init(value: "test-token", type: "bearer", lifespan: 3600),
+        requestTime: Date(),
+        authorization: nil,
+        region: .us
+    )
 
     enum Endpoint: String, CaseIterable, Sendable {
         case cardSearch

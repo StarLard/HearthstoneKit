@@ -25,7 +25,7 @@ public struct Rarity: Metadata, Identifiable {
         self.dustValue = dustValue
     }
     
-    public struct CardFormValue: Codable, Hashable {
+    public struct CardFormValue: Codable, Hashable, Sendable {
         public let regular: Int?
         public let golden: Int?
         
@@ -51,7 +51,7 @@ public struct Rarity: Metadata, Identifiable {
         }
     }
     
-    public enum Kind {
+    public enum Kind: Sendable {
         case common
         case free
         case rare

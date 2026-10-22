@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol Metadata: Codable, Hashable {
+public protocol Metadata: Codable, Hashable, Sendable {
     static var metadataKind: MetadataKind { get }
 }
 

@@ -22,7 +22,7 @@ import os.log
         return config
     }
     
-    public struct Configuration: Sendable {
+    public struct Configuration: Hashable, Sendable {
         public let clientID: String
         public let clientSecret: String
         

@@ -20,7 +20,7 @@ public struct MinionType: Metadata, Identifiable {
         self.name = name
     }
     
-    public enum Kind {
+    public enum Kind: Sendable {
         case murloc
         case demon
         case mech

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct GameMode: Codable, Hashable, Identifiable {
+public struct GameMode: Codable, Hashable, Identifiable, Sendable {
     public let id: BlizzardIdentifier
     public let slug: String
     public let name: String
@@ -19,7 +19,7 @@ public struct GameMode: Codable, Hashable, Identifiable {
         self.name = name
     }
     
-    public enum Kind: String {
+    public enum Kind: String, Sendable {
         case constructed
         case battlegrounds
         case mercenaries

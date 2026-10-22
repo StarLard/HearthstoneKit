@@ -8,7 +8,7 @@
 import Foundation
 
 /// A type that represents a deck in a form that can be exported an imported from Hearthstone
-public struct Deckstring: Hashable, CustomStringConvertible, CustomDebugStringConvertible, LosslessStringConvertible {
+public struct Deckstring: Hashable, Sendable, CustomStringConvertible, CustomDebugStringConvertible, LosslessStringConvertible {
     // MARK: Properties
     
     public let version: Int

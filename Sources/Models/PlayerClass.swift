@@ -22,7 +22,7 @@ public struct PlayerClass: Metadata, Identifiable {
         self.name = name
     }
     
-    public enum Kind {
+    public enum Kind: Sendable {
         case all
         case demonHunter
         case druid

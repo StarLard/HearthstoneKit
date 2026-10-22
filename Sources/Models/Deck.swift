@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Deck: Codable, Hashable {
+public struct Deck: Codable, Hashable, Sendable {
     public let version: Int
     public let format: String
     public let hero: Card

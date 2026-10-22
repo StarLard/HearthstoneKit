@@ -9,7 +9,7 @@ import Foundation
 import os.log
 
 public enum BattleNetAPI {
-    struct AccessToken: Codable, Equatable {
+    struct AccessToken: Codable, Hashable, Sendable {
         let value: String
         let type: String
         let expiration: Date
@@ -28,7 +28,7 @@ public enum BattleNetAPI {
             self.region = region
         }
         
-        struct Response: Decodable {
+        struct Response: Decodable, Sendable {
             let value: String
             let type: String
             let lifespan: TimeInterval
@@ -41,7 +41,7 @@ public enum BattleNetAPI {
         }
     }
     
-    public struct Authorization: Equatable, Codable {
+    public struct Authorization: Codable, Hashable, Sendable {
         /// The authorization code received from the authorization server.
         let authorizationCode: String
         /// Must be identical to the `redirect_uri` value used in the authorization request.

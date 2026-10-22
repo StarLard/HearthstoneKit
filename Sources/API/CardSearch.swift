@@ -8,7 +8,7 @@
 import Foundation
 
 extension HearthstoneAPI {
-    public struct CardSearch: Decodable {
+    public struct CardSearch: Decodable, Hashable, Sendable {
         public let cardCount: Int
         public let pageCount: Int
         public let page: Int
@@ -16,7 +16,7 @@ extension HearthstoneAPI {
         
         // MARK: Filters
         
-        public enum SortPriority: String {
+        public enum SortPriority: String, Sendable {
             case manaCost
             case attack
             case health
@@ -29,13 +29,13 @@ extension HearthstoneAPI {
             case tier
         }
         
-        public enum SortOrder: String {
+        public enum SortOrder: String, Sendable {
             case ascending = "asc"
             case descending = "desc"
         }
     }
     
-    public struct CardBackSearch: Decodable {
+    public struct CardBackSearch: Decodable, Hashable, Sendable {
         public let cardCount: Int
         public let pageCount: Int
         public let page: Int
@@ -43,13 +43,13 @@ extension HearthstoneAPI {
         
         // MARK: Filters
         
-        public enum SortPriority: String {
+        public enum SortPriority: String, Sendable {
             /// Sorts by the date the card back was added.
             case date = "dateAdded"
             case name
         }
         
-        public enum SortOrder: String {
+        public enum SortOrder: String, Sendable {
             case ascending = "asc"
             case descending = "desc"
         }

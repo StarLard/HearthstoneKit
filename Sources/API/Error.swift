@@ -8,7 +8,7 @@
 import Foundation
 
 /// An error thrown when problems occur with one of the APIs.
-public struct APIServiceError: CustomNSError, Decodable {
+public struct APIServiceError: CustomNSError, Decodable, Hashable {
     public static let errorDomain: String = "HearthstoneKit.APIServiceError"
     
     static var noResponse: APIServiceError {

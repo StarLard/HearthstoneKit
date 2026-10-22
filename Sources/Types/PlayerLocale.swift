@@ -8,7 +8,7 @@
 import Foundation
 
 /// All requests in the Hearthstone API include an optional locale parameter. Localization works as described in [Hearthstone Localization ](https://develop.battle.net/documentation/hearthstone/guides/localization).
-public enum PlayerLocale: String, CaseIterable, Codable {
+public enum PlayerLocale: String, CaseIterable, Codable, Sendable {
     /// German - Germany
     case deDE = "de_DE"
     /// English - United States

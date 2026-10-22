@@ -210,7 +210,7 @@ extension Card {
         public var kind: Kind { Kind(slug: slug) }
         public static let metadataKind: MetadataKind = .types
         
-        public enum Kind {
+        public enum Kind: Sendable {
             case hero
             case minion
             case spell
