@@ -104,7 +104,8 @@ public enum HearthstoneAPI {
     ///    metadata. The default value is `nil`.
     ///   - keywordSlug: A required keyword on the card (for example, battlecry, deathrattle, and so on). This value must match the keyword slugs found in
     ///    metadata. The default value is `nil`.
-    ///   - tiers: This special parameter is for tavern tier, which is only recognized when searching for Battlegrounds cards. The default value is `nil`.
+    ///   - tiers: This special parameter is for tavern tier, which is only recognized when searching for Battlegrounds cards. To search for heroes,
+    ///   pass `[.hero]` on its own; it can't be combined with numbered tiers. The default value is `nil`.
     ///   - textFilter: A text string used to filter cards. The default value is `nil`.
     ///   - page: A page number. The default value is `1`.
     ///   - pageSize: The number of results to choose per page. A value will be selected automatically if you do not supply a pageSize or if the pageSize is higher
@@ -387,6 +388,21 @@ extension HearthstoneAPI {
             assert(tiers == nil)
         case .arena, .unknown:
             assertionFailure("battlegrounds, constructed, and mercenaries are the only currently supported game modes.")
+        }
+
+        // The API documents `tier=hero` but currently returns no cards for it. Battlegrounds heroes are exactly the cards of type "hero",
+        // so ask for those instead. "hero" is an alternative to the numbered tiers, so it can't be combined with them.
+        var typeSlug = typeSlug
+        var tiers = tiers
+        if let requestedTiers = tiers, requestedTiers.contains(.hero) {
+            if Set(requestedTiers) == [.hero] {
+                assert(typeSlug == nil || typeSlug == "hero", "Battlegrounds heroes can't be combined with another card type.")
+                typeSlug = "hero"
+                tiers = nil
+            } else {
+                assertionFailure("`BattlegroundsTier.hero` can't be combined with numbered tiers.")
+                tiers = requestedTiers.filter { $0 != .hero }
+            }
         }
 
         var parameters = [

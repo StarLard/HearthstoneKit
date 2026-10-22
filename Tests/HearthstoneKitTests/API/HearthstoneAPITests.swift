@@ -36,8 +36,7 @@ extension LiveAPITests {
         }
 
         @Test func `Battlegrounds card search`() async throws {
-            // Filters by type rather than `tiers: [.hero]`: the live API currently returns no cards for `tier=hero`, despite the docs listing it.
-            let searchResult = try await HearthstoneAPI.searchBattlegroundsCards(for: .enUS, typeSlug: "hero", textFilter: "Alexstrasza",
+            let searchResult = try await HearthstoneAPI.searchBattlegroundsCards(for: .enUS, textFilter: "Alexstrasza", tiers: [.hero],
                                                                                  page: 1, pageSize: 5, sort: .name, order: .descending)
             #expect(searchResult.cardCount == 1)
             #expect(searchResult.page == 1)

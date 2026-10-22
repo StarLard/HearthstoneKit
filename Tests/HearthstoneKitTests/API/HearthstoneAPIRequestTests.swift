@@ -120,15 +120,28 @@ struct HearthstoneAPIRequestTests {
         let (session, stub) = StubURLProtocol.makeSession()
         _ = try? await HearthstoneAPI.requestCards(with: Self.token, session: session, for: .enUS, setSlug: nil, classSlug: nil, manaCost: nil,
                                                    attack: nil, health: nil, collectible: false, raritySlug: nil, typeSlug: nil, minionTypeSlug: nil,
-                                                   keywordSlug: nil, textFilter: nil, gameMode: .battlegrounds, tiers: [.hero, .three], page: 1,
+                                                   keywordSlug: nil, textFilter: nil, gameMode: .battlegrounds, tiers: [.three, .seven], page: 1,
                                                    pageSize: nil, sort: .attack, order: .ascending)
 
         let url = try #require(stub.requests.only?.url)
         let query = queryItems(of: url)
         #expect(query["gameMode"] == "battlegrounds")
-        #expect(query["tier"] == "hero,3")
+        #expect(query["tier"] == "3,7")
         #expect(query["collectible"] == "0")
         #expect(query["sort"] == "attack:asc")
+    }
+
+    @Test func `Battlegrounds hero tier is sent as the hero card type`() async throws {
+        let (session, stub) = StubURLProtocol.makeSession()
+        _ = try? await HearthstoneAPI.requestCards(with: Self.token, session: session, for: .enUS, setSlug: nil, classSlug: nil, manaCost: nil,
+                                                   attack: nil, health: nil, collectible: nil, raritySlug: nil, typeSlug: nil, minionTypeSlug: nil,
+                                                   keywordSlug: nil, textFilter: nil, gameMode: .battlegrounds, tiers: [.hero], page: 1,
+                                                   pageSize: nil, sort: .name, order: .ascending)
+
+        let url = try #require(stub.requests.only?.url)
+        let query = queryItems(of: url)
+        #expect(query["type"] == "hero")
+        #expect(query["tier"] == nil)
     }
 
     @Test func `Mercenaries card search sends mercenary filters`() async throws {

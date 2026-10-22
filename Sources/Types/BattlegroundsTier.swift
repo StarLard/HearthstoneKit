@@ -15,5 +15,6 @@ public enum BattlegroundsTier: String, Sendable {
     case five = "5"
     case six = "6"
     case seven = "7"
+    /// Battlegrounds heroes. Use this on its own: it's an alternative to the numbered tiers, not something to combine with them.
     case hero
 }
