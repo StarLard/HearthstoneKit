@@ -65,6 +65,11 @@ extension LiveAPITests {
             #expect(searchResult.cards.count == searchResult.cardCount)
         }
 
+        @Test func `Battlegrounds tier 7 card search`() async throws {
+            let tierSeven = try await HearthstoneAPI.searchBattlegroundsCards(for: .enUS, tiers: [.seven], pageSize: 1)
+            #expect(tierSeven.cardCount > 0)
+        }
+
         @Test func `Get all cards`() async throws {
             let searchResult = try await HearthstoneAPI.searchConstructedCards(for: .enUS, pageSize: 500)
             #expect(searchResult.cardCount >= 2377)
