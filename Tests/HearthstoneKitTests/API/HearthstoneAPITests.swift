@@ -24,9 +24,10 @@ extension LiveAPITests {
         }
 
         @Test func `Constructed card search`() async throws {
-            let searchResult = try await HearthstoneAPI.searchConstructedCards(for: .enUS, setSlug: "rise-of-shadows", classSlug: "mage", manaCost: [10],
-                                                                               attack: [4], health: [10], collectible: true, raritySlug: "legendary",
-                                                                               typeSlug: "minion", minionTypeSlug: "dragon", keywordSlug: "battlecry",
+            // No `keywordSlug`: Blizzard's keyword slugs currently end in a newline (e.g. "battlecry\n"), so `keyword=battlecry` matches nothing.
+            let searchResult = try await HearthstoneAPI.searchConstructedCards(for: .enUS, setSlug: "rise-of-shadows", classSlug: "mage", manaCost: [8],
+                                                                               attack: [4], health: [12], collectible: true, raritySlug: "legendary",
+                                                                               typeSlug: "minion", minionTypeSlug: "dragon",
                                                                                textFilter: "kalecgos", page: 1, pageSize: 5, sort: .name, order: .descending)
             #expect(searchResult.cardCount == 1)
             #expect(searchResult.page == 1)
@@ -35,7 +36,8 @@ extension LiveAPITests {
         }
 
         @Test func `Battlegrounds card search`() async throws {
-            let searchResult = try await HearthstoneAPI.searchBattlegroundsCards(for: .enUS, textFilter: "Alexstrasza", tiers: [.hero, .three],
+            // Filters by type rather than `tiers: [.hero]`: the live API currently returns no cards for `tier=hero`, despite the docs listing it.
+            let searchResult = try await HearthstoneAPI.searchBattlegroundsCards(for: .enUS, typeSlug: "hero", textFilter: "Alexstrasza",
                                                                                  page: 1, pageSize: 5, sort: .name, order: .descending)
             #expect(searchResult.cardCount == 1)
             #expect(searchResult.page == 1)
