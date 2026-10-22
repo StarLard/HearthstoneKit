@@ -30,6 +30,8 @@ public enum HearthstoneAPI {
     ///    metadata. The default value is `nil`.
     ///   - keywordSlug: A required keyword on the card (for example, battlecry, deathrattle, and so on). This value must match the keyword slugs found in
     ///    metadata. The default value is `nil`.
+    ///   - spellSchoolSlug: The school of a spell card (for example, arcane, fire, frost, and so on). This value must match the spell school slugs
+    ///    found in metadata. The default value is `nil`.
     ///   - textFilter: A text string used to filter cards. The default value is `nil`.
     ///   - page: A page number. The default value is `1`.
     ///   - pageSize: The number of results to choose per page. A value will be selected automatically if you do not supply a pageSize or if the pageSize is higher
@@ -50,6 +52,7 @@ public enum HearthstoneAPI {
         typeSlug: String? = nil,
         minionTypeSlug: String? = nil,
         keywordSlug: String? = nil,
+        spellSchoolSlug: String? = nil,
         textFilter: String? = nil,
         page: Int = 1,
         pageSize: Int? = nil,
@@ -77,7 +80,8 @@ public enum HearthstoneAPI {
             page: page,
             pageSize: pageSize,
             sort: sort,
-            order: order
+            order: order,
+            spellSchoolSlug: spellSchoolSlug
         )
     }
 
@@ -285,7 +289,7 @@ extension HearthstoneAPI {
                              setSlug: String?, classSlug: String?, manaCost: [Int]?, attack: [Int]?, health: [Int]?, collectible: Bool?,
                              raritySlug: String?, typeSlug: String?, minionTypeSlug: String?, keywordSlug: String?, textFilter: String?,
                              gameMode: GameMode.Kind, tiers: [BattlegroundsTier]?, page: Int, pageSize: Int?, sort: CardSearch.SortPriority,
-                             order: CardSearch.SortOrder) async throws -> CardSearch {
+                             order: CardSearch.SortOrder, spellSchoolSlug: String? = nil) async throws -> CardSearch {
 
         switch gameMode {
         case .battlegrounds:
@@ -332,6 +336,9 @@ extension HearthstoneAPI {
         }
         if let value = keywordSlug {
             parameters.append(URLQueryItem(name: "keyword", value: value))
+        }
+        if let value = spellSchoolSlug {
+            parameters.append(URLQueryItem(name: "spellSchool", value: value))
         }
         if let value = textFilter {
             parameters.append(URLQueryItem(name: "textFilter", value: value))

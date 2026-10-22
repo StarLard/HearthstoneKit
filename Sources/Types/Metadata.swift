@@ -19,4 +19,5 @@ public enum MetadataKind: String, Sendable {
     case classes
     case minionTypes
     case keywords
+    case spellSchools
 }

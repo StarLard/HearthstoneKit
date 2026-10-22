@@ -91,7 +91,8 @@ struct HearthstoneAPIRequestTests {
         _ = try? await HearthstoneAPI.requestCards(with: Self.token, session: session, for: .enUS, setSlug: "rise-of-shadows", classSlug: "mage",
                                                    manaCost: [1, 2], attack: [3], health: [4, 5], collectible: true, raritySlug: "legendary",
                                                    typeSlug: "minion", minionTypeSlug: "dragon", keywordSlug: "battlecry", textFilter: "kalecgos",
-                                                   gameMode: .constructed, tiers: nil, page: 2, pageSize: 5, sort: .name, order: .descending)
+                                                   gameMode: .constructed, tiers: nil, page: 2, pageSize: 5, sort: .name, order: .descending,
+                                                   spellSchoolSlug: "fire")
 
         let url = try #require(stub.requests.only?.url)
         #expect(queryItems(of: url) == [
@@ -111,6 +112,7 @@ struct HearthstoneAPIRequestTests {
             "minionType": "dragon",
             "keyword": "battlecry",
             "textFilter": "kalecgos",
+            "spellSchool": "fire",
         ])
     }
 

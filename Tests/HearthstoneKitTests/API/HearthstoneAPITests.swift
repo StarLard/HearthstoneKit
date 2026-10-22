@@ -45,6 +45,13 @@ extension LiveAPITests {
             #expect(searchResult.cards.first?.slug == "61488-alexstrasza")
         }
 
+        @Test func `Spell school search`() async throws {
+            let fireSpells = try await HearthstoneAPI.searchConstructedCards(for: .enUS, spellSchoolSlug: "fire", pageSize: 1)
+            let allCards = try await HearthstoneAPI.searchConstructedCards(for: .enUS, pageSize: 1)
+            #expect(fireSpells.cardCount > 0)
+            #expect(fireSpells.cardCount < allCards.cardCount)
+        }
+
         @Test func `Get all cards`() async throws {
             let searchResult = try await HearthstoneAPI.searchConstructedCards(for: .enUS, pageSize: 500)
             #expect(searchResult.cardCount >= 2377)
@@ -85,6 +92,11 @@ extension LiveAPITests {
         @Test func `Get metadata`() async throws {
             let rarities = try await HearthstoneAPI.getMetadata(for: .enUS, metadataType: Rarity.self)
             #expect(rarities.contains(where: { (rarity) -> Bool in rarity.slug == "common" }))
+        }
+
+        @Test func `Get spell school metadata`() async throws {
+            let spellSchools = try await HearthstoneAPI.getMetadata(for: .enUS, metadataType: SpellSchool.self)
+            #expect(spellSchools.contains(where: { (spellSchool) -> Bool in spellSchool.slug == "fire" }))
         }
 
         @Test func `Get all metadata`() async throws {
