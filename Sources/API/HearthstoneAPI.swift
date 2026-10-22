@@ -273,6 +273,13 @@ public enum HearthstoneAPI {
 private extension HearthstoneAPI {
     private static let decoder = JSONDecoder()
 
+    /// Blizzard no longer accepts access tokens as a query parameter; they must be sent as a bearer token.
+    static func authorizedRequest(for url: URL, with accessToken: BattleNetAPI.AccessToken) -> URLRequest {
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(accessToken.value)", forHTTPHeaderField: "Authorization")
+        return request
+    }
+
     // MARK: Cards
 
     static func requestCards(with accessToken: BattleNetAPI.AccessToken, session: URLSession = .shared, for locale: PlayerLocale,
@@ -291,7 +298,6 @@ private extension HearthstoneAPI {
         }
 
         var parameters = [
-            URLQueryItem(name: "access_token", value: accessToken.value),
             URLQueryItem(name: "locale", value: locale.rawValue),
             URLQueryItem(name: "page", value: String(page)),
             URLQueryItem(name: "gameMode", value: gameMode.rawValue),
@@ -344,7 +350,7 @@ private extension HearthstoneAPI {
         components.path = "/hearthstone/cards"
         components.queryItems = parameters
 
-        let request: URLRequest = URLRequest(url: components.url!)
+        let request = authorizedRequest(for: components.url!, with: accessToken)
         return try await session.value(CardSearch.self, for: request, using: decoder)
     }
 
@@ -354,11 +360,10 @@ private extension HearthstoneAPI {
         components.scheme = "https"
         components.host = locale.gameDataAPIRegion.host
         components.path = "/hearthstone/cards/\(idOrSlug)"
-        components.queryItems = [URLQueryItem(name: "access_token", value: accessToken.value),
-                                 URLQueryItem(name: "gameMode", value: gameMode.rawValue),
+        components.queryItems = [URLQueryItem(name: "gameMode", value: gameMode.rawValue),
                                  URLQueryItem(name: "locale", value: locale.rawValue)]
 
-        let request: URLRequest = URLRequest(url: components.url!)
+        let request = authorizedRequest(for: components.url!, with: accessToken)
         return try await session.value(Card.self, for: request, using: decoder)
     }
 
@@ -368,7 +373,6 @@ private extension HearthstoneAPI {
                                  cardBackCategory: String?, textFilter: String?, sort: CardBackSearch.SortPriority,
                                  order: CardBackSearch.SortOrder) async throws -> CardBackSearch {
         var parameters = [
-            URLQueryItem(name: "access_token", value: accessToken.value),
             URLQueryItem(name: "locale", value: locale.rawValue),
             URLQueryItem(name: "sort", value: sort.rawValue),
             URLQueryItem(name: "order", value: order.rawValue),
@@ -387,7 +391,7 @@ private extension HearthstoneAPI {
         components.path = "/hearthstone/cardbacks"
         components.queryItems = parameters
 
-        let request: URLRequest = URLRequest(url: components.url!)
+        let request = authorizedRequest(for: components.url!, with: accessToken)
         return try await session.value(CardBackSearch.self, for: request, using: decoder)
     }
 
@@ -397,10 +401,9 @@ private extension HearthstoneAPI {
         components.scheme = "https"
         components.host = locale.gameDataAPIRegion.host
         components.path = "/hearthstone/cardbacks/\(idOrSlug)"
-        components.queryItems = [URLQueryItem(name: "access_token", value: accessToken.value),
-                                 URLQueryItem(name: "locale", value: locale.rawValue)]
+        components.queryItems = [URLQueryItem(name: "locale", value: locale.rawValue)]
 
-        let request: URLRequest = URLRequest(url: components.url!)
+        let request = authorizedRequest(for: components.url!, with: accessToken)
         return try await session.value(CardBack.self, for: request, using: decoder)
     }
 
@@ -412,10 +415,9 @@ private extension HearthstoneAPI {
         components.scheme = "https"
         components.host = locale.gameDataAPIRegion.host
         components.path = "/hearthstone/deck/\(deckcode)"
-        components.queryItems = [URLQueryItem(name: "access_token", value: accessToken.value),
-                                 URLQueryItem(name: "locale", value: locale.rawValue)]
+        components.queryItems = [URLQueryItem(name: "locale", value: locale.rawValue)]
 
-        let request: URLRequest = URLRequest(url: components.url!)
+        let request = authorizedRequest(for: components.url!, with: accessToken)
         return try await session.value(Deck.self, for: request, using: decoder)
     }
 
@@ -427,10 +429,9 @@ private extension HearthstoneAPI {
         components.scheme = "https"
         components.host = locale.gameDataAPIRegion.host
         components.path = "/hearthstone/metadata/\(MetadataType.metadataKind)"
-        components.queryItems = [URLQueryItem(name: "access_token", value: accessToken.value),
-                                 URLQueryItem(name: "locale", value: locale.rawValue)]
+        components.queryItems = [URLQueryItem(name: "locale", value: locale.rawValue)]
 
-        let request: URLRequest = URLRequest(url: components.url!)
+        let request = authorizedRequest(for: components.url!, with: accessToken)
         return try await session.value(Set<MetadataType>.self, for: request, using: decoder)
     }
 
@@ -440,10 +441,9 @@ private extension HearthstoneAPI {
         components.scheme = "https"
         components.host = locale.gameDataAPIRegion.host
         components.path = "/hearthstone/metadata"
-        components.queryItems = [URLQueryItem(name: "access_token", value: accessToken.value),
-                                 URLQueryItem(name: "locale", value: locale.rawValue)]
+        components.queryItems = [URLQueryItem(name: "locale", value: locale.rawValue)]
 
-        let request: URLRequest = URLRequest(url: components.url!)
+        let request = authorizedRequest(for: components.url!, with: accessToken)
         return try await session.value(MetadataSummary.self, for: request, using: decoder)
     }
 }
