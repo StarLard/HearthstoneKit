@@ -186,6 +186,9 @@ public enum HearthstoneAPI {
     ///   - locale: The locale to reflect in localized data.
     ///   - cardBackCategory: A category of the card back. The category must match a valid category. The default value is `nil`.
     ///   - textFilter: A text string used to filter card backs. The default value is `nil`.
+    ///   - page: A page number. The default value is `1`.
+    ///   - pageSize: The number of results to choose per page. A value will be selected automatically if you do not supply a pageSize or if the pageSize is higher
+    ///    than the maximum allowed. The default value is `nil`.
     ///   - sort: The field used to sort the results. Results are sorted by `date` by default.
     ///   - order: The order in which to sort the results. The default value is `descending`.
     /// - Returns: The card backs matching the search criteria, one page at a time.
@@ -194,12 +197,14 @@ public enum HearthstoneAPI {
         for locale: PlayerLocale,
         cardBackCategory: String? = nil,
         textFilter: String? = nil,
+        page: Int = 1,
+        pageSize: Int? = nil,
         sort: CardBackSearch.SortPriority = .date,
         order: CardBackSearch.SortOrder = .descending
     ) async throws -> CardBackSearch {
         let accessToken = try await BattleNetAPI.getAccessToken(with: session, for: locale.oauthAPIRegion)
         return try await requestCardBacks(with: accessToken, session: session, for: locale, cardBackCategory: cardBackCategory,
-                                          textFilter: textFilter, sort: sort, order: order)
+                                          textFilter: textFilter, page: page, pageSize: pageSize, sort: sort, order: order)
     }
 
     /// Returns a specific card back by using card back ID or slug.
@@ -376,10 +381,11 @@ extension HearthstoneAPI {
     // MARK: Card Backs
 
     static func requestCardBacks(with accessToken: BattleNetAPI.AccessToken, session: URLSession, for locale: PlayerLocale,
-                                 cardBackCategory: String?, textFilter: String?, sort: CardBackSearch.SortPriority,
+                                 cardBackCategory: String?, textFilter: String?, page: Int, pageSize: Int?, sort: CardBackSearch.SortPriority,
                                  order: CardBackSearch.SortOrder) async throws -> CardBackSearch {
         var parameters = [
             URLQueryItem(name: "locale", value: locale.rawValue),
+            URLQueryItem(name: "page", value: String(page)),
             URLQueryItem(name: "sort", value: "\(sort.rawValue):\(order.rawValue)"),
         ]
 
@@ -388,6 +394,9 @@ extension HearthstoneAPI {
         }
         if let value = textFilter {
             parameters.append(URLQueryItem(name: "textFilter", value: value))
+        }
+        if let value = pageSize {
+            parameters.append(URLQueryItem(name: "pageSize", value: String(value)))
         }
 
         var components = URLComponents()

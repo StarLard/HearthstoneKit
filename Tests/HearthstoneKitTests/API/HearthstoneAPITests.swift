@@ -77,6 +77,13 @@ extension LiveAPITests {
             #expect(searchResult.cardBacks.first?.slug == "0-classic")
         }
 
+        @Test func `Card back search pages results`() async throws {
+            let searchResult = try await HearthstoneAPI.searchCardBacks(for: .enUS, page: 2, pageSize: 2)
+            #expect(searchResult.page == 2)
+            #expect(searchResult.cardBacks.count == 2)
+            #expect(searchResult.pageCount > 2)
+        }
+
         // MARK: Decks
 
         @Test func `Get deck`() async throws {

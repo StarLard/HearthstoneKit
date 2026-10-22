@@ -54,7 +54,7 @@ struct HearthstoneAPIRequestTests {
                                                           gameMode: .constructed)
             case .cardBackSearch:
                 _ = try? await HearthstoneAPI.requestCardBacks(with: token, session: session, for: .enUS, cardBackCategory: nil, textFilter: nil,
-                                                               sort: .date, order: .descending)
+                                                               page: 1, pageSize: nil, sort: .date, order: .descending)
             case .cardBack:
                 _ = try? await HearthstoneAPI.requestCardBack(with: token, session: session, for: .enUS, idOrSlug: "155-pizza-stone")
             case .deck:
@@ -134,13 +134,15 @@ struct HearthstoneAPIRequestTests {
     @Test func `Card back search sends filters`() async throws {
         let (session, stub) = StubURLProtocol.makeSession()
         _ = try? await HearthstoneAPI.requestCardBacks(with: Self.token, session: session, for: .enUS, cardBackCategory: "base",
-                                                       textFilter: "pizza", sort: .name, order: .ascending)
+                                                       textFilter: "pizza", page: 2, pageSize: 10, sort: .name, order: .ascending)
 
         let url = try #require(stub.requests.only?.url)
         #expect(queryItems(of: url) == [
             "locale": "en_US",
             "cardBackCategory": "base",
             "textFilter": "pizza",
+            "page": "2",
+            "pageSize": "10",
             "sort": "name:asc",
         ])
     }
