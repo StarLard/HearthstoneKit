@@ -33,12 +33,11 @@ public enum OAuthAPIRegion: String, Codable, Sendable {
     case apac
     case cn
     
+    /// Blizzard serves OAuth for every region except China from a single global host.
     public var host: String {
         switch self {
-        case .us: return "us.battle.net"
-        case .eu: return "eu.battle.net"
-        case .apac: return "apac.battle.net"
-        case .cn: return "www.battlenet.com.cn"
+        case .us, .eu, .apac: return "oauth.battle.net"
+        case .cn: return "oauth.battlenet.com.cn"
         }
     }
 }

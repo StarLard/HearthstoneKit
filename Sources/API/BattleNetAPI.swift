@@ -103,6 +103,43 @@ internal extension BattleNetAPI {
         }
         return try await requestAccessToken(with: session, for: region, authorization: authorization)
     }
+
+    /// Builds a token request that authenticates the client with HTTP Basic auth and sends the grant as a form-encoded body,
+    /// as Blizzard recommends, so credentials never appear in the URL.
+    static func accessTokenRequest(for region: OAuthAPIRegion, authorization: Authorization?, clientID: String, clientSecret: String) -> URLRequest {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = region.host
+        components.path = "/token"
+
+        var parameters: [(name: String, value: String)]
+        if let authorization = authorization {
+            parameters = [
+                ("grant_type", "authorization_code"),
+                ("code", authorization.authorizationCode),
+                ("redirect_uri", authorization.redirectURI)
+            ]
+            if let scopes = authorization.scopes {
+                parameters.append(("scope", scopes))
+            }
+        } else {
+            parameters = [("grant_type", "client_credentials")]
+        }
+
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        let credentials = Data("\(clientID):\(clientSecret)".utf8).base64EncodedString()
+        request.setValue("Basic \(credentials)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.httpBody = Data(parameters.map({ "\($0.name)=\(formEncoded($0.value))" }).joined(separator: "&").utf8)
+        return request
+    }
+
+    /// Percent-encodes everything except unreserved characters, so values like redirect URIs can't break the form body.
+    private static func formEncoded(_ value: String) -> String {
+        let unreserved = CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~")
+        return value.addingPercentEncoding(withAllowedCharacters: unreserved) ?? value
+    }
 }
 
 // MARK: Private
@@ -134,33 +171,9 @@ private extension BattleNetAPI {
     }
     
     static func requestAccessToken(with session: URLSession, for region: OAuthAPIRegion, authorization: Authorization?) async throws -> AccessToken {
-        var components = URLComponents()
-        components.scheme = "https"
-        components.host = region.host
-        components.path = "/oauth/token"
-        let queryItems: [URLQueryItem]
-        if let authorization = authorization {
-            var items = [
-                URLQueryItem(name: "code", value: authorization.authorizationCode),
-                URLQueryItem(name: "redirect_uri", value: authorization.redirectURI)
-            ]
-            if let scopes = authorization.scopes {
-                items.append(URLQueryItem(name: "scope", value: scopes))
-            }
-            queryItems = items
-        } else {
-            let configuration = await HearthstoneKit.configuration
-            queryItems = [
-                URLQueryItem(name: "client_id", value: configuration.clientID),
-                URLQueryItem(name: "client_secret", value: configuration.clientSecret)
-            ]
-        }
-        components.queryItems = queryItems
-        var request: URLRequest = URLRequest(url: components.url!)
-        request.httpMethod = "POST"
-        let grantType = authorization == nil ? "client_credentials" : "authorization_code"
-        request.httpBody = "grant_type=\(grantType)".data(using: .utf8)
-        
+        let configuration = await HearthstoneKit.configuration
+        let request = accessTokenRequest(for: region, authorization: authorization, clientID: configuration.clientID,
+                                         clientSecret: configuration.clientSecret)
         let requestTime = Date()
 
         let accessTokenResponse = try await session.value(AccessToken.Response.self, for: request, using: decoder)
@@ -179,7 +192,7 @@ private extension BattleNetAPI {
         var components = URLComponents()
         components.scheme = "https"
         components.host = region.host
-        components.path = "/oauth/userinfo"
+        components.path = "/userinfo"
         var request: URLRequest = URLRequest(url: components.url!)
         request.setValue("Bearer \(accessToken.value)", forHTTPHeaderField: "Authorization")
         return try await session.value(BattleNetUserInfo.self, for: request, using: decoder)
