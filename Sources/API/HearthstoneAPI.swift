@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Combine
 
 /// An interface with methods to consume the Hearthstone API.
 public enum HearthstoneAPI {
@@ -37,7 +36,7 @@ public enum HearthstoneAPI {
     ///    than the maximum allowed. The default value is `nil`.
     ///   - sort: The field used to sort the results. Results are sorted by `manaCost` by default. Cards will also be sorted by class automatically in most cases.
     ///   - order: The order in which to sort the results. The default value is `ascending`.
-    /// - Returns: A publisher which can be canceled and sends a `CardSearch` if the request succeeds or an error on failure.
+    /// - Returns: The cards matching the search criteria, one page at a time.
     public static func searchConstructedCards(
         with session: URLSession = .shared,
         for locale: PlayerLocale,
@@ -108,7 +107,7 @@ public enum HearthstoneAPI {
     ///    than the maximum allowed. The default value is `nil`.
     ///   - sort: The field used to sort the results. Results are sorted by `manaCost` by default. Cards will also be sorted by class automatically in most cases.
     ///   - order: The order in which to sort the results. The default value is `ascending`.
-    /// - Returns: A publisher which can be canceled and sends a `CardSearch` if the request succeeds or an error on failure.
+    /// - Returns: The cards matching the search criteria, one page at a time.
     public static func searchBattlegroundsCards(
         with session: URLSession = .shared,
         for locale: PlayerLocale,
@@ -163,7 +162,7 @@ public enum HearthstoneAPI {
     ///   or `HearthstoneAPI.searchBattlegroundsCards()`.
     ///   - gameMode: A recognized game mode (for example, battlegrounds or constructed). The default value is `constructed`. See the
     ///   [Game Modes Guide](https://develop.battle.net/documentation/hearthstone/guides/game-modes) for more information.
-    /// - Returns: A publisher which can be canceled and sends a `Card` if the request succeeds or an error on failure.
+    /// - Returns: The matching card.
     public static func getCard(
         with session: URLSession = .shared,
         for locale: PlayerLocale,
@@ -185,7 +184,7 @@ public enum HearthstoneAPI {
     ///   - textFilter: A text string used to filter card backs. The default value is `nil`.
     ///   - sort: The field used to sort the results. Results are sorted by `date` by default.
     ///   - order: The order in which to sort the results. The default value is `descending`.
-    /// - Returns: A publisher which can be canceled and sends a `CardBackSearch` if the request succeeds or an error on failure.
+    /// - Returns: The card backs matching the search criteria, one page at a time.
     public static func searchCardBacks(
         with session: URLSession = .shared,
         for locale: PlayerLocale,
@@ -205,7 +204,7 @@ public enum HearthstoneAPI {
     ///   - session: A `URLSession` to create the request in. The default value is `shared`.
     ///   - locale: The locale to reflect in localized data.
     ///   - idOrSlug: An ID or slug that uniquely identifies a card back. You can discover these values by using `HearthstoneAPI.searchCardBacks()`.
-    /// - Returns: A publisher which can be canceled and sends a `Card` if the request succeeds or an error on failure.
+    /// - Returns: The matching card back.
     public static func getCardBack(
         with session: URLSession = .shared,
         for locale: PlayerLocale,
@@ -223,7 +222,7 @@ public enum HearthstoneAPI {
     ///   - session: A `URLSession` to create the request in. The default value is `shared`.
     ///   - locale: The locale to reflect in localized data.
     ///   - deckcode: A code that identifies a deck. You can get one from a `Deckstring` or you copy one from the game or various Hearthstone websites.
-    /// - Returns: A publisher which can be canceled and sends a `Deck` if the request succeeds or an error on failure.
+    /// - Returns: The deck the code describes.
     public static func getDeck(
         with session: URLSession = .shared,
         for locale: PlayerLocale,
@@ -242,7 +241,7 @@ public enum HearthstoneAPI {
     ///   - locale: The locale to reflect in localized data.
     ///   - metadataType: The type of the metadata to retrieve. Valid values include `ExpansionSet`, `ExpansionSet.Group`, `Rarity`,
     ///   `Card.Keyword`, `PlayerClass`, `Card.CardType`, and `MinionType`.
-    /// - Returns: A publisher which can be canceled and sends a `MetadataType` if the request succeeds or an error on failure.
+    /// - Returns: Every value of the requested metadata type.
     public static func getMetadata<MetadataType: Metadata>(
         with session: URLSession = .shared,
         for locale: PlayerLocale,
@@ -258,7 +257,7 @@ public enum HearthstoneAPI {
     /// - Parameters:
     ///   - session: A `URLSession` to create the request in. The default value is `shared`.
     ///   - locale: The locale to reflect in localized data.
-    /// - Returns: A publisher which can be canceled and sends a `MetadataSummary` if the request succeeds or an error on failure.
+    /// - Returns: All of the API's metadata.
     public static func getAllMetadata(
         with session: URLSession = .shared,
         for locale: PlayerLocale
