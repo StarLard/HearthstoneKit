@@ -52,6 +52,19 @@ extension LiveAPITests {
             #expect(fireSpells.cardCount < allCards.cardCount)
         }
 
+        @Test func `Mercenaries card search`() async throws {
+            let searchResult = try await HearthstoneAPI.searchMercenariesCards(for: .enUS, mercenaryIDs: [23], mercenaryRoleSlugs: ["tank"],
+                                                                               isDefaultMercenary: true)
+            #expect(searchResult.cardCount == 1)
+            #expect(searchResult.cards.first?.slug == "64590-alexstrasza")
+        }
+
+        @Test func `Every Mercenaries card decodes`() async throws {
+            let searchResult = try await HearthstoneAPI.searchMercenariesCards(for: .enUS, pageSize: 500)
+            #expect(searchResult.pageCount == 1)
+            #expect(searchResult.cards.count == searchResult.cardCount)
+        }
+
         @Test func `Get all cards`() async throws {
             let searchResult = try await HearthstoneAPI.searchConstructedCards(for: .enUS, pageSize: 500)
             #expect(searchResult.cardCount >= 2377)
@@ -104,6 +117,11 @@ extension LiveAPITests {
         @Test func `Get spell school metadata`() async throws {
             let spellSchools = try await HearthstoneAPI.getMetadata(for: .enUS, metadataType: SpellSchool.self)
             #expect(spellSchools.contains(where: { (spellSchool) -> Bool in spellSchool.slug == "fire" }))
+        }
+
+        @Test func `Get mercenary role metadata`() async throws {
+            let roles = try await HearthstoneAPI.getMetadata(for: .enUS, metadataType: MercenaryRole.self)
+            #expect(roles.contains(where: { (role) -> Bool in role.slug == "tank" }))
         }
 
         @Test func `Get all metadata`() async throws {

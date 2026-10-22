@@ -157,6 +157,70 @@ public enum HearthstoneAPI {
         )
     }
 
+    /// Returns an up-to-date list of all Mercenaries cards matching the search criteria. For more information about the search parameters,
+    /// see the [Card Search Guide](https://develop.battle.net/documentation/hearthstone/guides).
+    /// - Parameters:
+    ///   - session: A `URLSession` to create the request in. The default value is `shared`.
+    ///   - locale: The locale to reflect in localized data.
+    ///   - attack: The attack power of the mercenary. You can include multiple values in a list. The default value is `nil`.
+    ///   - health: The health of a mercenary. You can include multiple values in a list. The default value is `nil`.
+    ///   - minionTypeSlug: The type of mercenary card (for example, beast, murloc, dragon, and so on). This value must match the minion type slugs found
+    ///    in metadata. The default value is `nil`.
+    ///   - mercenaryIDs: The unique numeric IDs of mercenaries. Each mercenary can have multiple cards, one for each skin. The default value is `nil`.
+    ///   - mercenaryRoleSlugs: The roles of mercenary cards (for example, caster, fighter, or tank). These values must match the mercenary role slugs
+    ///    found in metadata. The default value is `nil`.
+    ///   - isDefaultMercenary: Whether a card represents the default skin for its mercenary. `true` returns only default skins; `false` returns only
+    ///    non-default skins. To return both, use `nil`. The default value is `nil`.
+    ///   - textFilter: A text string used to filter cards. The default value is `nil`.
+    ///   - page: A page number. The default value is `1`.
+    ///   - pageSize: The number of results to choose per page. A value will be selected automatically if you do not supply a pageSize or if the pageSize is higher
+    ///    than the maximum allowed. The default value is `nil`.
+    ///   - sort: The field used to sort the results. Results are sorted by `manaCost` by default.
+    ///   - order: The order in which to sort the results. The default value is `ascending`.
+    /// - Returns: The cards matching the search criteria, one page at a time.
+    public static func searchMercenariesCards(
+        with session: URLSession = .shared,
+        for locale: PlayerLocale,
+        attack: [Int]? = nil,
+        health: [Int]? = nil,
+        minionTypeSlug: String? = nil,
+        mercenaryIDs: [Int]? = nil,
+        mercenaryRoleSlugs: [String]? = nil,
+        isDefaultMercenary: Bool? = nil,
+        textFilter: String? = nil,
+        page: Int = 1,
+        pageSize: Int? = nil,
+        sort: CardSearch.SortPriority = .manaCost,
+        order: CardSearch.SortOrder = .ascending
+    ) async throws -> CardSearch {
+        let accessToken = try await BattleNetAPI.getAccessToken(with: session, for: locale.oauthAPIRegion)
+        return try await requestCards(
+            with: accessToken,
+            session: session,
+            for: locale,
+            setSlug: nil,
+            classSlug: nil,
+            manaCost: nil,
+            attack: attack,
+            health: health,
+            collectible: nil,
+            raritySlug: nil,
+            typeSlug: nil,
+            minionTypeSlug: minionTypeSlug,
+            keywordSlug: nil,
+            textFilter: textFilter,
+            gameMode: .mercenaries,
+            tiers: nil,
+            page: page,
+            pageSize: pageSize,
+            sort: sort,
+            order: order,
+            mercenaryIDs: mercenaryIDs,
+            mercenaryRoleSlugs: mercenaryRoleSlugs,
+            isDefaultMercenary: isDefaultMercenary
+        )
+    }
+
     /// Returns the card with an ID or slug that matches the one you specify. For more information,
     /// see the [Card Search Guide](https://develop.battle.net/documentation/hearthstone/guides).
     /// - Parameters:
@@ -294,15 +358,16 @@ extension HearthstoneAPI {
                              setSlug: String?, classSlug: String?, manaCost: [Int]?, attack: [Int]?, health: [Int]?, collectible: Bool?,
                              raritySlug: String?, typeSlug: String?, minionTypeSlug: String?, keywordSlug: String?, textFilter: String?,
                              gameMode: GameMode.Kind, tiers: [BattlegroundsTier]?, page: Int, pageSize: Int?, sort: CardSearch.SortPriority,
-                             order: CardSearch.SortOrder, spellSchoolSlug: String? = nil) async throws -> CardSearch {
+                             order: CardSearch.SortOrder, spellSchoolSlug: String? = nil, mercenaryIDs: [Int]? = nil,
+                             mercenaryRoleSlugs: [String]? = nil, isDefaultMercenary: Bool? = nil) async throws -> CardSearch {
 
         switch gameMode {
         case .battlegrounds:
             break
-        case .constructed:
+        case .constructed, .mercenaries:
             assert(tiers == nil)
         case .arena, .unknown:
-            assertionFailure("battlegrounds and constructed are the only currently supported game modes.")
+            assertionFailure("battlegrounds, constructed, and mercenaries are the only currently supported game modes.")
         }
 
         var parameters = [
@@ -350,6 +415,15 @@ extension HearthstoneAPI {
         }
         if let value = pageSize {
             parameters.append(URLQueryItem(name: "pageSize", value: String(value)))
+        }
+        if let value = mercenaryIDs {
+            parameters.append(URLQueryItem(name: "mercenaryId", value: value.map(String.init).joined(separator: ",")))
+        }
+        if let value = mercenaryRoleSlugs {
+            parameters.append(URLQueryItem(name: "mercenaryRole", value: value.joined(separator: ",")))
+        }
+        if let value = isDefaultMercenary {
+            parameters.append(URLQueryItem(name: "defaultMercenary", value: value ? "1" : "0"))
         }
         if let value = tiers {
             parameters.append(URLQueryItem(name: "tier", value: value.map({$0.rawValue}).joined(separator: ",")))

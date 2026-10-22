@@ -22,6 +22,7 @@ public struct GameMode: Codable, Hashable, Identifiable {
     public enum Kind: String {
         case constructed
         case battlegrounds
+        case mercenaries
         case arena
         case unknown
         
@@ -29,6 +30,7 @@ public struct GameMode: Codable, Hashable, Identifiable {
             switch slug {
             case "constructed": self = .constructed
             case "battlegrounds": self = .battlegrounds
+            case "mercenaries": self = .mercenaries
             case "arena": self = .arena
             default: self = .unknown
             }

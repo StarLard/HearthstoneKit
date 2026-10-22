@@ -146,6 +146,15 @@ struct CardTests {
         #expect(card.childIDs == [43013, 43405])
     }
     
+    @Test func `Decode card without a class`() throws {
+        // Most Mercenaries cards have a null `classId`.
+        var json = try #require(try JSONSerialization.jsonObject(with: openSampleFile(.cardMinion)) as? [String: Any])
+        json["classId"] = NSNull()
+        let card = try JSONDecoder().decode(Card.self, from: JSONSerialization.data(withJSONObject: json))
+        #expect(card.classID == nil)
+        #expect(card.slug == "52119-arch-villain-rafaam")
+    }
+
     @Test func `Decode card type from valid data`() throws {
         let cardType = try JSONDecoder().decode(Card.CardType.self, from: openSampleFile(.cardType))
         #expect(cardType.id == 3)

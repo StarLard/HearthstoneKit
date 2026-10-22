@@ -131,6 +131,23 @@ struct HearthstoneAPIRequestTests {
         #expect(query["sort"] == "attack:asc")
     }
 
+    @Test func `Mercenaries card search sends mercenary filters`() async throws {
+        let (session, stub) = StubURLProtocol.makeSession()
+        _ = try? await HearthstoneAPI.requestCards(with: Self.token, session: session, for: .enUS, setSlug: nil, classSlug: nil, manaCost: nil,
+                                                   attack: nil, health: nil, collectible: nil, raritySlug: nil, typeSlug: nil, minionTypeSlug: nil,
+                                                   keywordSlug: nil, textFilter: nil, gameMode: .mercenaries, tiers: nil, page: 1, pageSize: nil,
+                                                   sort: .tier, order: .descending, mercenaryIDs: [23, 24], mercenaryRoleSlugs: ["tank", "caster"],
+                                                   isDefaultMercenary: true)
+
+        let url = try #require(stub.requests.only?.url)
+        let query = queryItems(of: url)
+        #expect(query["gameMode"] == "mercenaries")
+        #expect(query["mercenaryId"] == "23,24")
+        #expect(query["mercenaryRole"] == "tank,caster")
+        #expect(query["defaultMercenary"] == "1")
+        #expect(query["sort"] == "tier:desc")
+    }
+
     @Test func `Card back search sends filters`() async throws {
         let (session, stub) = StubURLProtocol.makeSession()
         _ = try? await HearthstoneAPI.requestCardBacks(with: Self.token, session: session, for: .enUS, cardBackCategory: "base",
