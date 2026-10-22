@@ -99,8 +99,7 @@ struct HearthstoneAPIRequestTests {
             "page": "2",
             "pageSize": "5",
             "gameMode": "constructed",
-            "sort": "name",
-            "order": "desc",
+            "sort": "name:desc",
             "set": "rise-of-shadows",
             "class": "mage",
             "manaCost": "1,2",
@@ -127,6 +126,7 @@ struct HearthstoneAPIRequestTests {
         #expect(query["gameMode"] == "battlegrounds")
         #expect(query["tier"] == "hero,3")
         #expect(query["collectible"] == "0")
+        #expect(query["sort"] == "attack:asc")
     }
 
     @Test func `Card back search sends filters`() async throws {
@@ -139,8 +139,7 @@ struct HearthstoneAPIRequestTests {
             "locale": "en_US",
             "cardBackCategory": "base",
             "textFilter": "pizza",
-            "sort": "name",
-            "order": "asc",
+            "sort": "name:asc",
         ])
     }
 

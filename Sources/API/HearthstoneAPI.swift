@@ -300,8 +300,8 @@ extension HearthstoneAPI {
             URLQueryItem(name: "locale", value: locale.rawValue),
             URLQueryItem(name: "page", value: String(page)),
             URLQueryItem(name: "gameMode", value: gameMode.rawValue),
-            URLQueryItem(name: "sort", value: sort.rawValue),
-            URLQueryItem(name: "order", value: order.rawValue),
+            // The API takes the sort direction as part of `sort`; the separate `order` parameter is deprecated.
+            URLQueryItem(name: "sort", value: "\(sort.rawValue):\(order.rawValue)"),
         ]
         if let value = setSlug {
             parameters.append(URLQueryItem(name: "set", value: value))
@@ -373,8 +373,7 @@ extension HearthstoneAPI {
                                  order: CardBackSearch.SortOrder) async throws -> CardBackSearch {
         var parameters = [
             URLQueryItem(name: "locale", value: locale.rawValue),
-            URLQueryItem(name: "sort", value: sort.rawValue),
-            URLQueryItem(name: "order", value: order.rawValue),
+            URLQueryItem(name: "sort", value: "\(sort.rawValue):\(order.rawValue)"),
         ]
 
         if let value = cardBackCategory {

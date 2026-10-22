@@ -21,6 +21,12 @@ extension HearthstoneAPI {
             case attack
             case health
             case name
+            /// Sorts by class. Only recognized when searching constructed cards.
+            case `class`
+            /// Groups results by class. Only recognized when searching constructed cards.
+            case groupByClass
+            /// Sorts by tavern tier. Only recognized when searching Battlegrounds or Mercenaries cards.
+            case tier
         }
         
         public enum SortOrder: String {
@@ -38,7 +44,8 @@ extension HearthstoneAPI {
         // MARK: Filters
         
         public enum SortPriority: String {
-            case date
+            /// Sorts by the date the card back was added.
+            case date = "dateAdded"
             case name
         }
         
