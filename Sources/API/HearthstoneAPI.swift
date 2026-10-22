@@ -270,7 +270,7 @@ public enum HearthstoneAPI {
 
 // MARK: - Network Requests
 
-private extension HearthstoneAPI {
+extension HearthstoneAPI {
     private static let decoder = JSONDecoder()
 
     /// Blizzard no longer accepts access tokens as a query parameter; they must be sent as a bearer token.
