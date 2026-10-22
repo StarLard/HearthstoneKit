@@ -6,10 +6,10 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import XCTest
+import Testing
 @testable import HearthstoneKit
 
-final class DeckstringTests: HSKitTestCase {
+struct DeckstringTests {
     private static let cardMap: [BlizzardIdentifier: Int] = [
         877: 1,
         903: 1,
@@ -32,62 +32,50 @@ final class DeckstringTests: HSKitTestCase {
         1091: 2,
         1281: 2
     ]
-    
-    @MainActor func testImporting() throws {
-        try XCTContext.runActivity(named: "Test importing without header") { _ in
-            let deckstring = try Deckstring(deckcode: "AAECAR8K7QaHB4f7Ap6dA6CFA9SLA94ElwikpQPHAwr4rwP8rwPslgOFsAPJBIAHhwSNAcMIgQoA")
-            XCTAssertEqual(deckstring.deckcode, "AAECAR8K7QaHB4f7Ap6dA6CFA9SLA94ElwikpQPHAwr4rwP8rwPslgOFsAPJBIAHhwSNAcMIgQoA")
-            XCTAssertEqual(deckstring.heroID, 31)
-            XCTAssertEqual(deckstring.formatID, 2)
-            XCTAssertNil(deckstring.name)
-            XCTAssertEqual(deckstring.cards, Self.cardMap)
-        }
-        try XCTContext.runActivity(named: "Test importing with header") { _ in
-            let deckstring = try Deckstring(deckcode: """
-                ### We go face\n
-                AAECAR8K7QaHB4f7Ap6dA6CFA9SLA94ElwikpQPHAwr4rwP8rwPslgOFsAPJBIAHhwSNAcMIgQoA\n
-                # To use this deck, copy it to your clipboard and create a new deck in Hearthstone\n
-                """)
-            XCTAssertEqual(deckstring.deckcode, """
-            ### We go face\n
-            AAECAR8K7QaHB4f7Ap6dA6CFA9SLA94ElwikpQPHAwr4rwP8rwPslgOFsAPJBIAHhwSNAcMIgQoA\n
-            # To use this deck, copy it to your clipboard and create a new deck in Hearthstone\n
-            """)
-            XCTAssertEqual(deckstring.heroID, 31)
-            XCTAssertEqual(deckstring.formatID, 2)
-            XCTAssertEqual(deckstring.name, "We go face")
-            XCTAssertEqual(deckstring.cards, Self.cardMap)
-        }
-        try XCTContext.runActivity(named: "Test deckstring equality") { _ in
-            let deckstringWithoutHeader = try Deckstring(deckcode: "AAECAR8K7QaHB4f7Ap6dA6CFA9SLA94ElwikpQPHAwr4rwP8rwPslgOFsAPJBIAHhwSNAcMIgQoA")
-            let deckstringWithHeader = try Deckstring(deckcode: """
-                ### We go face\n
-                AAECAR8K7QaHB4f7Ap6dA6CFA9SLA94ElwikpQPHAwr4rwP8rwPslgOFsAPJBIAHhwSNAcMIgQoA\n
-                # To use this deck, copy it to your clipboard and create a new deck in Hearthstone\n
-                """)
-            XCTAssertEqual(deckstringWithoutHeader, deckstringWithHeader)
-        }
+
+    private static let deckcodeWithoutHeader = "AAECAR8K7QaHB4f7Ap6dA6CFA9SLA94ElwikpQPHAwr4rwP8rwPslgOFsAPJBIAHhwSNAcMIgQoA"
+
+    private static let deckcodeWithHeader = """
+        ### We go face\n
+        AAECAR8K7QaHB4f7Ap6dA6CFA9SLA94ElwikpQPHAwr4rwP8rwPslgOFsAPJBIAHhwSNAcMIgQoA\n
+        # To use this deck, copy it to your clipboard and create a new deck in Hearthstone\n
+        """
+
+    // MARK: Importing
+
+    @Test(arguments: [
+        (deckcodeWithoutHeader, nil),
+        (deckcodeWithHeader, "We go face"),
+    ] as [(String, String?)])
+    func importing(deckcode: String, expectedName: String?) throws {
+        let deckstring = try Deckstring(deckcode: deckcode)
+        #expect(deckstring.deckcode == deckcode)
+        #expect(deckstring.heroID == 31)
+        #expect(deckstring.formatID == 2)
+        #expect(deckstring.name == expectedName)
+        #expect(deckstring.cards == Self.cardMap)
     }
-    
-    @MainActor func testExporting() {
-        XCTContext.runActivity(named: "Test exporting without header") { _ in
-            let deckstring = Deckstring(formatID: 2, heroID: 31, cards: Self.cardMap)
-            XCTAssertEqual(deckstring.heroID, 31)
-            XCTAssertEqual(deckstring.formatID, 2)
-            XCTAssertNil(deckstring.name)
-            XCTAssertEqual(deckstring.cards, Self.cardMap)
-        }
-        XCTContext.runActivity(named: "Test exporting with header") { _ in
-            let deckstring = Deckstring(formatID: 2, heroID: 31, cards: Self.cardMap, name: "We go face")
-            XCTAssertEqual(deckstring.heroID, 31)
-            XCTAssertEqual(deckstring.formatID, 2)
-            XCTAssertEqual(deckstring.name, "We go face")
-            XCTAssertEqual(deckstring.cards, Self.cardMap)
-        }
-        XCTContext.runActivity(named: "Test deckstring equality") { _ in
-            let deckstringWithoutHeader = Deckstring(formatID: 2, heroID: 31, cards: Self.cardMap)
-            let deckstringWithHeader = Deckstring(formatID: 2, heroID: 31, cards: Self.cardMap, name: "We go face")
-            XCTAssertEqual(deckstringWithoutHeader, deckstringWithHeader)
-        }
+
+    @Test func `Imported deckstrings are equal regardless of header`() throws {
+        let deckstringWithoutHeader = try Deckstring(deckcode: Self.deckcodeWithoutHeader)
+        let deckstringWithHeader = try Deckstring(deckcode: Self.deckcodeWithHeader)
+        #expect(deckstringWithoutHeader == deckstringWithHeader)
+    }
+
+    // MARK: Exporting
+
+    @Test(arguments: [nil, "We go face"])
+    func exporting(name: String?) {
+        let deckstring = Deckstring(formatID: 2, heroID: 31, cards: Self.cardMap, name: name)
+        #expect(deckstring.heroID == 31)
+        #expect(deckstring.formatID == 2)
+        #expect(deckstring.name == name)
+        #expect(deckstring.cards == Self.cardMap)
+    }
+
+    @Test func `Exported deckstrings are equal regardless of header`() {
+        let deckstringWithoutHeader = Deckstring(formatID: 2, heroID: 31, cards: Self.cardMap)
+        let deckstringWithHeader = Deckstring(formatID: 2, heroID: 31, cards: Self.cardMap, name: "We go face")
+        #expect(deckstringWithoutHeader == deckstringWithHeader)
     }
 }

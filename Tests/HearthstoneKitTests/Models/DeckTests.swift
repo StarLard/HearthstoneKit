@@ -6,20 +6,19 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import XCTest
+import Foundation
+import Testing
 @testable import HearthstoneKit
 
-final class DeckTests: HSKitTestCase {
-    func testDecodeFromValidData() throws {
-        let data = openSampleFile(.deck)
-        assertDoesNotThrow(try JSONDecoder().decode(Deck.self, from: data)) { (deck) in
-            XCTAssertEqual(deck.version, 0)
-            XCTAssertEqual(deck.format, "standard")
-            XCTAssertEqual(deck.hero.id, 7)
-            XCTAssertEqual(deck.heroPower.id, 725)
-            XCTAssertEqual(deck.class.id, 10)
-            XCTAssertEqual(deck.decklist.numberOfCards, 30)
-            XCTAssertEqual(deck.decklist.numberOfSlots, 18)
-        }
+struct DeckTests {
+    @Test func `Decode from valid data`() throws {
+        let deck = try JSONDecoder().decode(Deck.self, from: openSampleFile(.deck))
+        #expect(deck.version == 0)
+        #expect(deck.format == "standard")
+        #expect(deck.hero.id == 7)
+        #expect(deck.heroPower.id == 725)
+        #expect(deck.class.id == 10)
+        #expect(deck.decklist.numberOfCards == 30)
+        #expect(deck.decklist.numberOfSlots == 18)
     }
 }

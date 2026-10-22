@@ -6,83 +6,72 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import XCTest
+import Foundation
+import Testing
 @testable import HearthstoneKit
 
-final class MetadataTests: HSKitTestCase {
-    func testPlayerClassDecodeFromValidData() throws {
-        let data = openSampleFile(.playerClass)
-        assertDoesNotThrow(try JSONDecoder().decode(PlayerClass.self, from: data)) { (model) in
-            XCTAssertEqual(model.id, 3)
-            XCTAssertEqual(model.slug, "hunter")
-            XCTAssertEqual(model.name, "Hunter")
-            XCTAssertEqual(model.kind, .hunter)
-            XCTAssertEqual(model.cardID, 31)
-        }
+struct MetadataTests {
+    @Test func `Player class decodes from valid data`() throws {
+        let model = try JSONDecoder().decode(PlayerClass.self, from: openSampleFile(.playerClass))
+        #expect(model.id == 3)
+        #expect(model.slug == "hunter")
+        #expect(model.name == "Hunter")
+        #expect(model.kind == .hunter)
+        #expect(model.cardID == 31)
     }
-    
-    func testExpansionSetDecodeFromValidData() {
-        let data = openSampleFile(.expansionSet)
-        assertDoesNotThrow(try JSONDecoder().decode(ExpansionSet.self, from: data)) { (model) in
-            XCTAssertEqual(model.id, 1403)
-            XCTAssertEqual(model.slug, "galakronds-awakening")
-            XCTAssertEqual(model.name, "Galakrond's Awakening")
-            XCTAssertEqual(model.releaseDate, Date(timeIntervalSince1970: 1577858400))
-            XCTAssertEqual(model.type, "adventure")
-            XCTAssertEqual(model.collectibleCount, 35)
-            XCTAssertEqual(model.collectibleRevealedCount, 35)
-            XCTAssertEqual(model.nonCollectibleCount, 246)
-            XCTAssertEqual(model.nonCollectibleRevealedCount, 43)
-        }
+
+    @Test func `Expansion set decodes from valid data`() throws {
+        let model = try JSONDecoder().decode(ExpansionSet.self, from: openSampleFile(.expansionSet))
+        #expect(model.id == 1403)
+        #expect(model.slug == "galakronds-awakening")
+        #expect(model.name == "Galakrond's Awakening")
+        #expect(model.releaseDate == Date(timeIntervalSince1970: 1577858400))
+        #expect(model.type == "adventure")
+        #expect(model.collectibleCount == 35)
+        #expect(model.collectibleRevealedCount == 35)
+        #expect(model.nonCollectibleCount == 246)
+        #expect(model.nonCollectibleRevealedCount == 43)
     }
-    
-    func testExpansionSetGroupDecodeFromValidData() {
-        let data = openSampleFile(.expansionSetGroup)
-        assertDoesNotThrow(try JSONDecoder().decode(ExpansionSet.Group.self, from: data)) { (model) in
-            XCTAssertEqual(model.year, 2019)
-            XCTAssertEqual(model.slug, "dragon")
-            XCTAssertEqual(model.name, "Year of the Dragon")
-            XCTAssertEqual(model.isStandard, true)
-            XCTAssertEqual(model.icon, "icon_cardset_yearofthedragon")
-            XCTAssertEqual(model.cardSets, [
-              "galakronds-awakening",
-              "descent-of-dragons",
-              "saviors-of-uldum",
-              "rise-of-shadows"
-            ])
-        }
+
+    @Test func `Expansion set group decodes from valid data`() throws {
+        let model = try JSONDecoder().decode(ExpansionSet.Group.self, from: openSampleFile(.expansionSetGroup))
+        #expect(model.year == 2019)
+        #expect(model.slug == "dragon")
+        #expect(model.name == "Year of the Dragon")
+        #expect(model.isStandard == true)
+        #expect(model.icon == "icon_cardset_yearofthedragon")
+        #expect(model.cardSets == [
+          "galakronds-awakening",
+          "descent-of-dragons",
+          "saviors-of-uldum",
+          "rise-of-shadows"
+        ])
     }
-    
-    func testGameModeDecodeFromValidData() {
-        let data = openSampleFile(.gameMode)
-        assertDoesNotThrow(try JSONDecoder().decode(GameMode.self, from: data)) { (model) in
-            XCTAssertEqual(model.id, 1)
-            XCTAssertEqual(model.slug, "constructed")
-            XCTAssertEqual(model.name, "Standard & Wild Formats")
-            XCTAssertEqual(model.kind, .constructed)
-        }
+
+    @Test func `Game mode decodes from valid data`() throws {
+        let model = try JSONDecoder().decode(GameMode.self, from: openSampleFile(.gameMode))
+        #expect(model.id == 1)
+        #expect(model.slug == "constructed")
+        #expect(model.name == "Standard & Wild Formats")
+        #expect(model.kind == .constructed)
     }
-    
-    func testMinionTypeDecodeFromValidData() {
-        let data = openSampleFile(.minionType)
-        assertDoesNotThrow(try JSONDecoder().decode(MinionType.self, from: data)) { (model) in
-            XCTAssertEqual(model.id, 14)
-            XCTAssertEqual(model.slug, "murloc")
-            XCTAssertEqual(model.name, "Murloc")
-            XCTAssertEqual(model.kind, .murloc)
-        }
+
+    @Test func `Minion type decodes from valid data`() throws {
+        let model = try JSONDecoder().decode(MinionType.self, from: openSampleFile(.minionType))
+        #expect(model.id == 14)
+        #expect(model.slug == "murloc")
+        #expect(model.name == "Murloc")
+        #expect(model.kind == .murloc)
     }
-    
-    func testRarityDecodeFromValidData() throws {
-        let data = openSampleFile(.rarity)
-        assertDoesNotThrow(try JSONDecoder().decode(Rarity.self, from: data)) { (model) in
-            XCTAssertEqual(model.id, 5)
-            XCTAssertEqual(model.slug, "legendary")
-            XCTAssertEqual(model.name, "Legendary")
-            XCTAssertEqual(model.craftingCost.regular, 1600)
-            XCTAssertEqual(model.craftingCost.golden, 3200)
-            XCTAssertEqual(model.dustValue.regular, 400)
-            XCTAssertEqual(model.dustValue.golden, 1600)
-        }
+
+    @Test func `Rarity decodes from valid data`() throws {
+        let model = try JSONDecoder().decode(Rarity.self, from: openSampleFile(.rarity))
+        #expect(model.id == 5)
+        #expect(model.slug == "legendary")
+        #expect(model.name == "Legendary")
+        #expect(model.craftingCost.regular == 1600)
+        #expect(model.craftingCost.golden == 3200)
+        #expect(model.dustValue.regular == 400)
+        #expect(model.dustValue.golden == 1600)
     }
 }
