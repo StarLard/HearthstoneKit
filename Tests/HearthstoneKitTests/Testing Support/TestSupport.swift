@@ -20,7 +20,11 @@ struct LiveAPITests {}
 /// since `HearthstoneKit.configure(with:)` may only be called once per process.
 @MainActor func configureSDKIfNeeded() throws {
     guard !hasConfiguredSDK else { return }
-    let configuration = try #require(HearthstoneKit.Configuration(bundle: Bundle.module), "Missing or invalid HearthstoneKit-Configuration.plist")
+    // The plist holds real API credentials, so it isn't checked in. Live tests fail without it rather than silently skipping.
+    let configuration = try #require(
+        HearthstoneKit.Configuration(bundle: Bundle.module),
+        "Missing or invalid HearthstoneKit-Configuration.plist. Copy HearthstoneKit-Configuration.example.plist in Tests/HearthstoneKitTests/Resources and add your Blizzard API credentials."
+    )
     HearthstoneKit.configure(with: configuration)
     hasConfiguredSDK = true
 }

@@ -3,3 +3,6 @@
 /Packages
 /*.xcodeproj
 xcuserdata/
+
+# Blizzard API credentials for the live tests. See README.md.
+Tests/HearthstoneKitTests/Resources/HearthstoneKit-Configuration.plist
