@@ -25,7 +25,7 @@ enum Keychain {
     private enum QueryValues {
         static var limit: NSString { NSString(format: kSecMatchLimitOne) }
         static var `class`: NSString { NSString(format: kSecClassGenericPassword) }
-        static let account = "com.calebfriden.hearthstone-kit"
+        static let account = "com.starlard.hearthstone-kit"
     }
     
     enum Service: String {
