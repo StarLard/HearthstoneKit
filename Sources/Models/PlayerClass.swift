@@ -24,6 +24,7 @@ public struct PlayerClass: Metadata, Identifiable {
     
     public enum Kind: Sendable {
         case all
+        case deathKnight
         case demonHunter
         case druid
         case hunter
@@ -40,6 +41,7 @@ public struct PlayerClass: Metadata, Identifiable {
         public init(slug: String) {
             switch slug {
             case "all": self = .all
+            case "deathknight": self = .deathKnight
             case "demonhunter": self = .demonHunter
             case "druid": self = .druid
             case "hunter": self = .hunter

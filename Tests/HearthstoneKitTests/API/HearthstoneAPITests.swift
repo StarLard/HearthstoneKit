@@ -136,6 +136,15 @@ extension LiveAPITests {
             #expect(roles.contains(where: { (role) -> Bool in role.slug == "tank" }))
         }
 
+        @Test func `Get player class metadata`() async throws {
+            let classes = try await HearthstoneAPI.getMetadata(for: .enUS, metadataType: PlayerClass.self)
+            #expect(classes.contains(where: { (playerClass) -> Bool in playerClass.kind == .deathKnight }))
+            // Every class the API returns should map to a known kind, so new classes don't go unnoticed.
+            for playerClass in classes {
+                #expect(playerClass.kind != .unknown, "Unrecognized class slug: \(playerClass.slug)")
+            }
+        }
+
         @Test func `Get all metadata`() async throws {
             let metadata = try await HearthstoneAPI.getAllMetadata(for: .enUS)
             #expect(metadata.rarities.contains(where: { (rarity) -> Bool in rarity.slug == "common" }))
